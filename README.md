@@ -9,34 +9,6 @@
 
 ---
 
-## 📌 Table of Contents
-- [Overview](#overview)
-- [Problem Statement](#problem-statement)
-- [Our Solution](#our-solution)
-- [Why Agentic AI?](#why-agentic-ai)
-- [Generative AI vs. Agentic AI](#generative-ai--agentic-ai)
-- [Key Features](#key-features)
-- [System Architecture](#system-architecture)
-- [Workflow Walkthrough](#workflow)
-- [Example Transformation](#example-transformation)
-- [Specialized Agents](#specialized-agents)
-- [Technology Stack](#technology-stack)
-- [Project Structure](#project-structure)
-- [Installation & Setup](#installation--setup)
-- [Environment Variables](#environment-variables)
-- [Internal Architecture & Orchestration](#how-it-works-internally)
-- [Validation & Reliability](#validation--reliability)
-- [Use Cases](#use-cases)
-- [Comparative Advantages](#advantages)
-- [Future Enhancements](#future-enhancements)
-- [Security & Privacy](#security--privacy)
-- [Demo & Screenshots](#demo--screenshots)
-- [Team](#team)
-- [SIH Context](#sih-context)
-- [License](#license)
-
----
-
 ## 📖 Overview
 
 **TransformAI** is an intelligent, agent-driven content transformation platform designed to solve the challenge of information fragmentation in modern organizations. When critical information exists in long-form or complex formats—such as threat intelligence advisories, research papers, policy documents, news reports, and incident logs—organizations struggle to rapidly adapt this information for different stakeholders and media channels.
