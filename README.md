@@ -286,51 +286,6 @@ TranformAi/
 
 ---
 
-## ⚙️ Installation & Setup
-
-### Prerequisites
-- **Git** (v2.38+)
-- **Python** (v3.10+) *or* **Node.js** (v18+)
-- **API Key** for target LLM Provider (e.g., OpenAI, Google Gemini, Anthropic)
-
-### 1. Clone the Repository
-```bash
-git clone https://github.com/your-username/TransformAI.git
-cd TransformAI
-```
-
-### 2. Environment Configuration
-Create a `.env` file in the project root based on `.env.example`:
-```bash
-cp .env.example .env
-```
-
-### 3. Install Dependencies & Launch
-*(Detailed execution commands will be updated as codebase modules are configured.)*
-
----
-
-## 🔑 Environment Variables
-
-To configure TransformAI, setup your local `.env` configuration as follows:
-
-```env
-# Server Configuration
-PORT=8000
-ENVIRONMENT=development
-
-# LLM Provider Keys (Do NOT commit real secrets to version control)
-OPENAI_API_KEY=your_openai_api_key_here
-GEMINI_API_KEY=your_gemini_api_key_here
-ANTHROPIC_API_KEY=your_anthropic_api_key_here
-
-# Orchestration Settings
-MAX_CONCURRENT_TASKS=4
-ENABLE_VALIDATION_AGENT=true
-```
-
----
-
 ## 🧠 How It Works Internally
 
 TransformAI uses a deterministic step-by-step pipeline to process each request:
@@ -438,27 +393,6 @@ TransformAI is designed with data privacy in mind:
 | Interactive Review & Editor | Export Options |
 | :---: | :---: |
 | ![Review Workspace](docs/screenshots/review_placeholder.png) | ![Export Options](docs/screenshots/export_placeholder.png) |
-
----
-
-## 👥 Team
-
-- **Project Lead & Developer:** *Team Name / Contributor Placeholders*
-- **Role / Domain:** AI Orchestration & Full-Stack Architecture
-
----
-
-## 🏆 Smart India Hackathon (SIH) Context
-
-TransformAI was conceptualized and architected to address Smart India Hackathon (SIH) problem themes focused on **AI-powered Multi-Format Content Transformation & Information Accessibility**. 
-
-The system solves the critical need of public and private sector organizations to rapidly disseminate verified, multi-channel information from long-form technical, administrative, and emergency source documents.
-
----
-
-## 📜 License
-
-Licensing terms are **To Be Determined (TBD)** upon final repository publication.
 
 ---
 
