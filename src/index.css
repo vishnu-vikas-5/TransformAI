@@ -1,0 +1,238 @@
+:root {
+  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Strict 4-Color Palette: #30364F | #ACBAC4 | #E1D9BC | #F0F0DB */
+  --c-navy: #30364F;     /* Deep Slate Navy (Main BG & Dark Surfaces) */
+  --c-steel: #ACBAC4;    /* Cool Steel Blue (Borders & Primary Accents) */
+  --c-sand: #E1D9BC;     /* Soft Muted Sand (Highlights & Badges) */
+  --c-cream: #F0F0DB;    /* Off-White Cream (Primary Text & Light Surfaces) */
+
+  --bg-primary: var(--c-navy);
+  --bg-secondary: #272B40;
+  --bg-tertiary: var(--c-navy);
+
+  --glass-bg: rgba(48, 54, 79, 0.85);
+  --glass-card: #272B40;
+  --glass-border: var(--c-steel);
+  --glass-border-glow: var(--c-sand);
+
+  --accent-primary: var(--c-sand);
+  --accent-secondary: var(--c-steel);
+  --accent-dark: var(--c-navy);
+
+  --text-primary: var(--c-cream);
+  --text-secondary: var(--c-sand);
+  --text-muted: var(--c-steel);
+
+  --gradient-brand: linear-gradient(135deg, #ACBAC4 0%, #E1D9BC 100%);
+  --gradient-card: linear-gradient(135deg, #30364F 0%, #272B40 100%);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(172, 186, 196, 0.3);
+
+  color-scheme: dark;
+  scrollbar-color: var(--c-steel) var(--c-navy);
+}
+
+/* Fallback for webkit scrollbar */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--c-steel);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--c-navy);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--c-navy);
+  color: var(--c-cream);
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Typography Utilities */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--c-cream);
+}
+
+.text-gradient {
+  color: var(--c-sand);
+  background: none;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Glassmorphism / Clean Card Panel */
+.glass-panel {
+  background: #272B40;
+  border: 1.5px solid var(--c-steel);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  transition: all 0.25s ease;
+}
+
+.glass-panel-hover:hover {
+  border-color: var(--c-sand);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+/* Button Component Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.925rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--c-sand);
+  color: var(--c-navy);
+  border: 1.5px solid var(--c-sand);
+}
+
+.btn-primary:hover {
+  background: var(--c-steel);
+  color: var(--c-navy);
+  border-color: var(--c-steel);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--c-navy);
+  color: var(--c-cream);
+  border: 1.5px solid var(--c-steel);
+}
+
+.btn-secondary:hover {
+  background: var(--c-steel);
+  color: var(--c-navy);
+  border-color: var(--c-sand);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--c-cream);
+  border: 1.5px solid var(--c-steel);
+}
+
+.btn-outline:hover {
+  background: var(--c-steel);
+  color: var(--c-navy);
+}
+
+.btn-sm {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.825rem;
+  border-radius: var(--radius-sm);
+}
+
+.btn-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Badge Styles - 4-Color Strict Palette */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  background: var(--c-steel);
+  color: var(--c-navy);
+  border: 1px solid var(--c-sand);
+}
+
+.badge-indigo, .badge-cyan, .badge-emerald, .badge-purple, .badge-amber, .badge-rose {
+  background: var(--c-steel);
+  color: var(--c-navy);
+  border: 1px solid var(--c-sand);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.35s ease forwards;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 18, 28, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 800px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--c-navy);
+  border: 2px solid var(--c-sand);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  color: var(--c-cream);
+}
+
+/* Code block styles */
+pre, code {
+  font-family: var(--font-mono);
+  background: #272B40;
+  color: var(--c-cream);
+}

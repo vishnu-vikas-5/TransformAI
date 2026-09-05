@@ -11,60 +11,58 @@
 
 ## Overview
 
-**TransformAI** is an intelligent, agent-driven content transformation platform designed to solve the challenge of information fragmentation in modern organizations. When critical information exists in long-form or complex formats—such as threat intelligence advisories, research papers, policy documents, news reports, and incident logs—organizations struggle to rapidly adapt this information for different stakeholders and media channels.
+**TransformAI** is an intelligent, agent-driven content transformation platform designed to solve the challenge of information fragmentation in modern organizations. When critical information exists in long-form or complex formats—such as threat intelligence advisories, research papers, policy documents, news reports, announcements, incident logs, or free-form prompts—organizations struggle to rapidly adapt this information for different stakeholders and media channels.
 
-TransformAI empowers users to upload complex source material and select a suite of distinct target outputs (e.g., Executive Summaries, Social Media Posts, Employee Awareness Emails, FAQs, and Technical Reports). Powered by a **Master AI Orchestrator** and a suite of **Specialized Domain Agents**, TransformAI intelligently decomposes the transformation task, executes content generation in parallel, validates outputs for factual fidelity, and presents ready-to-use artifacts for human approval.
+TransformAI provides an operator dashboard through which users submit source content (English text, documents, articles, reports, prompts, images, videos, or contextual information) and explicitly configure desired target deliverables (such as Video Packages, LinkedIn Posts, Twitter/X Threads, Structured Advisories, Infographics, Executive Summaries, and Presentations). Powered by a **Master AI Orchestrator** and a suite of **Specialized Domain Agents**, TransformAI intelligently decomposes the transformation task, executes content generation in parallel, validates outputs for factual fidelity, and presents ready-to-use artifacts for human review and export.
 
 > [!IMPORTANT]
-> **Human-in-the-Loop Design Principle:** TransformAI is explicitly built as an **assisted, human-in-the-loop platform**, not an unmonitored autonomous system. The user retains complete authority over *what* outputs are required and *approves/edits* all generated content before export.
+> **Human-in-the-Loop Design Principle:** TransformAI is explicitly built as an **assisted, human-in-the-loop platform**, not an unmonitored autonomous system. The operator retains complete control over *what* outputs are requested and *approves/edits* all generated content before export.
 
 ---
 
 ## Problem Statement
 
-In today's fast-paced environment, organizations digest vast quantities of information across diverse formats:
-- Technical incident reports & advisories
-- Policy updates & compliance standards
-- Academic papers & technical whitepapers
-- Press announcements & market news
-- Unstructured free-form prompts and briefs
+Organizations frequently need to convert information available in different forms—such as news articles, reports, advisories, threat intelligence, policy documents, research papers, announcements, incident reports, or free-form prompts—into specific communication artifacts suitable for various audiences and purposes.
 
-Converting a single 15-page technical report into actionable communications—such as an executive summary for C-suite leaders, an awareness email for employees, a LinkedIn post for public relations, and an operational FAQ for IT teams—is a **manual, repetitive, and labor-intensive task**.
+The traditional process requires manually analyzing source content, understanding the desired objective, and creating required output formats. This process is time-consuming, resource-intensive, and often requires specialized expertise across content creation, communication, and domain knowledge.
 
-### Key Challenges of Traditional Methods:
-1. **High Latency:** Manual reading, synthesis, and re-drafting consume hours or days.
-2. **Inconsistent Messaging:** Different teams drafting separate communications often introduce conflicting details or alter key facts.
-3. **Tone Misalignment:** Adapting technical jargon into accessible language for non-technical stakeholders requires specialized editing skills.
-4. **Scalability Bottlenecks:** Human teams cannot keep pace during crisis events or high-volume publishing schedules.
+### Key Challenges Solved:
+1. **High Latency:** Replaces manual reading, synthesis, and multi-format drafting with automated parallel generation.
+2. **Inconsistent Messaging:** Eliminates conflicting statements when multiple teams draft separate communications from the same source.
+3. **Tone and Style Bleed:** Ensures technical jargon is adapted into accessible language for general audiences while retaining technical precision for domain experts.
+4. **Multi-Format Scalability:** Allows operators to select multiple output formats concurrently and generate all deliverables from a single source.
 
 ---
 
 ## Our Solution
 
-TransformAI bridges the gap between raw information and audience-tailored distribution through a structured **Human-in-the-Loop Agentic Engine**:
+TransformAI acts as an AI-powered content transformation engine that converts a common source of information into the specific deliverables requested by the operator, accelerating content creation and improving operational consistency.
 
 ```
-User Intent (Selects Inputs & Targets)
-                  │
-                  ▼
-       AI Orchestrator (Decomposes Tasks)
-                  │
-                  ▼
-    Specialized Agents (Parallel Generation)
-                  │
-                  ▼
-      Validation Agent (Factual & Tone Audit)
-                  │
-                  ▼
-        User Review & Export (Final Human Approval)
+Source Content Ingestion (Text, Docs, Articles, Videos, Prompts)
+                           │
+                           ▼
+Operator Configurable Parameters (Audience, Tone, Detail, Style)
+                           │
+                           ▼
+            AI Orchestrator (Decomposes Workflow)
+                           │
+                           ▼
+       Specialized Agents (Parallel Task Execution)
+                           │
+                           ▼
+         Validation Agent (Factual Grounding Audit)
+                           │
+                           ▼
+        Operator Review Workbench (Edit, Regenerate, Export)
 ```
 
-1. **Flexible Ingestion:** Upload PDF, DOCX, TXT, web URLs, articles, or raw text prompts.
-2. **Explicit Target Selection:** Select exact output formats tailored to your target audiences.
-3. **Automated Task Decomposition:** An AI Orchestrator analyzes the source document structure and breaks down generation tasks into isolated micro-tasks.
-4. **Specialized Agent Execution:** Domain-trained agent prompts independently construct each artifact according to format-specific constraints.
-5. **Quality & Grounding Audit:** A dedicated Validation Agent checks all outputs against the source text to minimize hallucinations and enforce cross-output consistency.
-6. **Human-in-the-Loop Control:** Users review, edit, refine, or regenerate individual outputs before exporting in desired formats.
+1. **Dashboard Content Submission:** Submit source content as raw text, uploaded documents (PDF/DOCX), articles, reports, prompts, or contextual data.
+2. **Configurable Generation Parameters:** Control target audience, tone, language, level of detail, communication objective, and content style.
+3. **Automated Task Decomposition:** The Master AI Orchestrator analyzes input context and builds an execution graph for sub-tasks.
+4. **Specialized Agent Generation:** Domain agents generate format-specific deliverables in parallel.
+5. **Factual Grounding Audit:** The Validation Agent verifies generated outputs against source text to eliminate unsupported claims and preserve accuracy.
+6. **Operator Approval & Export:** Review, edit, regenerate, or download deliverables in Markdown, PDF, or text formats.
 
 ---
 
@@ -72,16 +70,16 @@ User Intent (Selects Inputs & Targets)
 
 Traditional Large Language Model (LLM) implementations rely on **single-prompt workflows**, asking a single LLM call to produce multiple distinct artifacts simultaneously. This approach exhibits fundamental weaknesses:
 - **Context Degradation:** LLMs struggle to maintain strict formatting rules across multiple outputs in one response window.
-- **Tone Bleed:** Technical tone leaks into public awareness posts, or casual tone degrades executive summaries.
+- **Tone Bleed:** Technical tone leaks into public social posts, or casual tone degrades executive briefings.
 - **Lack of Verification:** A single LLM cannot critique its own output within the same execution path effectively.
 
 ### The Agentic Advantage in TransformAI:
 
-- **Task Decomposition:** The Master Orchestrator treats complex user requests as a execution graph rather than a single prompt string.
+- **Task Decomposition:** The Master Orchestrator treats complex user requests as an execution graph rather than a single prompt string.
 - **Specialized Roles:** Each agent operates with distinct system instructions, constraints, formatting schemas, and audience models.
-- **Parallel Processing:** Independent tasks (e.g., drafting a LinkedIn post vs. building an internal FAQ) run concurrently, reducing processing latency.
+- **Parallel Processing:** Independent tasks (e.g., generating a Video Package vs. building a Twitter Thread) run concurrently, reducing processing latency.
 - **Dedicated Quality Assurance:** Decoupling validation into a secondary agent step ensures impartial factual verification against source content.
-- **Human-in-the-Loop Governance:** Orchestrators provide deterministic control structures so humans can step in at any stage.
+- **Human-in-the-Loop Governance:** Orchestrators provide deterministic control structures so operators can step in at any stage.
 
 ---
 
@@ -92,7 +90,7 @@ TransformAI distinctively combines both **Generative AI** and **Agentic AI**:
 | Dimension | Generative AI Layer | Agentic AI Layer |
 | :--- | :--- | :--- |
 | **Primary Function** | Content Synthesis & Text Generation | Workflow Orchestration & Control |
-| **Role in Platform** | Produces natural language text, summaries, and translations. | Decomposes goals, routes tasks, selects tools, and validates results. |
+| **Role in Platform** | Produces natural language text, scripts, and summaries. | Decomposes goals, routes tasks, selects tools, and validates results. |
 | **Execution** | Executes single inferencing calls based on provided context. | Coordinates multi-agent parallel execution graphs and state tracking. |
 | **Quality Control** | Generates candidate responses. | Audits outputs for factual grounding, tone compliance, and completeness. |
 
@@ -100,16 +98,22 @@ TransformAI distinctively combines both **Generative AI** and **Agentic AI**:
 
 ## Key Features
 
-- **Multi-Format Input Support:** Ingest PDFs, Word Documents (`.doc`/`.docx`), Plain Text, Web URLs, News Articles, Advisories, and Free-Form Prompts.
-- **User-Defined Target Selection:** Multi-select desired output artifacts from an intuitive control panel.
-- **Intelligent Document Parsing:** Extract clean text, structure, tables, and metadata prior to LLM processing.
+- **Multi-Format Source Ingestion:** Ingest text, documents (PDF/DOCX), articles, reports, advisories, research papers, and prompts.
+- **Operator Dashboard Control:** Multi-select desired output deliverables through configurable dashboard parameters.
+- **Configurable Parameters:** Tailor target audience, communication tone, level of detail, communication objective, and content style.
 - **Master Agent Orchestration:** Dynamically break down complex requests into isolated, parallelizable sub-tasks.
-- **Specialized Micro-Agents:** Domain-specific generation for Summaries, Emails, Social Media, FAQs, Reports, Presentations, and Translations.
+- **Multi-Deliverable Generation:**
+  - **Video Package:** Complete video script, scene-by-scene storyboard, narration text, subtitles, and visual recommendations.
+  - **LinkedIn Post:** Platform-optimized professional posts suitable for publication.
+  - **Twitter/X Post & Thread:** Character-optimized tweets and sequential tweet threads with hashtags.
+  - **Structured Advisory:** Formal advisory documents detailing hazard levels, operational guidance, and compliance directives.
+  - **Infographic Package:** Structured layout recommendations, key visual messaging, and graphic asset breakdown.
+  - **Executive Summary:** Concise executive briefings highlighting key metrics and strategic decisions.
+  - **Presentation Package:** Presentation slides outline, visual cues, and speaker notes.
 - **Parallel Task Execution:** Process multiple output formats concurrently to optimize runtime performance.
-- **Audience & Tone Adaptation:** Automatically adapt readability, length, jargon level, and formatting for specific demographics.
-- **Factual Grounding & Hallucination Auditing:** Automated cross-checking against source materials to preserve factual integrity.
-- **Interactive Human-in-the-Loop Editor:** Review, edit, refine, or regenerate individual output cards on demand.
-- **Export Flexibility:** Download generated artifacts as Markdown, PDF, HTML, or copy directly to clipboard.
+- **Factual Grounding Audit:** Automated cross-checking against source materials to preserve factual integrity.
+- **Interactive Operator Review:** Review, edit, refine, or regenerate individual output cards on demand.
+- **Multi-Format Export:** Download generated artifacts as Markdown, PDF, or text.
 
 ---
 
@@ -119,28 +123,32 @@ The following Mermaid diagram illustrates the end-to-end data flow and agent coo
 
 ```mermaid
 flowchart TD
-    A[User / Client Interface] -->|Uploads Content & Selects Outputs| B[Input Processing Layer]
-    B -->|Extracted Text & Metadata| C[Output Selection Module]
-    C -->|User Intent & Configuration| D[AI Orchestrator / Master Agent]
+    A[Operator Dashboard] -->|Submits Content & Selects Outputs| B[Input Processing Layer]
+    B -->|Extracted Context & Metadata| C[Configurable Parameters Module]
+    C -->|User Intent & Target Controls| D[AI Orchestrator / Master Agent]
     
     D -->|Decomposes Workflow| E[Task Decomposition Engine]
 
-    E -->|Task 1: Summary| F1[Summary Agent]
-    E -->|Task 2: Email| F2[Email Agent]
-    E -->|Task 3: Social Media| F3[Social Media Agent]
-    E -->|Task 4: FAQ| F4[FAQ Agent]
-    E -->|Task 5: Report| F5[Technical Report Agent]
+    E -->|Task 1: Executive Summary| F1[Summary Agent]
+    E -->|Task 2: Video Package| F2[Video Script Agent]
+    E -->|Task 3: LinkedIn Post| F3[Social Media Agent]
+    E -->|Task 4: Twitter/X Thread| F4[Microblogging Agent]
+    E -->|Task 5: Structured Advisory| F5[Advisory Agent]
+    E -->|Task 6: Infographic Package| F6[Infographic Agent]
+    E -->|Task 7: Presentation| F7[Presentation Agent]
 
     F1 -->|Generates Candidate Draft| G[Generative AI Engine Layer]
     F2 -->|Generates Candidate Draft| G
     F3 -->|Generates Candidate Draft| G
     F4 -->|Generates Candidate Draft| G
     F5 -->|Generates Candidate Draft| G
+    F6 -->|Generates Candidate Draft| G
+    F7 -->|Generates Candidate Draft| G
 
-    G -->|Raw Generated Artifacts| H[Validation / Quality Agent]
+    G -->|Raw Generated Deliverables| H[Validation / Quality Agent]
     H -->|Factual Consistency & Tone Check| I[Output Aggregator]
-    I -->|Consolidated Output Workspace| J[User Review & Interactive Editor]
-    J -->|Approved / Edited Artifacts| K[Export & Download Engine]
+    I -->|Consolidated Workspace| J[Operator Review & Interactive Editor]
+    J -->|Approved Deliverables| K[Export & Download Engine]
 
     style A fill:#4F46E5,color:#fff,stroke:#312E81,stroke-width:2px
     style D fill:#7C3AED,color:#fff,stroke:#4C1D95,stroke-width:2px
@@ -155,80 +163,45 @@ flowchart TD
 Here is how TransformAI processes a complex real-world request step-by-step:
 
 ### Step 1: Input Ingestion
-The user uploads a 10-page **Cybersecurity Incident Report** regarding a critical zero-day vulnerability.
+The operator submits a 10-page **Cybersecurity Incident Report** detailing a critical zero-day vulnerability (CVE-2024-38077).
 
-### Step 2: Output Selection
-The user checks the following target artifacts:
-- [x] **Executive Summary** (For C-Suite / Board)
-- [x] **Employee Awareness Email** (For Internal Staff)
-- [x] **LinkedIn Post** (For External PR)
-- [x] **Operational FAQ** (For IT & Support Teams)
+### Step 2: Deliverable Selection & Parameter Configuration
+The operator selects target deliverables on the dashboard:
+- [x] **Executive Summary** (Target Audience: C-Suite)
+- [x] **Video Package** (Target Audience: Media Production)
+- [x] **LinkedIn Post** (Target Audience: Professional Public)
+- [x] **Twitter/X Thread** (Target Audience: Microblogging Followers)
+- [x] **Structured Advisory** (Target Audience: Infrastructure Engineers)
+- [x] **Infographic Package** (Target Audience: Visual Media)
+- [x] **Presentation** (Target Audience: Board Presenters)
 
 ### Step 3: Orchestration & Decomposition
-The **AI Orchestrator** parses the 10-page document, identifies key entities (CVE IDs, impact, remediation steps, timelines), and creates 4 independent execution tasks:
-1. `Task_01` → Assign to `Summary Agent` (Target tone: Formal, concise, strategic)
-2. `Task_02` → Assign to `Email Agent` (Target tone: Actionable, reassuring, urgent)
-3. `Task_03` → Assign to `Social Media Agent` (Target tone: Professional, public-facing, concise)
-4. `Task_04` → Assign to `FAQ Agent` (Target tone: Clear, question-answer structure, technical guidance)
+The **AI Orchestrator** parses the input document, identifies key entities (CVE IDs, CVSS 9.8, affected services, remediation steps), and creates independent execution tasks assigned to specialized agents.
 
 ### Step 4: Parallel Agent Execution
-Tasks 1 through 4 execute in parallel via the Generative AI Layer, invoking specialized prompting strategies for each format.
+Tasks execute concurrently via the Generative AI Layer, applying tailored prompts, constraints, and formatting rules for each deliverable type.
 
 ### Step 5: Factual Validation Audit
-The **Validation Agent** evaluates each generated candidate against the original 10-page report:
-- *Check:* Does the Employee Email accurately reflect the mitigation steps without leaking unconfirmed speculation?
-- *Check:* Does the Executive Summary match the financial/operational impact metrics stated in the report?
+The **Validation Agent** evaluates each candidate deliverable against the source document to verify factual grounding, check for missing details, and confirm tone alignment.
 
-### Step 6: User Review & Export
-The generated outputs are rendered in a multi-column dashboard where the user can fine-tune text, trigger single-card regenerations, and export all assets.
+### Step 6: Operator Review & Export
+The generated deliverables are rendered in an interactive workbench where the operator can edit text, inspect grounding citations, regenerate individual cards, and export all files.
 
 ---
 
-## Example Transformation
+## Supported Output Deliverables
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    INPUT SOURCE DOCUMENT                        │
-│ 10-Page Cybersecurity Incident Report (Vulnerability CVE-2024-X) │
-└─────────────────────────────────────────────────────────────────┘
-                                │
-                                ▼
-         ┌──────────────────────────────────────────────┐
-         │     TRANSFORMAI MULTI-AGENT TRANSFORMATION   │
-         └──────────────────────────────────────────────┘
-                                │
-   ┌────────────────────┬───────┴────────────┬────────────────────┐
-   ▼                    ▼                    ▼                    ▼
-┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
-│Executive Summary │ │  Employee Email  │ │  LinkedIn Post   │ │   Internal FAQ   │
-├──────────────────┤ ├──────────────────┤ ├──────────────────┤ ├──────────────────┤
-│High-level overview│ │Immediate action  │ │Public statement  │ │Q&A for IT helpdesk│
-│of breach scope,  │ │items for staff,  │ │regarding patch   │ │addressing patch  │
-│business risk, and│ │phishing alert, & │ │deployment and    │ │procedures & user │
-│budget allocation.│ │password updates. │ │system security.  │ │system impact.    │
-└──────────────────┘ └──────────────────┘ └──────────────────┘ └──────────────────┘
-```
+TransformAI supports specialized domain agents tailored for distinct communication outputs:
 
-> [!NOTE]
-> All outputs remain strictly grounded in the source text. Non-sourced claims or extraneous hallucinations are flagged and excised by the Validation Agent.
-
----
-
-## Specialized Agents
-
-TransformAI uses specialized agents designed for distinct document targets:
-
-| Agent Name | Core Responsibility | Typical Output Format | Target Audience |
+| Deliverable Type | Primary Focus | Generated Artifact Components | Target Audience |
 | :--- | :--- | :--- | :--- |
-| **Document Analysis Agent** | Parses, cleanses, and extracts structured key entities from source documents. | JSON Knowledge Graph / Key Points | Internal Orchestration Layer |
-| **Summarization Agent** | Synthesizes complex source text into executive & detailed summaries. | Markdown Bullet Points & Highlights | C-Suite, Executives, Managers |
-| **Email Generation Agent** | Drafts audience-aligned emails (internal announcements, alerts, newsletters). | Subject Line + Email Body | Internal Employees, Clients |
-| **Social Media Agent** | Crafts engaging short-form social posts with hashtags & key takeaways. | LinkedIn / Twitter / Meta posts | Public, Followers, Tech Community |
-| **FAQ Agent** | Converts analytical content into intuitive Question-and-Answer pairs. | Categorized Q&A Lists | Support Desks, Users, Customers |
-| **Technical Report Agent** | Expands key facts into structured technical summaries or whitepaper snippets. | Formatted Technical Documentation | Engineers, IT Operations |
-| **Presentation Agent** | Converts source points into slide-by-slide titles and speaker notes. | Slide Deck Outline (Markdown/JSON) | Presenters, Stakeholders |
-| **Translation Agent** | Translates output artifacts into target languages while preserving context. | Multilingual Document Text | Global Teams, Regional Public |
-| **Validation Agent** | Cross-audits generated outputs against source text for factual grounding. | Validation Report / Quality Score | Internal Orchestration Layer |
+| **Executive Summary** | Strategic Overview | High-level business impact, risk metrics, strategic decisions | C-Suite, Board, Executives |
+| **Video Package** | Multimedia Production | Script, scene-by-scene storyboard, narration text, subtitles, visual cues | Video Editors, Media Teams |
+| **LinkedIn Post** | Corporate PR & Engagement | Professional post text, key takeaways, call-to-actions, hashtags | Professional Community, PR |
+| **Twitter/X Thread** | Short-Form Social | Sequential 5-tweet thread, character limits, engagement hooks | Microblogging Followers, Public |
+| **Structured Advisory** | Operational Directive | Formal hazard summary, vulnerable scope, numbered action directives | IT Engineers, Compliance Staff |
+| **Infographic Package** | Visual Data Representation | Layout wireframe recommendations, visual metric callouts, asset guide | Designers, General Public |
+| **Presentation** | Stakeholder Briefing | Slide-by-slide titles, bullet points, visual cues, speaker notes | Presenters, Stakeholders |
 
 ---
 
@@ -237,7 +210,7 @@ TransformAI uses specialized agents designed for distinct document targets:
 > [!NOTE]
 > **Project Configuration Status:** The repository infrastructure is currently initialized. Technology configurations below represent the foundational setup planned for full component integration.
 
-- **Frontend Interface:** *To be configured* (Recommended: HTML5 / Modern Vanilla JS or React framework)
+- **Frontend Interface:** React 19 / Modern Vanilla CSS (Vite Engine)
 - **Backend Service:** *To be configured* (Recommended: Python FastAPI / Node.js Express)
 - **Agent Orchestration Framework:** *To be configured* (Recommended: LangChain / LangGraph / Custom Python Orchestrator)
 - **Generative AI Models:** *To be configured* (Integrates via OpenAI API / Google Gemini API / Anthropic Claude API / Ollama local models)
@@ -251,9 +224,15 @@ TransformAI uses specialized agents designed for distinct document targets:
 ```text
 TranformAi/
 ├── README.md                 # Project Overview & Technical Documentation
-├── docs/                     # Documentation & Architecture Assets
-│   └── screenshots/          # Application Screenshots (Placeholders)
-└── (Codebase modules under active configuration)
+├── index.html                # Web Application Entrypoint
+├── package.json              # Project Dependencies & Vite Scripts
+├── vite.config.js            # Vite Development Server Configuration
+├── src/                      # React Source Code
+│   ├── App.jsx               # Main Application Component & State Management
+│   ├── index.css             # Glassmorphism Design System & Utility Tokens
+│   ├── components/           # UI Components (Navbar, Hero, Input, Selector, Orchestrator, Workbench)
+│   └── data/                 # Datasets, Sample Documents & Mock Pipeline Results
+└── docs/                     # Documentation Assets
 ```
 
 ---
@@ -263,25 +242,25 @@ TranformAi/
 TransformAI uses a deterministic step-by-step pipeline to process each request:
 
 ```text
-Input Document 
-  └─► Parsing & Text Extraction 
-        └─► Structure Analysis & Entity Extraction 
-              └─► User Intent & Target Output Map 
-                    └─► AI Orchestrator Task Graph Construction 
-                          └─► Parallel Dispatch to Specialized Agents 
-                                └─► GenAI Content Generation 
+Source Content 
+  └─► Ingestion & Syntax Extraction 
+        └─► Context & Entity Graph Construction 
+              └─► Operator Dashboard Parameter Selection 
+                    └─► AI Orchestrator Task Graph Decomposer 
+                          └─► Concurrent Dispatch to Specialized Agents 
+                                └─► GenAI Layer Execution 
                                       └─► Validation Agent Factual Audit 
-                                            └─► Aggregation & Presentation 
-                                                  └─► Human Review & Edits 
+                                            └─► Aggregation Workspace 
+                                                  └─► Operator Review & Edits 
                                                         └─► Multi-Format Export
 ```
 
-1. **Document Ingestion & Parsing:** Extracts raw text, headers, and metadata while stripping formatting noise.
-2. **Intent Mapping:** Maps user-selected output tags to specific Agent Configuration Schemas.
+1. **Content Ingestion & Parsing:** Extracts raw text, headers, and metadata while stripping noise.
+2. **Parameter Mapping:** Maps operator-selected target tags and tone controls to Agent Configuration Schemas.
 3. **Graph Construction:** The Orchestrator constructs an acyclic task graph, pairing independent tasks for parallel processing.
 4. **Agent Execution:** Specialized prompt templates pass document context and target formatting parameters to the GenAI layer.
 5. **Validation Audit:** A verification prompt compares candidate outputs line-by-line with the parsed source text.
-6. **User Workbench:** The frontend renders editable artifact cards allowing real-time modification or single-click regeneration.
+6. **Operator Workbench:** Renders editable artifact cards allowing real-time modification or single-click regeneration.
 
 ---
 
@@ -289,9 +268,9 @@ Input Document
 
 The **Master Orchestrator Agent** manages execution order and state across all sub-agents:
 
-- **Dependency Graph Analysis:** Tasks with no inter-dependencies (e.g., generating an Email vs. generating a Social Media post) are flagged for **concurrent execution**.
+- **Dependency Graph Analysis:** Tasks with no inter-dependencies (e.g., generating a Video Package vs. generating a LinkedIn post) are flagged for **concurrent execution**.
 - **Context Allocation:** Rather than sending entire 50-page documents to every agent, the Orchestrator feeds relevant document slices and key entity summaries to targeted micro-agents, optimizing token usage and latency.
-- **State Management:** Tracks progress (Pending, Processing, Validating, Completed, Failed) for each artifact in real time.
+- **State Management:** Tracks progress (Pending, Processing, Validating, Completed, Failed) for each deliverable in real time.
 
 ---
 
@@ -305,19 +284,19 @@ Ensuring high factual accuracy is critical when transforming sensitive organizat
 ### Validation Agent Safeguards:
 - **Grounding Verification:** Verifies that all facts, numbers, dates, and names in generated outputs exist in the source document.
 - **Omission Detection:** Checks if critical safety instructions or disclaimers were omitted during summarization.
-- **Format Adherence:** Ensures emails contain subject lines, FAQs maintain Q&A pairs, and social posts follow length restrictions.
+- **Format Adherence:** Ensures video packages contain storyboards, advisories include severity levels, and tweets respect character limits.
 - **Tone & Audience Check:** Audits vocabulary complexity and reading levels to match the specified target demographic.
 
 ---
 
 ## Use Cases
 
-- **Cybersecurity Advisories:** Convert technical incident reports into executive briefings, employee alerts, and public statements.
-- **Government & Public Advisories:** Translate complex policy whitepapers into accessible public notices and FAQs.
-- **Corporate Communications:** Transform internal strategy memos into departmental updates, newsletter snippets, and presentation slides.
-- **Research Paper Adaptation:** Convert academic papers into digestible blog posts, executive summaries, and slide outlines.
-- **Press & Media Relations:** Turn product release documentation into targeted press releases and social media campaigns.
-- **Policy & Compliance Updates:** Convert legal/regulatory updates into actionable compliance checklists for staff.
+- **Cybersecurity Advisories:** Convert technical incident reports into executive briefings, video packages, employee alerts, and structured advisories.
+- **Government & Public Health Advisories:** Translate complex policy whitepapers into public notices, FAQs, infographics, and news briefings.
+- **Corporate Communications:** Transform internal strategy memos into departmental updates, LinkedIn posts, newsletter snippets, and presentation slides.
+- **Research Paper Adaptation:** Convert academic papers into video summaries, tweet threads, digestible blog posts, and slide outlines.
+- **Press & Media Relations:** Turn product release documentation into targeted press releases, social media campaigns, and infographics.
+- **Policy & Compliance Updates:** Convert legal/regulatory updates into actionable compliance checklists and advisories.
 
 ---
 
@@ -340,3 +319,17 @@ TransformAI is designed with data privacy in mind:
 - **Local Execution Compatible:** Architecture supports local model backends (via Ollama / LM Studio) for strict air-gapped security.
 - **Zero Third-Party Training (Planned):** Enterprise API integrations enforce zero data-retention policies.
 - **Stateless Document Processing:** Uploaded files are processed transiently in memory and cleared upon session termination.
+
+---
+
+## Smart India Hackathon (SIH) Context
+
+TransformAI was conceptualized and architected to address Smart India Hackathon (SIH) problem themes focused on **AI-powered Multi-Format Content Transformation & Information Accessibility**. 
+
+The system solves the critical need of public and private sector organizations to rapidly disseminate verified, multi-channel information from long-form technical, administrative, and emergency source documents.
+
+---
+
+## License
+
+Licensing terms are **To Be Determined (TBD)** upon final repository publication.
