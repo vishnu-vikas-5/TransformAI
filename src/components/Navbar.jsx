@@ -199,7 +199,7 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHe
                 >
                   <MessageSquare size={18} color="#E1D9BC" style={{ marginTop: '2px', flexShrink: 0 }} />
                   <div>
-                    <div style={{ fontWeight: '700', fontSize: '0.85rem', color: '#F0F0DB' }}>Ask NotebookLM AI</div>
+                    <div style={{ fontWeight: '700', fontSize: '0.85rem', color: '#F0F0DB' }}>Ask Grounded AI</div>
                     <div style={{ fontSize: '0.72rem', color: '#ACBAC4' }}>Grounded Interactive Q&A Assistant</div>
                   </div>
                 </button>

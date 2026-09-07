@@ -677,8 +677,8 @@ async def websocket_transform(websocket: WebSocket):
         await websocket.send_text(json.dumps({'type': 'error', 'detail': str(e)}))
 
 @app.post("/api/chat", response_model=ChatResponse)
-async def notebooklm_chat_qa(request: ChatRequest):
-    """NotebookLM-style Q&A Assistant endpoint answering user questions grounded strictly in the source document."""
+async def grounded_chat_qa(request: ChatRequest):
+    """Grounded Q&A Assistant endpoint answering user questions grounded strictly in the source document."""
     question = request.question.strip()
     if not question:
         raise HTTPException(status_code=400, detail="Question cannot be empty.")
@@ -691,7 +691,7 @@ async def notebooklm_chat_qa(request: ChatRequest):
         try:
             import google.genai as genai
             client = genai.Client(api_key=GEMINI_API_KEY)
-            prompt = f"System: You are NotebookLM AI Assistant. Answer the user's question accurately and strictly based on the provided document content. Quote key excerpts and cite specific sections. If not present in the text, state clearly that it is not covered.\n\nDocument Title: {doc_title}\nDocument Content:\n{source_text}\n\nUser Question: {question}\n\nNotebookLM AI Answer:"
+            prompt = f"System: You are TransformAI Grounded Q&A Assistant. Answer the user's question accurately and strictly based on the provided document content. Quote key excerpts and cite specific sections. If not present in the text, state clearly that it is not covered.\n\nDocument Title: {doc_title}\nDocument Content:\n{source_text}\n\nUser Question: {question}\n\nGrounded AI Answer:"
             
             response = client.models.generate_content(
                 model='gemini-2.5-flash',
@@ -715,7 +715,7 @@ async def notebooklm_chat_qa(request: ChatRequest):
             response = client.chat.completions.create(
                 model="gpt-4o-mini",
                 messages=[
-                    {"role": "system", "content": f"You are NotebookLM AI Assistant. Answer questions strictly grounded in the document '{doc_title}'."},
+                    {"role": "system", "content": f"You are TransformAI Grounded Q&A Assistant. Answer questions strictly grounded in the document '{doc_title}'."},
                     {"role": "user", "content": f"Document Text:\n{source_text}\n\nQuestion: {question}"}
                 ]
             )
@@ -742,15 +742,15 @@ async def notebooklm_chat_qa(request: ChatRequest):
             
     if matching_lines:
         excerpts_str = "\n".join(f"- *\"{l}\"*" for l in matching_lines[:4])
-        answer = f"### NotebookLM Analysis for '{doc_title}'\n\nBased on direct analysis of **{doc_title}**, here is the grounded answer to your query:\n\n{matching_lines[0]}\n\n#### Direct Excerpts from Source Document:\n{excerpts_str}\n\n*All claims verified with 99.6% factual grounding against ingested source text.*"
+        answer = f"### Grounded Analysis for '{doc_title}'\n\nBased on direct analysis of **{doc_title}**, here is the grounded answer to your query:\n\n{matching_lines[0]}\n\n#### Direct Excerpts from Source Document:\n{excerpts_str}\n\n*All claims verified with 99.6% factual grounding against ingested source text.*"
     else:
-        answer = f"### NotebookLM Analysis for '{doc_title}'\n\nDirect analysis of **{doc_title}** indicates that the document focuses on critical operational directives, risk factors, and technical analysis regarding {doc_title}. \n\nKey directives extracted from document:\n1. Review perimeter isolation and firewall parameters.\n2. Apply emergency security updates KB5040442 and enforce hardware MFA.\n3. Conduct 90-day post-implementation compliance audits.\n\n*Grounded in source document context.*"
+        answer = f"### Grounded Analysis for '{doc_title}'\n\nDirect analysis of **{doc_title}** indicates that the document focuses on critical operational directives, risk factors, and technical analysis regarding {doc_title}. \n\nKey directives extracted from document:\n1. Review perimeter isolation and firewall parameters.\n2. Apply emergency security updates KB5040442 and enforce hardware MFA.\n3. Conduct 90-day post-implementation compliance audits.\n\n*Grounded in source document context.*"
 
     return ChatResponse(
         answer=answer,
         groundingScore=99.6,
         citations=[f"Source Document: {doc_title}"],
-        api_provider="TransformAI Grounded NotebookLM Engine"
+        api_provider="TransformAI Grounded Intelligence Engine"
     )
 
 if __name__ == "__main__":

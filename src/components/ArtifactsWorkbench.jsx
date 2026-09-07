@@ -366,7 +366,7 @@ export default function ArtifactsWorkbench({
                       </button>
                     )}
 
-                    {/* EXEC SUMMARY: Dedicated Full Summary Page & NotebookLM Q&A buttons */}
+                    {/* EXEC SUMMARY: Dedicated Full Summary Page & Grounded Q&A buttons */}
                     {formatId === 'exec_summary' && onNavigateTab && (
                       <>
                         <button
@@ -379,7 +379,7 @@ export default function ArtifactsWorkbench({
                         <button
                           className="btn btn-secondary btn-sm"
                           onClick={() => onNavigateTab('chat')}
-                          title="Ask questions using NotebookLM AI"
+                          title="Ask questions using Grounded Document AI"
                         >
                           <MessageSquare size={13} /> Ask AI
                         </button>

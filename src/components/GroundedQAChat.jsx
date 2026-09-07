@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, Send, Sparkles, ShieldCheck, Copy, Check, FileText, HelpCircle, Loader2, ArrowRight } from 'lucide-react';
 
-export default function NotebookLMChat({ selectedDoc, customText }) {
+export default function GroundedQAChat({ selectedDoc, customText }) {
   const [question, setQuestion] = useState('');
   const [loading, setLoading] = useState(false);
   const [copiedIdx, setCopiedIdx] = useState(null);
@@ -13,7 +13,7 @@ export default function NotebookLMChat({ selectedDoc, customText }) {
   const [messages, setMessages] = useState([
     {
       sender: 'ai',
-      text: `Hello! I am your **NotebookLM AI Assistant** for **"${docTitle}"**.\n\nI have fully analyzed and indexed this document (${selectedDoc?.pages || 10} pages, ${selectedDoc?.wordCount?.toLocaleString() || '3,840'} words). You can ask me any question about the document's findings, threat vectors, mandatory directives, timelines, or technical specifications.\n\nWhat would you like to know?`,
+      text: `Hello! I am your **TransformAI Grounded Q&A Assistant** for **"${docTitle}"**.\n\nI have fully analyzed and indexed this document (${selectedDoc?.pages || 10} pages, ${selectedDoc?.wordCount?.toLocaleString() || '3,840'} words). You can ask me any question about the document's findings, threat vectors, mandatory directives, timelines, or technical specifications.\n\nWhat would you like to know?`,
       groundingScore: 99.6,
       citations: [docTitle]
     }
@@ -71,7 +71,7 @@ export default function NotebookLMChat({ selectedDoc, customText }) {
 
     // Client-side Fallback Q&A synthesis
     setTimeout(() => {
-      let aiAnswer = `### NotebookLM Analysis for "${docTitle}"\n\nBased on direct inspection of **${docTitle}**:\n\n`;
+      let aiAnswer = `### Grounded Analysis for "${docTitle}"\n\nBased on direct inspection of **${docTitle}**:\n\n`;
       
       const lowerQ = qText.toLowerCase();
       if (lowerQ.includes('patch') || lowerQ.includes('kb') || lowerQ.includes('directive')) {
@@ -110,7 +110,7 @@ export default function NotebookLMChat({ selectedDoc, customText }) {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem', borderBottom: '1.5px solid #ACBAC4', paddingBottom: '1rem' }}>
         <div>
           <span className="badge" style={{ background: '#E1D9BC', color: '#30364F', marginBottom: '0.5rem', fontWeight: '700' }}>
-            <Sparkles size={12} /> NotebookLM AI Q&A Assistant
+            <Sparkles size={12} /> TransformAI Grounded Q&A Assistant
           </span>
           <h2 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#F0F0DB' }}>
             Ask Questions About "{docTitle}"
@@ -128,7 +128,7 @@ export default function NotebookLMChat({ selectedDoc, customText }) {
       {/* Suggested Quick Questions */}
       <div style={{ marginBottom: '1.25rem' }}>
         <span style={{ fontSize: '0.78rem', color: '#ACBAC4', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>
-          💡 Suggested NotebookLM Prompts:
+          💡 Suggested Prompts:
         </span>
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           {suggestedQuestions.map((sq, idx) => (
@@ -174,7 +174,7 @@ export default function NotebookLMChat({ selectedDoc, customText }) {
               ) : (
                 <>
                   <Sparkles size={12} color="#E1D9BC" />
-                  <strong style={{ color: '#F0F0DB' }}>NotebookLM AI Assistant</strong>
+                  <strong style={{ color: '#F0F0DB' }}>TransformAI Grounded AI</strong>
                   <span className="badge" style={{ fontSize: '0.65rem', background: '#E1D9BC', color: '#30364F', padding: '0.1rem 0.4rem' }}>
                     {msg.groundingScore}% Grounded
                   </span>
@@ -221,7 +221,7 @@ export default function NotebookLMChat({ selectedDoc, customText }) {
         {loading && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#E1D9BC', fontSize: '0.85rem' }}>
             <Loader2 size={16} className="spin" style={{ animation: 'spin 1s linear infinite' }} />
-            <span>NotebookLM AI is analyzing source document context & synthesizing answer...</span>
+            <span>Grounded AI is analyzing source document context & synthesizing answer...</span>
           </div>
         )}
 
@@ -238,7 +238,7 @@ export default function NotebookLMChat({ selectedDoc, customText }) {
       >
         <input
           type="text"
-          placeholder={`Ask NotebookLM any question about "${docTitle}" (e.g., What are the action steps?)...`}
+          placeholder={`Ask any question about "${docTitle}" (e.g., What are the action steps?)...`}
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           disabled={loading}

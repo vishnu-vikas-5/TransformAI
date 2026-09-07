@@ -6,7 +6,7 @@ import OutputSelector from './components/OutputSelector';
 import OrchestratorVisualizer from './components/OrchestratorVisualizer';
 import ArtifactsWorkbench from './components/ArtifactsWorkbench';
 import FullSummaryPage from './components/FullSummaryPage';
-import NotebookLMChat from './components/NotebookLMChat';
+import GroundedQAChat from './components/GroundedQAChat';
 import ArchitectureSection from './components/ArchitectureSection';
 import ComparativeSection from './components/ComparativeSection';
 import GroundingModal from './components/GroundingModal';
@@ -225,7 +225,7 @@ export default function App() {
 
           {activeTab === 'chat' && (
             <div className="animate-fade-in">
-              <NotebookLMChat 
+              <GroundedQAChat 
                 selectedDoc={selectedDoc}
                 customText={customText}
               />

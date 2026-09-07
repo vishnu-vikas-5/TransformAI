@@ -131,7 +131,7 @@ This Master Executive Briefing synthesizes every critical element, technical vul
             onClick={onNavigateToChat}
             style={{ padding: '0.6rem 1.2rem', fontSize: '0.875rem' }}
           >
-            <MessageSquare size={16} /> Ask NotebookLM AI Question
+            <MessageSquare size={16} /> Ask Grounded AI Question
           </button>
         </div>
       </div>
@@ -242,7 +242,7 @@ This Master Executive Briefing synthesizes every critical element, technical vul
         </p>
 
         <button className="btn btn-primary btn-sm" onClick={onNavigateToChat}>
-          Have a specific question? Ask NotebookLM AI <ArrowRight size={14} />
+          Have a specific question? Ask Grounded AI <ArrowRight size={14} />
         </button>
       </div>
 
