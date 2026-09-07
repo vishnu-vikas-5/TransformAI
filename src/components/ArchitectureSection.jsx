@@ -6,7 +6,7 @@ export default function ArchitectureSection() {
   return (
     <div id="architecture" style={{ padding: '3rem 0' }}>
       <div className="container">
-        
+
         {/* Section Header */}
         <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 3rem auto' }}>
           <span className="badge" style={{ marginBottom: '0.75rem', background: '#ACBAC4', color: '#30364F', borderColor: '#E1D9BC' }}>

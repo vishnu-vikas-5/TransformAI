@@ -9,7 +9,7 @@ export default function GroundingModal({ isOpen, onClose, modalData }) {
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content animate-fade-in" style={{ background: '#30364F', borderColor: '#E1D9BC' }} onClick={(e) => e.stopPropagation()}>
-        
+
         {/* Modal Header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', borderBottom: '1.5px solid #ACBAC4', paddingBottom: '1rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -73,7 +73,7 @@ export default function GroundingModal({ isOpen, onClose, modalData }) {
           <h4 style={{ fontSize: '0.9rem', marginBottom: '0.5rem', color: '#ACBAC4' }}>Source Document Cross-Citations:</h4>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             {result?.citations?.map((cite, idx) => (
-              <div 
+              <div
                 key={idx}
                 style={{
                   display: 'flex',

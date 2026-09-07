@@ -8,7 +8,14 @@ const GithubIcon = ({ size = 18 }) => (
   </svg>
 );
 
-export default function Navbar({ activeTab, setActiveTab, onLaunchDemo }) {
+export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHealth, apiProvider }) {
+  const isOnline = serverHealth?.status === 'online';
+  const aiModelName = serverHealth?.gemini_key_configured 
+    ? 'Gemini 2.5 Flash API' 
+    : serverHealth?.openai_key_configured 
+    ? 'OpenAI GPT-4o API' 
+    : apiProvider || 'TransformAI Engine';
+
   return (
     <header style={{
       position: 'sticky',
@@ -23,7 +30,7 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo }) {
         justifyContent: 'space-between',
         height: '70px'
       }}>
-        {/* Brand Logo */}
+        {/* Brand Logo & Live Backend Badge */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }} onClick={() => setActiveTab('workbench')}>
           <div style={{
             width: '42px',
@@ -46,27 +53,44 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo }) {
                 Agentic Engine
               </span>
             </div>
-            <p style={{ fontSize: '0.725rem', color: '#ACBAC4' }}>Multi-Format Content Transformation</p>
+            
+            {/* Live Backend & AI Provider Status Bar */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '2px', fontSize: '0.7rem' }}>
+              <span style={{
+                width: '7px',
+                height: '7px',
+                borderRadius: '50%',
+                background: isOnline ? '#52c41a' : '#ff4d4f',
+                boxShadow: isOnline ? '0 0 6px #52c41a' : 'none'
+              }} />
+              <span style={{ color: isOnline ? '#F0F0DB' : '#ACBAC4', fontWeight: '700' }}>
+                {isOnline ? 'FastAPI Backend Online' : 'Connecting Backend...'}
+              </span>
+              <span style={{ color: '#ACBAC4' }}>•</span>
+              <span style={{ color: '#E1D9BC', fontWeight: '700' }}>
+                AI: {aiModelName}
+              </span>
+            </div>
           </div>
         </div>
 
         {/* Navigation Links */}
         <nav style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <button 
+          <button
             className={`btn btn-sm ${activeTab === 'workbench' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('workbench')}
           >
             <Cpu size={16} /> Engine Workbench
           </button>
 
-          <button 
+          <button
             className={`btn btn-sm ${activeTab === 'architecture' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('architecture')}
           >
             <Zap size={16} /> Agent Architecture
           </button>
 
-          <button 
+          <button
             className={`btn btn-sm ${activeTab === 'comparative' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('comparative')}
           >
@@ -79,9 +103,9 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo }) {
           <button className="btn btn-primary btn-sm" onClick={onLaunchDemo}>
             <Sparkles size={15} /> Run Live Demo
           </button>
-          <a 
-            href="https://github.com/vishnu-vikas-5/TransformAI" 
-            target="_blank" 
+          <a
+            href="https://github.com/vishnu-vikas-5/TransformAI"
+            target="_blank"
             rel="noreferrer"
             className="btn btn-secondary btn-sm"
             style={{ padding: '0.5rem' }}

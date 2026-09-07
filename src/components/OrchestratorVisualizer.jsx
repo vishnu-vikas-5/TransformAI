@@ -1,18 +1,27 @@
 import React from 'react';
-import { Cpu, Play, CheckCircle2, Loader2, GitBranch, ArrowRight, ShieldCheck, Terminal } from 'lucide-react';
+import { Cpu, Play, CheckCircle2, Loader2, GitBranch, ArrowRight, ShieldCheck, Terminal, Sparkles, Server } from 'lucide-react';
 import { OUTPUT_FORMATS } from '../data/mockData';
 
-export default function OrchestratorVisualizer({ 
-  isExecuting, 
-  executionProgress, 
-  onRunOrchestration, 
+export default function OrchestratorVisualizer({
+  isExecuting,
+  executionProgress,
+  onRunOrchestration,
   selectedOutputs,
-  completedOutputs 
+  completedOutputs,
+  apiProvider,
+  serverHealth
 }) {
+
+  const isOnline = serverHealth?.status === 'online';
+  const activeAiName = serverHealth?.gemini_key_configured 
+    ? 'Google Gemini 2.5 Flash API (Live AI)' 
+    : serverHealth?.openai_key_configured 
+    ? 'OpenAI GPT-4o API (Live AI)' 
+    : apiProvider || 'TransformAI Engine';
 
   return (
     <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', background: '#272B40', borderColor: '#ACBAC4' }}>
-      
+
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -34,7 +43,7 @@ export default function OrchestratorVisualizer({
           </div>
         </div>
 
-        <button 
+        <button
           className={`btn ${isExecuting ? 'btn-secondary btn-disabled' : 'btn-primary'}`}
           onClick={onRunOrchestration}
           style={{ padding: '0.8rem 1.75rem', fontSize: '0.95rem' }}
@@ -50,6 +59,44 @@ export default function OrchestratorVisualizer({
             </>
           )}
         </button>
+      </div>
+
+      {/* Live Backend & AI Model Indicator Banner */}
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        background: '#30364F',
+        border: '1.5px solid #ACBAC4',
+        borderRadius: 'var(--radius-md)',
+        padding: '0.85rem 1.25rem',
+        marginBottom: '1.5rem',
+        fontSize: '0.85rem',
+        color: '#F0F0DB',
+        flexWrap: 'wrap',
+        gap: '0.75rem'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+          <Server size={18} color="#E1D9BC" />
+          <span>
+            <strong>Python FastAPI Backend:</strong>{' '}
+            <span style={{ color: isOnline ? '#52c41a' : '#ff4d4f', fontWeight: '800' }}>
+              {isOnline ? '● Online (http://localhost:8000)' : '● Connecting / Offline'}
+            </span>
+          </span>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+          <Sparkles size={18} color="#E1D9BC" />
+          <span>
+            <strong>Active LLM Provider:</strong>{' '}
+            <span style={{ color: '#E1D9BC', fontWeight: '800' }}>{activeAiName}</span>
+          </span>
+        </div>
+
+        <div style={{ fontSize: '0.75rem', color: '#ACBAC4', background: '#272B40', padding: '0.25rem 0.65rem', borderRadius: '20px', border: '1px solid #ACBAC4', fontWeight: '700' }}>
+          ⚡ SSE Real-Time Stream Active
+        </div>
       </div>
 
       {/* Orchestration DAG Visualizer */}
@@ -104,7 +151,7 @@ export default function OrchestratorVisualizer({
               const isDone = completedOutputs.includes(id);
 
               return (
-                <div 
+                <div
                   key={id}
                   style={{
                     display: 'flex',

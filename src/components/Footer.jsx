@@ -44,9 +44,9 @@ export default function Footer() {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
           <span className="badge" style={{ background: '#ACBAC4', color: '#30364F', borderColor: '#E1D9BC' }}>SIH / College Project Solution</span>
-          <a 
-            href="https://github.com/vishnu-vikas-5/TransformAI" 
-            target="_blank" 
+          <a
+            href="https://github.com/vishnu-vikas-5/TransformAI"
+            target="_blank"
             rel="noreferrer"
             style={{ color: '#F0F0DB', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: '700' }}
           >

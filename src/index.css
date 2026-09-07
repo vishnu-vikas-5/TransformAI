@@ -3,10 +3,14 @@
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Strict 4-Color Palette: #30364F | #ACBAC4 | #E1D9BC | #F0F0DB */
-  --c-navy: #30364F;     /* Deep Slate Navy (Main BG & Dark Surfaces) */
-  --c-steel: #ACBAC4;    /* Cool Steel Blue (Borders & Primary Accents) */
-  --c-sand: #E1D9BC;     /* Soft Muted Sand (Highlights & Badges) */
-  --c-cream: #F0F0DB;    /* Off-White Cream (Primary Text & Light Surfaces) */
+  --c-navy: #30364F;
+  /* Deep Slate Navy (Main BG & Dark Surfaces) */
+  --c-steel: #ACBAC4;
+  /* Cool Steel Blue (Borders & Primary Accents) */
+  --c-sand: #E1D9BC;
+  /* Soft Muted Sand (Highlights & Badges) */
+  --c-cream: #F0F0DB;
+  /* Off-White Cream (Primary Text & Light Surfaces) */
 
   --bg-primary: var(--c-navy);
   --bg-secondary: #272B40;
@@ -47,10 +51,12 @@
     width: 8px;
     height: 8px;
   }
+
   ::-webkit-scrollbar-thumb {
     background: var(--c-steel);
     border-radius: 4px;
   }
+
   ::-webkit-scrollbar-track {
     background: var(--c-navy);
   }
@@ -69,10 +75,18 @@ body {
   min-height: 100vh;
   line-height: 1.6;
   overflow-x: hidden;
+  background-image: radial-gradient(rgba(172, 186, 196, 0.22) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  background-position: 0 0;
 }
 
 /* Typography Utilities */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 700;
   letter-spacing: -0.02em;
   color: var(--c-cream);
@@ -188,7 +202,12 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--c-sand);
 }
 
-.badge-indigo, .badge-cyan, .badge-emerald, .badge-purple, .badge-amber, .badge-rose {
+.badge-indigo,
+.badge-cyan,
+.badge-emerald,
+.badge-purple,
+.badge-amber,
+.badge-rose {
   background: var(--c-steel);
   color: var(--c-navy);
   border: 1px solid var(--c-sand);
@@ -196,8 +215,15 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {
@@ -231,7 +257,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Code block styles */
-pre, code {
+pre,
+code {
   font-family: var(--font-mono);
   background: #272B40;
   color: var(--c-cream);

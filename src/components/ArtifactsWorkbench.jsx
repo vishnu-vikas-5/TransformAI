@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { CheckCircle2, Copy, Download, RefreshCw, Eye, ShieldCheck, Sparkles, Check, ExternalLink, Play } from 'lucide-react';
+import { CheckCircle2, Copy, Download, RefreshCw, Eye, ShieldCheck, Sparkles, Check, ExternalLink, Play, FileText } from 'lucide-react';
 import { OUTPUT_FORMATS, PRE_GENERATED_RESULTS } from '../data/mockData';
-import { exportToPptx, exportToPdf } from '../utils/exportUtils';
+import { exportToPptx, exportToPdf, exportToMarkdown, exportToText } from '../utils/exportUtils';
 import VideoPlayerModal from './VideoPlayerModal';
 
-export default function ArtifactsWorkbench({ 
-  selectedDoc, 
-  selectedOutputs, 
+export default function ArtifactsWorkbench({
+  selectedDoc,
+  selectedOutputs,
   completedOutputs,
-  onOpenGroundingModal 
+  backendResults,
+  onOpenGroundingModal
 }) {
   const [editedResults, setEditedResults] = useState({});
   const [copiedId, setCopiedId] = useState(null);
@@ -18,14 +19,17 @@ export default function ArtifactsWorkbench({
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [activeVideoData, setActiveVideoData] = useState(null);
 
-  // Initialize or retrieve result for an output format
+  // Initialize or retrieve result for an output format (Prioritizing Backend Real-Time API output)
   const getResultForFormat = (formatId) => {
     if (editedResults[formatId]) {
       return editedResults[formatId];
     }
-    const docData = PRE_GENERATED_RESULTS[selectedDoc.id] || PRE_GENERATED_RESULTS.cybersecurity;
+    if (backendResults && backendResults[formatId]) {
+      return backendResults[formatId];
+    }
+    const docData = PRE_GENERATED_RESULTS[selectedDoc?.id] || PRE_GENERATED_RESULTS.cybersecurity;
     return docData[formatId] || {
-      content: `### Generated ${formatId}\n\nProcessed content for ${selectedDoc.title}. All claims grounded in source text.`,
+      content: `### Generated ${formatId}\n\nProcessed content for ${selectedDoc?.title || 'Document'}. All claims grounded in source text.`,
       groundingScore: 98.5,
       hallucinations: 0,
       toneMatch: 99,
@@ -54,7 +58,7 @@ export default function ArtifactsWorkbench({
     try {
       const res = getResultForFormat(formatId);
       const filename = exportToPptx(title, res.content, selectedDoc?.id || 'document');
-      setActionNotice(`Generated PowerPoint Presentation: ${filename}`);
+      setActionNotice(`Downloaded PowerPoint (.pptx): ${filename}`);
       setTimeout(() => setActionNotice(null), 3500);
     } catch (e) {
       console.error(e);
@@ -66,7 +70,31 @@ export default function ArtifactsWorkbench({
     try {
       const res = getResultForFormat(formatId);
       const filename = exportToPdf(title, res.content, selectedDoc?.id || 'document');
-      setActionNotice(`Generated PDF Document: ${filename}`);
+      setActionNotice(`Downloaded PDF Document: ${filename}`);
+      setTimeout(() => setActionNotice(null), 3500);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  // Real Markdown (.md) Export
+  const handleExportMarkdown = (formatId, title) => {
+    try {
+      const res = getResultForFormat(formatId);
+      const filename = exportToMarkdown(title, res.content, selectedDoc?.id || 'document');
+      setActionNotice(`Downloaded Markdown (.md): ${filename}`);
+      setTimeout(() => setActionNotice(null), 3500);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  // Real Text (.txt) Export
+  const handleExportText = (formatId, title) => {
+    try {
+      const res = getResultForFormat(formatId);
+      const filename = exportToText(title, res.content, selectedDoc?.id || 'document');
+      setActionNotice(`Downloaded Text file (.txt): ${filename}`);
       setTimeout(() => setActionNotice(null), 3500);
     } catch (e) {
       console.error(e);
@@ -76,7 +104,7 @@ export default function ArtifactsWorkbench({
   const handlePostToPlatform = (formatId, platform) => {
     const res = getResultForFormat(formatId);
     navigator.clipboard.writeText(res.content);
-    
+
     let targetUrl = '';
     if (platform === 'linkedin') {
       targetUrl = 'https://www.linkedin.com/feed/?shareActive=true';
@@ -113,7 +141,7 @@ export default function ArtifactsWorkbench({
 
   return (
     <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', background: '#272B40', borderColor: '#ACBAC4' }}>
-      
+
       {/* Toast Notification */}
       {actionNotice && (
         <div style={{
@@ -153,7 +181,7 @@ export default function ArtifactsWorkbench({
           }}>4</div>
           <div>
             <h2 style={{ fontSize: '1.35rem', color: '#F0F0DB' }}>Human-in-the-Loop Review & Deliverable Export</h2>
-            <p style={{ fontSize: '0.8rem', color: '#ACBAC4' }}>Export real PPTX presentations, Video Packages, PDF documents, or post directly to social platforms</p>
+            <p style={{ fontSize: '0.8rem', color: '#ACBAC4' }}>Real-time parallel multi-agent output deliverables (FastAPI Backend Engine)</p>
           </div>
         </div>
 
@@ -192,7 +220,7 @@ export default function ArtifactsWorkbench({
             const isCopied = copiedId === formatId;
 
             return (
-              <div 
+              <div
                 key={formatId}
                 className="glass-panel"
                 style={{
@@ -239,7 +267,7 @@ export default function ArtifactsWorkbench({
                     <span>Tone Match: <strong style={{ color: '#F0F0DB' }}>{result.toneMatch}%</strong></span>
                   </div>
 
-                  <button 
+                  <button
                     className="btn btn-outline btn-sm"
                     style={{ padding: '0.2rem 0.6rem', fontSize: '0.7rem', borderColor: '#E1D9BC', color: '#F0F0DB' }}
                     onClick={() => onOpenGroundingModal(formatInfo, result)}
@@ -270,7 +298,7 @@ export default function ArtifactsWorkbench({
 
                 {/* Customized Deliverable Action Buttons */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', flexWrap: 'wrap' }}>
-                  <button 
+                  <button
                     className="btn btn-secondary btn-sm"
                     onClick={() => handleRegenerate(formatId)}
                     title="Regenerate single output"
@@ -278,73 +306,82 @@ export default function ArtifactsWorkbench({
                     <RefreshCw size={13} /> Regenerate
                   </button>
 
-                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
                     {/* Copy Button */}
-                    <button 
+                    <button
                       className="btn btn-secondary btn-sm"
                       onClick={() => handleCopy(formatId)}
+                      title="Copy text to clipboard"
                     >
                       {isCopied ? <Check size={13} color="#E1D9BC" /> : <Copy size={13} />}
-                      {isCopied ? 'Copied!' : 'Copy Text'}
+                      {isCopied ? 'Copied!' : 'Copy'}
+                    </button>
+
+                    {/* Universal Markdown Download */}
+                    <button
+                      className="btn btn-secondary btn-sm"
+                      onClick={() => handleExportMarkdown(formatId, formatInfo.title)}
+                      title="Download Markdown file (.md)"
+                    >
+                      <Download size={13} /> .md
+                    </button>
+
+                    {/* Universal Text Download */}
+                    <button
+                      className="btn btn-secondary btn-sm"
+                      onClick={() => handleExportText(formatId, formatInfo.title)}
+                      title="Download Text file (.txt)"
+                    >
+                      <FileText size={13} /> .txt
                     </button>
 
                     {/* PRESENTATION: Real PPTX PowerPoint Download */}
                     {formatId === 'presentation' && (
-                      <button 
+                      <button
                         className="btn btn-primary btn-sm"
                         onClick={() => handleExportPptx(formatId, formatInfo.title)}
                       >
-                        <Download size={13} /> Download PPTX Presentation (.pptx)
+                        <Download size={13} /> PPTX
                       </button>
                     )}
 
                     {/* VIDEO PACKAGE: Video Studio Preview & PPTX Export */}
                     {formatId === 'video_package' && (
-                      <button 
+                      <button
                         className="btn btn-primary btn-sm"
                         onClick={() => handleOpenVideoStudio(formatId)}
                       >
-                        <Play size={13} /> Watch Video Package Studio
+                        <Play size={13} /> Video Studio
                       </button>
                     )}
 
-                    {/* INFOGRAPHIC: PDF Poster Export */}
-                    {formatId === 'infographic_pkg' && (
-                      <button 
+                    {/* INFOGRAPHIC / SUMMARY / ADVISORY: PDF Export */}
+                    {(formatId === 'infographic_pkg' || formatId === 'exec_summary' || formatId === 'advisory_doc') && (
+                      <button
                         className="btn btn-primary btn-sm"
                         onClick={() => handleExportPdf(formatId, formatInfo.title)}
                       >
-                        <Download size={13} /> Export Infographic PDF (.pdf)
-                      </button>
-                    )}
-
-                    {/* EXECUTIVE SUMMARY / ADVISORY: PDF Export */}
-                    {(formatId === 'exec_summary' || formatId === 'advisory_doc') && (
-                      <button 
-                        className="btn btn-primary btn-sm"
-                        onClick={() => handleExportPdf(formatId, formatInfo.title)}
-                      >
-                        <Download size={13} /> Download PDF (.pdf)
+                        <Download size={13} /> PDF
                       </button>
                     )}
 
                     {/* LINKEDIN POST: Direct LinkedIn Post */}
                     {formatId === 'linkedin_post' && (
-                      <button 
+                      <button
                         className="btn btn-primary btn-sm"
                         onClick={() => handlePostToPlatform(formatId, 'linkedin')}
                       >
-                        <ExternalLink size={13} /> Post to LinkedIn
+                        <ExternalLink size={13} /> LinkedIn
                       </button>
                     )}
 
                     {/* TWITTER THREAD: Direct Twitter Post */}
                     {formatId === 'twitter_thread' && (
-                      <button 
+                      <button
                         className="btn btn-primary btn-sm"
                         onClick={() => handlePostToPlatform(formatId, 'twitter')}
                       >
-                        <ExternalLink size={13} /> Post to X / Twitter
+                        <ExternalLink size={13} /> Post to X
                       </button>
                     )}
                   </div>
@@ -357,13 +394,15 @@ export default function ArtifactsWorkbench({
       )}
 
       {/* Video Studio Modal */}
-      <VideoPlayerModal 
+      <VideoPlayerModal
         isOpen={isVideoModalOpen}
         onClose={() => setIsVideoModalOpen(false)}
         videoData={activeVideoData}
         docId={selectedDoc?.id || 'document'}
+        docTitle={selectedDoc?.title || 'Document Briefing'}
       />
 
     </div>
   );
 }
+

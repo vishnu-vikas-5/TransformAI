@@ -12,10 +12,10 @@ const ICON_MAP = {
   Layers: Layers
 };
 
-export default function OutputSelector({ 
-  selectedOutputs, 
-  setSelectedOutputs, 
-  selectedTone, 
+export default function OutputSelector({
+  selectedOutputs,
+  setSelectedOutputs,
+  selectedTone,
   setSelectedTone,
   detailLevel,
   setDetailLevel,
@@ -38,7 +38,7 @@ export default function OutputSelector({
 
   return (
     <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', background: '#272B40', borderColor: '#ACBAC4' }}>
-      
+
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -143,7 +143,7 @@ export default function OutputSelector({
             <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.4rem', color: '#ACBAC4' }}>
               Target Tone
             </label>
-            <select 
+            <select
               value={selectedTone}
               onChange={(e) => setSelectedTone(e.target.value)}
               style={{
@@ -170,7 +170,7 @@ export default function OutputSelector({
             <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.4rem', color: '#ACBAC4' }}>
               Level of Detail
             </label>
-            <select 
+            <select
               value={detailLevel}
               onChange={(e) => setDetailLevel(e.target.value)}
               style={{
@@ -196,7 +196,7 @@ export default function OutputSelector({
             <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.4rem', color: '#ACBAC4' }}>
               Communication Style
             </label>
-            <select 
+            <select
               value={communicationStyle}
               onChange={(e) => setCommunicationStyle(e.target.value)}
               style={{

@@ -6,7 +6,7 @@ export default function ComparativeSection() {
   return (
     <div id="comparative" style={{ padding: '3rem 0', background: '#30364F' }}>
       <div className="container">
-        
+
         {/* Section Header */}
         <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 3rem auto' }}>
           <span className="badge" style={{ marginBottom: '0.75rem', background: '#ACBAC4', color: '#30364F', borderColor: '#E1D9BC' }}>

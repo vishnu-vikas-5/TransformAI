@@ -6,10 +6,10 @@ export default function Hero({ onStartTransformation }) {
     <div style={{
       padding: '3rem 0 2rem 0',
       position: 'relative',
-      background: '#30364F'
+      background: 'transparent'
     }}>
       <div className="container" style={{ textAlign: 'center', maxWidth: '960px' }}>
-        
+
         {/* Top Tagline Badge */}
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}>
           <span className="badge" style={{ padding: '0.4rem 1rem', fontSize: '0.8rem', background: '#ACBAC4', color: '#30364F', borderColor: '#E1D9BC' }}>
@@ -41,7 +41,7 @@ export default function Hero({ onStartTransformation }) {
           margin: '0 auto 2rem auto',
           lineHeight: '1.7'
         }}>
-          TransformAI combines Generative AI with a Master AI Orchestrator. 
+          TransformAI combines Generative AI with a Master AI Orchestrator.
           Upload complex source reports, select your target outputs, and watch specialized agents decompose, execute, and validate grounded communication artifacts in parallel.
         </p>
 
