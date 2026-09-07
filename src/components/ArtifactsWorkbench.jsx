@@ -55,14 +55,15 @@ export default function ArtifactsWorkbench({
   };
 
   // Real PPTX Export
-  const handleExportPptx = (formatId, title) => {
+  const handleExportPptx = async (formatId, title) => {
     try {
       const res = getResultForFormat(formatId);
-      const filename = exportToPptx(title, res.content, selectedDoc?.id || 'document');
+      const filename = await exportToPptx(title, res.content, selectedDoc?.id || 'document');
       setActionNotice(`Downloaded PowerPoint (.pptx): ${filename}`);
       setTimeout(() => setActionNotice(null), 3500);
     } catch (e) {
       console.error(e);
+      setActionNotice(`PPTX Export failed: ${e.message}`);
     }
   };
 

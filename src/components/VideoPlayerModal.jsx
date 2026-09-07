@@ -251,11 +251,17 @@ export default function VideoPlayerModal({ isOpen, onClose, videoData, docId, do
       recordedChunksRef.current = [];
 
       const stream = canvas.captureStream(30);
-      const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9')
-        ? 'video/webm;codecs=vp9'
-        : 'video/webm';
-
-      const recorder = new MediaRecorder(stream, { mimeType });
+      
+      const candidateTypes = [
+        'video/webm;codecs=vp9',
+        'video/webm',
+        'video/mp4;codecs=avc1.42E01E',
+        'video/mp4'
+      ];
+      const selectedMime = candidateTypes.find(t => typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported(t)) || '';
+      
+      const recorderOptions = selectedMime ? { mimeType: selectedMime } : undefined;
+      const recorder = new MediaRecorder(stream, recorderOptions);
       mediaRecorderRef.current = recorder;
 
       recorder.ondataavailable = (e) => {
@@ -294,8 +300,8 @@ export default function VideoPlayerModal({ isOpen, onClose, videoData, docId, do
     }
   };
 
-  const handleExportPptx = () => {
-    exportToPptx("Video Storyboard & Script Deck", videoData.content, docId);
+  const handleExportPptx = async () => {
+    await exportToPptx("Video Storyboard & Script Deck", videoData.content, docId);
   };
 
   const handleExportPdf = () => {

@@ -66,10 +66,15 @@ This Master Executive Briefing synthesizes every critical element, technical vul
     setTimeout(() => setActionNotice(null), 3500);
   };
 
-  const handleExportPptx = () => {
-    const filename = exportToPptx("Master Executive Briefing", rawSummary, selectedDoc?.id || 'document');
-    setActionNotice(`Downloaded Presentation (.pptx): ${filename}`);
-    setTimeout(() => setActionNotice(null), 3500);
+  const handleExportPptx = async () => {
+    try {
+      const filename = await exportToPptx("Master Executive Briefing", rawSummary, selectedDoc?.id || 'document');
+      setActionNotice(`Downloaded Presentation (.pptx): ${filename}`);
+      setTimeout(() => setActionNotice(null), 3500);
+    } catch (e) {
+      console.error(e);
+      setActionNotice(`PPTX Export failed: ${e.message}`);
+    }
   };
 
   const handleExportMd = () => {
