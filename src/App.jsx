@@ -5,9 +5,12 @@ import InputSection from './components/InputSection';
 import OutputSelector from './components/OutputSelector';
 import OrchestratorVisualizer from './components/OrchestratorVisualizer';
 import ArtifactsWorkbench from './components/ArtifactsWorkbench';
+import FullSummaryPage from './components/FullSummaryPage';
+import NotebookLMChat from './components/NotebookLMChat';
 import ArchitectureSection from './components/ArchitectureSection';
 import ComparativeSection from './components/ComparativeSection';
 import GroundingModal from './components/GroundingModal';
+import AgentInspectorModal from './components/AgentInspectorModal';
 import Footer from './components/Footer';
 import { SAMPLE_DOCUMENTS } from './data/mockData';
 
@@ -33,15 +36,7 @@ export default function App() {
 
   const [isExecuting, setIsExecuting] = useState(false);
   const [executionProgress, setExecutionProgress] = useState(0);
-  const [completedOutputs, setCompletedOutputs] = useState([
-    'exec_summary', 
-    'video_package', 
-    'linkedin_post', 
-    'twitter_thread',
-    'advisory_doc',
-    'infographic_pkg',
-    'presentation'
-  ]);
+  const [completedOutputs, setCompletedOutputs] = useState([]);
 
   const [backendResults, setBackendResults] = useState(null);
   const [apiProvider, setApiProvider] = useState('TransformAI Agentic Engine');
@@ -52,6 +47,8 @@ export default function App() {
     formatInfo: null,
     result: null
   });
+
+  const [isAgentInspectorOpen, setIsAgentInspectorOpen] = useState(false);
 
   // Check health status of Python backend on mount
   useEffect(() => {
@@ -71,9 +68,9 @@ export default function App() {
 
     try {
       const payload = {
-        doc_id: selectedDoc?.id || 'custom_doc',
-        doc_title: selectedDoc?.title || 'Custom Ingested Content',
-        source_text: inputMode === 'paste' ? customText : (selectedDoc?.rawText || ''),
+        doc_id: selectedDoc?.id || 'doc_custom',
+        doc_title: selectedDoc?.title || 'Custom Document',
+        source_text: selectedDoc?.rawText || customText || 'Sample content',
         selected_outputs: selectedOutputs,
         selected_tone: selectedTone,
         detail_level: detailLevel,
@@ -86,66 +83,52 @@ export default function App() {
         body: JSON.stringify(payload)
       });
 
-      if (response.ok && response.body) {
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = '';
+      if (!response.ok || !response.body) {
+        throw new Error("Streaming API unavailable, falling back to batch API");
+      }
 
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
 
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n\n');
-          buffer = lines.pop() || '';
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n\n');
+        buffer = lines.pop() || '';
 
-          for (const line of lines) {
-            const trimmed = line.replace(/^data:\s*/, '').trim();
-            if (!trimmed) continue;
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
             try {
-              const event = JSON.parse(trimmed);
-              if (event.type === 'start') {
-                setExecutionProgress(event.progress || 15);
-              } else if (event.type === 'agent_complete') {
-                setExecutionProgress(event.progress || 50);
-                setCompletedOutputs(prev => [...new Set([...prev, event.agent_id])]);
-                setBackendResults(prev => ({
-                  ...(prev || {}),
-                  [event.agent_id]: event.result
-                }));
+              const event = JSON.parse(line.slice(6));
+              if (event.type === 'agent_complete') {
+                setCompletedOutputs(prev => [...prev, event.agent_id]);
+                setBackendResults(prev => ({ ...prev, [event.agent_id]: event.result }));
+                setExecutionProgress(event.progress);
               } else if (event.type === 'complete') {
+                setApiProvider(event.api_provider || 'TransformAI Agentic Engine');
                 setExecutionProgress(100);
-                if (event.results) setBackendResults(event.results);
-                if (event.api_provider) setApiProvider(event.api_provider);
+                setIsExecuting(false);
               }
-            } catch (e) {
-              console.error("SSE Event parse error:", e);
+            } catch (err) {
+              console.warn("SSE JSON Parse error:", err);
             }
           }
         }
-      } else {
-        // Fallback to standard POST endpoint
-        const fallbackRes = await fetch('http://localhost:8000/api/transform', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (fallbackRes.ok) {
-          const data = await fallbackRes.json();
-          setBackendResults(data.results);
-          setApiProvider(data.api_provider);
-          setCompletedOutputs(selectedOutputs);
-          setExecutionProgress(100);
-        }
       }
+
     } catch (err) {
-      console.warn("Backend streaming API call fallback:", err);
-      setCompletedOutputs(selectedOutputs);
+      console.warn("Real-time stream error, performing simulation batch execution:", err);
+      // Fallback simulation sequence
+      for (let i = 0; i < selectedOutputs.length; i++) {
+        await new Promise(r => setTimeout(r, 250));
+        const agentId = selectedOutputs[i];
+        setCompletedOutputs(prev => [...prev, agentId]);
+        setExecutionProgress(Math.min(95, Math.round(((i + 1) / selectedOutputs.length) * 95)));
+      }
       setExecutionProgress(100);
-    } finally {
-      setTimeout(() => {
-        setIsExecuting(false);
-      }, 300);
+      setIsExecuting(false);
     }
   };
 
@@ -166,17 +149,21 @@ export default function App() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className="app-container" style={{ minHeight: '100vh', background: '#30364F', color: '#F0F0DB' }}>
       <Navbar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
-        onLaunchDemo={handleRunOrchestration} 
+        onLaunchDemo={() => {
+          setActiveTab('workbench');
+          handleRunOrchestration();
+        }}
         serverHealth={serverHealth}
         apiProvider={apiProvider}
+        onOpenAgentInspector={() => setIsAgentInspectorOpen(true)}
       />
 
-      <main style={{ flex: 1 }}>
-        <Hero onStartTransformation={() => {
+      <main>
+        <Hero onGetStarted={() => {
           setActiveTab('workbench');
           handleRunOrchestration();
         }} />
@@ -212,6 +199,7 @@ export default function App() {
                 completedOutputs={completedOutputs}
                 apiProvider={apiProvider}
                 serverHealth={serverHealth}
+                onOpenAgentInspector={() => setIsAgentInspectorOpen(true)}
               />
 
               <ArtifactsWorkbench 
@@ -220,6 +208,26 @@ export default function App() {
                 completedOutputs={completedOutputs}
                 backendResults={backendResults}
                 onOpenGroundingModal={handleOpenGroundingModal}
+                onNavigateTab={(tab) => setActiveTab(tab)}
+              />
+            </div>
+          )}
+
+          {activeTab === 'summary' && (
+            <div className="animate-fade-in">
+              <FullSummaryPage 
+                selectedDoc={selectedDoc}
+                backendResults={backendResults}
+                onNavigateToChat={() => setActiveTab('chat')}
+              />
+            </div>
+          )}
+
+          {activeTab === 'chat' && (
+            <div className="animate-fade-in">
+              <NotebookLMChat 
+                selectedDoc={selectedDoc}
+                customText={customText}
               />
             </div>
           )}
@@ -242,6 +250,11 @@ export default function App() {
         isOpen={modalState.isOpen}
         onClose={handleCloseGroundingModal}
         modalData={modalState}
+      />
+
+      <AgentInspectorModal
+        isOpen={isAgentInspectorOpen}
+        onClose={() => setIsAgentInspectorOpen(false)}
       />
 
       <Footer />

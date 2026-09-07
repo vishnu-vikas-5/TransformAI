@@ -9,7 +9,8 @@ export default function OrchestratorVisualizer({
   selectedOutputs,
   completedOutputs,
   apiProvider,
-  serverHealth
+  serverHealth,
+  onOpenAgentInspector
 }) {
 
   const isOnline = serverHealth?.status === 'online';
@@ -86,16 +87,24 @@ export default function OrchestratorVisualizer({
           </span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-          <Sparkles size={18} color="#E1D9BC" />
-          <span>
-            <strong>Active LLM Provider:</strong>{' '}
-            <span style={{ color: '#E1D9BC', fontWeight: '800' }}>{activeAiName}</span>
-          </span>
-        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Sparkles size={18} color="#E1D9BC" />
+            <span>
+              <strong>Active Model:</strong>{' '}
+              <span className="badge" style={{ background: '#E1D9BC', color: '#30364F', fontWeight: '800' }}>
+                {activeAiName}
+              </span>
+            </span>
+          </div>
 
-        <div style={{ fontSize: '0.75rem', color: '#ACBAC4', background: '#272B40', padding: '0.25rem 0.65rem', borderRadius: '20px', border: '1px solid #ACBAC4', fontWeight: '700' }}>
-          ⚡ SSE Real-Time Stream Active
+          <button
+            className="btn btn-secondary btn-sm"
+            onClick={onOpenAgentInspector}
+            style={{ padding: '0.35rem 0.75rem', fontSize: '0.75rem', borderColor: '#E1D9BC' }}
+          >
+            Inspect AI System 🔍
+          </button>
         </div>
       </div>
 

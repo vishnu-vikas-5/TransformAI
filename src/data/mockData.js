@@ -140,20 +140,44 @@ export const OUTPUT_FORMATS = [
 export const PRE_GENERATED_RESULTS = {
   cybersecurity: {
     exec_summary: {
-      content: `### Executive Summary: Critical Zero-Day Vulnerability (CVE-2024-38077)
+      content: `### Master Executive Briefing: Critical Zero-Day Vulnerability (CVE-2024-38077)
 
-**Risk Level:** CRITICAL (CVSS v3.1: 9.8)  
-**Affected Component:** Windows Remote Desktop Licensing Service  
+**Document Status:** 100% Grounded Master Summary (Full Scope Coverage)  
+**Target Audience:** C-Suite Officers, CISO, Board Directors & Operations Leads  
+**Tone Alignment:** Formal Authoritative  
+**Primary Objective:** Complete operational, technical, and strategic breakdown (No original PDF reading required)
 
-#### Strategic Business Impact
-- **Immediate Threat:** Unauthenticated remote attackers can execute arbitrary code with full SYSTEM privileges over Port 135.
-- **Ransomware Threat Vector:** Active exploitation deploys Cobalt Strike beacons and LockBit 4.0 within 45 minutes of intrusion.
-- **Operational Status:** 14 internal database nodes quarantined as a precaution. Zero external data exfiltration detected to date.
+---
 
-#### Mandatory Decisions & Authorizations
-1. Authorize emergency security patch KB5040442 deployment during tonight's maintenance window.
-2. Enforce perimeter firewall RPC block (Port 135) immediately.
-3. Initiate mandatory Hardware Token MFA reset for all Domain Admin sessions.`,
+#### 1. Executive Summary & Strategic Context
+This Master Executive Briefing synthesizes every critical element, technical vulnerability, operational requirement, and strategic recommendation from the 10-page Incident Advisory regarding **CVE-2024-38077**. Reading this briefing provides complete operational and executive clarity without needing to consult the original PDF.
+
+#### 2. Source Document Context & Core Scope
+- **Document Reference:** INC-2024-88902-SEC (Confidential / Internal Only)
+- **Target Component:** Windows Remote Desktop Licensing Service (termsrv.dll / lsvcs.dll)
+- **Affected Systems:** Windows Server 2016, 2019, and 2022 (All Editions with RDP Licensing role enabled)
+- **Threat Vector Rating:** CVSS v3.1 Base Score 9.8 (CRITICAL) [Vector: AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H]
+
+#### 3. Key Technical Findings & Incident Analysis
+1. **Heap Overflow Infiltration:** Unauthenticated remote attackers craft malicious RPC requests over Port 135/TCP to trigger heap-based buffer overflows, achieving unauthenticated NT AUTHORITY\\SYSTEM privileges.
+2. **Ransomware Staging Velocity:** Active threat actors deploy Cobalt Strike beacons and LockBit 4.0 payloads within 45 minutes of initial RPC handshake.
+3. **Current Containment Status:** 14 internal database nodes quarantined as a precaution; multi-agent forensic log audit confirms zero external data exfiltration to date.
+
+#### 4. Strategic Business & Operational Risk Impact
+- **Severity & Impact Level:** CRITICAL (High operational disruption and privilege takeover risk)
+- **Factual Grounding Score:** 99.4% (Zero unverified claims detected in automated validation audit)
+- **Audit Verification:** All CVE identifiers, CVSS metrics, port numbers, and patch KB designations verified against source text.
+
+#### 5. Step-by-Step Actionable Directives & Remediation
+- **Mandatory Directive 1 (Immediate - 2 Hours):** Block TCP Port 135 and RPC Dynamic Port Range (49152-65535) at perimeter firewalls for inbound external traffic.
+- **Mandatory Directive 2 (Immediate):** Stop and disable Remote Desktop Licensing service ('net stop TermServLicensing') on non-production domain nodes.
+- **Mandatory Directive 3 (Patch Deployment):** Authorize and deploy Emergency Security Patch KB5040442 immediately across all enterprise domain controllers.
+- **Mandatory Directive 4 (Access Control):** Enforce mandatory password resets for all Active Directory Domain Admin accounts and mandate hardware-backed MFA for RDP Gateways.
+
+#### 6. 90-Day Strategic Execution & Compliance Roadmap
+- **Immediate (0 - 48 Hours):** Authorize emergency maintenance window, apply KB5040442, enforce RPC Endpoint Mapper filters, and verify perimeter firewall port isolation.
+- **Phase 2 (Days 3 - 30):** Enforce Hardware Token MFA across all remote access nodes, roll out automated endpoint patch management, and audit domain admin credentials.
+- **Phase 3 (Days 31 - 90):** Conduct independent third-party penetration testing, finalize incident response audit, and update corporate compliance playbooks.`,
       groundingScore: 99.4,
       hallucinations: 0,
       toneMatch: 100,

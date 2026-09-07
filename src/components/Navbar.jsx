@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, ShieldCheck, Cpu, Sparkles } from 'lucide-react';
+import { Zap, ShieldCheck, Cpu, Sparkles, BookOpen, MessageSquare } from 'lucide-react';
 
 const GithubIcon = ({ size = 18 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -8,7 +8,7 @@ const GithubIcon = ({ size = 18 }) => (
   </svg>
 );
 
-export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHealth, apiProvider }) {
+export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHealth, apiProvider, onOpenAgentInspector }) {
   const isOnline = serverHealth?.status === 'online';
   const aiModelName = serverHealth?.gemini_key_configured 
     ? 'Gemini 2.5 Flash API' 
@@ -54,8 +54,12 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHe
               </span>
             </div>
             
-            {/* Live Backend & AI Provider Status Bar */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '2px', fontSize: '0.7rem' }}>
+            {/* Live Backend & AI Provider Status Bar (Clickable Inspector) */}
+            <div 
+              onClick={(e) => { e.stopPropagation(); onOpenAgentInspector && onOpenAgentInspector(); }}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '2px', fontSize: '0.7rem', cursor: 'pointer' }}
+              title="Click to inspect active AI model & agent prompts"
+            >
               <span style={{
                 width: '7px',
                 height: '7px',
@@ -67,34 +71,56 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHe
                 {isOnline ? 'FastAPI Backend Online' : 'Connecting Backend...'}
               </span>
               <span style={{ color: '#ACBAC4' }}>•</span>
-              <span style={{ color: '#E1D9BC', fontWeight: '700' }}>
-                AI: {aiModelName}
+              <span style={{ color: '#E1D9BC', fontWeight: '700', textDecoration: 'underline' }}>
+                AI: {aiModelName} (Inspect 🔍)
               </span>
             </div>
           </div>
         </div>
 
         {/* Navigation Links */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
           <button
             className={`btn btn-sm ${activeTab === 'workbench' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('workbench')}
           >
-            <Cpu size={16} /> Engine Workbench
+            <Cpu size={15} /> Workbench
+          </button>
+
+          <button
+            className={`btn btn-sm ${activeTab === 'summary' ? 'btn-primary' : 'btn-secondary'}`}
+            onClick={() => setActiveTab('summary')}
+          >
+            <BookOpen size={15} /> Full Summary
+          </button>
+
+          <button
+            className={`btn btn-sm ${activeTab === 'chat' ? 'btn-primary' : 'btn-secondary'}`}
+            onClick={() => setActiveTab('chat')}
+          >
+            <MessageSquare size={15} /> Ask NotebookLM AI
+          </button>
+
+          <button
+            className="btn btn-secondary btn-sm"
+            onClick={onOpenAgentInspector}
+            title="View full AI Model & Agent system breakdown"
+          >
+            <Sparkles size={14} color="#E1D9BC" /> Inspect AI
           </button>
 
           <button
             className={`btn btn-sm ${activeTab === 'architecture' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('architecture')}
           >
-            <Zap size={16} /> Agent Architecture
+            <Zap size={15} /> Architecture
           </button>
 
           <button
             className={`btn btn-sm ${activeTab === 'comparative' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => setActiveTab('comparative')}
           >
-            <ShieldCheck size={16} /> Why Agentic AI?
+            <ShieldCheck size={15} /> Why Agentic AI?
           </button>
         </nav>
 

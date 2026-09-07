@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CheckCircle2, Copy, Download, RefreshCw, Eye, ShieldCheck, Sparkles, Check, ExternalLink, Play, FileText } from 'lucide-react';
+import { CheckCircle2, Copy, Download, RefreshCw, Eye, ShieldCheck, Sparkles, Check, ExternalLink, Play, FileText, BookOpen, MessageSquare } from 'lucide-react';
 import { OUTPUT_FORMATS, PRE_GENERATED_RESULTS } from '../data/mockData';
 import { exportToPptx, exportToPdf, exportToMarkdown, exportToText } from '../utils/exportUtils';
 import VideoPlayerModal from './VideoPlayerModal';
@@ -9,7 +9,8 @@ export default function ArtifactsWorkbench({
   selectedOutputs,
   completedOutputs,
   backendResults,
-  onOpenGroundingModal
+  onOpenGroundingModal,
+  onNavigateTab
 }) {
   const [editedResults, setEditedResults] = useState({});
   const [copiedId, setCopiedId] = useState(null);
@@ -363,6 +364,26 @@ export default function ArtifactsWorkbench({
                       >
                         <Download size={13} /> PDF
                       </button>
+                    )}
+
+                    {/* EXEC SUMMARY: Dedicated Full Summary Page & NotebookLM Q&A buttons */}
+                    {formatId === 'exec_summary' && onNavigateTab && (
+                      <>
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => onNavigateTab('summary')}
+                          title="Open Full Exhaustive Summary Page"
+                        >
+                          <BookOpen size={13} /> Full Page
+                        </button>
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => onNavigateTab('chat')}
+                          title="Ask questions using NotebookLM AI"
+                        >
+                          <MessageSquare size={13} /> Ask AI
+                        </button>
+                      </>
                     )}
 
                     {/* LINKEDIN POST: Direct LinkedIn Post */}
