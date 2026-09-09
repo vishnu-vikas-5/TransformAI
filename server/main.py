@@ -452,6 +452,15 @@ A comprehensive evaluation of submitted source material highlights critical oper
     )
 
 
+@app.get("/")
+async def root():
+    return {
+        "status": "online",
+        "name": "TransformAI Agentic Backend API",
+        "docs_url": "/docs",
+        "health_check": "/api/health"
+    }
+
 @app.get("/api/health")
 async def health_check():
     """Returns server status and API key configuration state"""
