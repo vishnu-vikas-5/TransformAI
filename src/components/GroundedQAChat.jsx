@@ -14,17 +14,17 @@ export default function GroundedQAChat({ selectedDoc, customText }) {
   const [messages, setMessages] = useState([
     {
       sender: 'ai',
-      text: `Hello! I am your **TransformAI Grounded Q&A Assistant** for **"${docTitle}"**.\n\nI have fully analyzed and indexed this document (${selectedDoc?.pages || 10} pages, ${selectedDoc?.wordCount?.toLocaleString() || '3,840'} words). You can ask me any question about the document's findings, threat vectors, mandatory directives, timelines, or technical specifications.\n\nWhat would you like to know?`,
+      text: `Hello! I am your **TransformAI Grounded Q&A Assistant** for **"${docTitle}"**.\n\nI have fully analyzed and indexed this document (${selectedDoc?.pages || 1} pages, ${selectedDoc?.wordCount?.toLocaleString() || '1,200'} words). You can ask me any question about the document's main findings, directives, statistics, recommendations, or conclusions.\n\nWhat would you like to know?`,
       groundingScore: 99.6,
       citations: [docTitle]
     }
   ]);
 
   const suggestedQuestions = [
-    "What are the main threat vectors & severity ratings?",
-    "What are the mandatory security patch KB numbers & workarounds?",
-    "Which operating systems & components are affected?",
-    "Summarize the 90-day implementation roadmap timeline"
+    "What is the primary summary & main takeaway of this document?",
+    "What are the key findings, data points, or results presented?",
+    "Who or what is affected according to the source text?",
+    "What actions, conclusions, or next steps are recommended?"
   ];
 
   useEffect(() => {
