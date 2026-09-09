@@ -37,15 +37,7 @@ export default function App() {
 
   const [isExecuting, setIsExecuting] = useState(false);
   const [executionProgress, setExecutionProgress] = useState(0);
-  const [completedOutputs, setCompletedOutputs] = useState([
-    'exec_summary', 
-    'video_package', 
-    'linkedin_post', 
-    'twitter_thread',
-    'advisory_doc',
-    'infographic_pkg',
-    'presentation'
-  ]);
+  const [completedOutputs, setCompletedOutputs] = useState([]);
 
   const [backendResults, setBackendResults] = useState(null);
   const [apiProvider, setApiProvider] = useState('TransformAI Agentic Engine');
@@ -112,34 +104,28 @@ export default function App() {
         let buffer = '';
 
         while (true) {
-          const { done, value } = await reader.read();
+          const { value, done } = await reader.read();
           if (done) break;
-
           buffer += decoder.decode(value, { stream: true });
           const lines = buffer.split('\n\n');
           buffer = lines.pop() || '';
 
           for (const line of lines) {
-            const trimmed = line.replace(/^data:\s*/, '').trim();
-            if (!trimmed) continue;
-            try {
-              const event = JSON.parse(trimmed);
-              if (event.type === 'start') {
-                setExecutionProgress(event.progress || 15);
-              } else if (event.type === 'agent_complete') {
-                setExecutionProgress(event.progress || 50);
-                setCompletedOutputs(prev => [...new Set([...prev, event.agent_id])]);
-                setBackendResults(prev => ({
-                  ...(prev || {}),
-                  [event.agent_id]: event.result
-                }));
-              } else if (event.type === 'complete') {
-                setExecutionProgress(100);
-                if (event.results) setBackendResults(event.results);
-                if (event.api_provider) setApiProvider(event.api_provider);
+            if (line.startsWith('data: ')) {
+              try {
+                const event = JSON.parse(line.slice(6));
+                if (event.type === 'agent_complete') {
+                  setCompletedOutputs(prev => [...prev, event.agent_id]);
+                  setBackendResults(prev => ({ ...prev, [event.agent_id]: event.result }));
+                  setExecutionProgress(event.progress);
+                } else if (event.type === 'complete') {
+                  setApiProvider(event.api_provider || 'TransformAI Agentic Engine');
+                  setExecutionProgress(100);
+                  setIsExecuting(false);
+                }
+              } catch (err) {
+                console.warn("SSE JSON Parse error:", err);
               }
-            } catch (e) {
-              console.error("SSE Event parse error:", e);
             }
           }
         }
@@ -158,14 +144,18 @@ export default function App() {
           setExecutionProgress(100);
         }
       }
+
     } catch (err) {
-      console.warn("Backend streaming API call fallback:", err);
-      setCompletedOutputs(selectedOutputs);
+      console.warn("Real-time stream error, performing simulation batch execution:", err);
+      // Fallback simulation sequence
+      for (let i = 0; i < selectedOutputs.length; i++) {
+        await new Promise(r => setTimeout(r, 250));
+        const agentId = selectedOutputs[i];
+        setCompletedOutputs(prev => [...prev, agentId]);
+        setExecutionProgress(Math.min(95, Math.round(((i + 1) / selectedOutputs.length) * 95)));
+      }
       setExecutionProgress(100);
-    } finally {
-      setTimeout(() => {
-        setIsExecuting(false);
-      }, 300);
+      setIsExecuting(false);
     }
   };
 
@@ -186,14 +176,14 @@ export default function App() {
   };
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <div className="app-container" style={{ minHeight: '100vh', background: 'transparent', color: '#FFFFFF' }}>
       <Navbar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
         onLaunchDemo={() => {
           setActiveTab('workbench');
           handleRunOrchestration();
-        }} 
+        }}
         serverHealth={serverHealth}
         apiProvider={apiProvider}
         onOpenAgentInspector={() => setIsAgentInspectorOpen(true)}

@@ -1243,11 +1243,11 @@ export default function ArtifactsWorkbench({
           position: 'fixed',
           bottom: '24px',
           right: '24px',
-          background: '#E1DCC9',
+          background: '#DFD0B8',
           color: '#000000',
           padding: '0.75rem 1.25rem',
           borderRadius: 'var(--radius-md)',
-          boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
+          boxShadow: '0 10px 25px rgba(0,0,0,0.95)',
           zIndex: 1000,
           fontWeight: '700',
           fontSize: '0.875rem',
@@ -1266,7 +1266,7 @@ export default function ArtifactsWorkbench({
             width: '32px',
             height: '32px',
             borderRadius: '50%',
-            background: '#E1DCC9',
+            background: '#DFD0B8',
             color: '#000000',
             display: 'flex',
             alignItems: 'center',
@@ -1435,11 +1435,12 @@ export default function ArtifactsWorkbench({
                         <span>Tone Match: <strong style={{ color: '#E1DCC9' }}>{result.toneMatch}%</strong></span>
                       </>
                     )}
+
                   </div>
 
                   <button
                     className="btn btn-outline btn-sm"
-                    style={{ padding: '0.2rem 0.6rem', fontSize: '0.7rem', borderColor: '#E1DCC9', color: '#E1DCC9' }}
+                    style={{ padding: '0.2rem 0.6rem', fontSize: '0.7rem', borderColor: '#DFD0B8', color: '#FFFFFF' }}
                     onClick={() => onOpenGroundingModal(formatInfo, result)}
                   >
                     <Eye size={12} /> Inspect Citations
@@ -1622,6 +1623,7 @@ export default function ArtifactsWorkbench({
                   />
                 )}
 
+
                 {/* Customized Deliverable Action Buttons */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', flexWrap: 'wrap' }}>
                   <button
@@ -1639,7 +1641,7 @@ export default function ArtifactsWorkbench({
                       onClick={() => handleCopy(formatId)}
                       title="Copy text to clipboard"
                     >
-                      {isCopied ? <Check size={13} color="#E1DCC9" /> : <Copy size={13} />}
+                      {isCopied ? <Check size={13} color="#DFD0B8" /> : <Copy size={13} />}
                       {isCopied ? 'Copied!' : 'Copy'}
                     </button>
 
@@ -1756,6 +1758,26 @@ export default function ArtifactsWorkbench({
                           </>
                         )}
                       </button>
+                    )}
+
+                    {/* EXEC SUMMARY: Dedicated Full Summary Page & Grounded Q&A buttons */}
+                    {formatId === 'exec_summary' && onNavigateTab && (
+                      <>
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => onNavigateTab('summary')}
+                          title="Open Full Exhaustive Summary Page"
+                        >
+                          <BookOpen size={13} /> Full Page
+                        </button>
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => onNavigateTab('chat')}
+                          title="Ask questions using Grounded Document AI"
+                        >
+                          <MessageSquare size={13} /> Ask AI
+                        </button>
+                      </>
                     )}
 
                     {/* LINKEDIN POST: View Post Modal */}
