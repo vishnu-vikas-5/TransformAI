@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sparkles, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
+import TextType from './TextType';
 
 export default function Hero({ onStartTransformation }) {
   return (
@@ -30,7 +31,23 @@ export default function Hero({ onStartTransformation }) {
           color: '#FFFFFF'
         }}>
           Transform Complex Documents into <br />
-          <span style={{ color: '#FFFFFF', borderBottom: '3px solid #DFD0B8' }}>Audience-Tailored Communications</span>
+          <span style={{ color: '#FFFFFF', borderBottom: '3px solid #DFD0B8' }}>
+            <TextType 
+              text={[
+                "Audience-Tailored Communications",
+                "Executive Summaries & Advisories",
+                "Video Scripts & Storyboards",
+                "Social Threads & Slide Decks"
+              ]}
+              typingSpeed={60}
+              pauseDuration={2200}
+              deletingSpeed={35}
+              showCursor={true}
+              cursorCharacter="|"
+              cursorBlinkDuration={0.5}
+              loop={true}
+            />
+          </span>
         </h1>
 
         {/* Subtitle */}
