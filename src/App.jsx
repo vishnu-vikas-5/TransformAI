@@ -13,6 +13,7 @@ import GroundingModal from './components/GroundingModal';
 import AgentInspectorModal from './components/AgentInspectorModal';
 import Footer from './components/Footer';
 import { SAMPLE_DOCUMENTS } from './data/mockData';
+import { API_BASE_URL } from './utils/apiConfig';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('workbench');
@@ -52,7 +53,7 @@ export default function App() {
 
   // Check health status of Python backend on mount
   useEffect(() => {
-    fetch('http://localhost:8000/api/health')
+    fetch(`${API_BASE_URL}/api/health`)
       .then(res => res.json())
       .then(data => {
         setServerHealth(data);
@@ -77,7 +78,7 @@ export default function App() {
         communication_style: communicationStyle
       };
 
-      const response = await fetch('http://localhost:8000/api/transform/stream', {
+      const response = await fetch(`${API_BASE_URL}/api/transform/stream`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

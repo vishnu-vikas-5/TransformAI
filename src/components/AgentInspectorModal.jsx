@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Cpu, ShieldCheck, Zap, Server, Terminal, CheckCircle2, Sparkles, Code, Activity } from 'lucide-react';
+import { API_BASE_URL } from '../utils/apiConfig';
 
 export default function AgentInspectorModal({ isOpen, onClose }) {
   if (!isOpen) return null;
@@ -8,7 +9,7 @@ export default function AgentInspectorModal({ isOpen, onClose }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/agents')
+    fetch(`${API_BASE_URL}/api/agents`)
       .then(res => res.json())
       .then(data => {
         setAgentData(data);

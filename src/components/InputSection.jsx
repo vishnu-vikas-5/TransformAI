@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { FileText, Upload, Link as LinkIcon, Edit3, CheckCircle2, Eye, Sparkles, File, Loader2, Check } from 'lucide-react';
 import { SAMPLE_DOCUMENTS } from '../data/mockData';
+import { API_BASE_URL } from '../utils/apiConfig';
 
 export default function InputSection({ selectedDoc, setSelectedDoc, customText, setCustomText, inputMode, setInputMode }) {
   const [showFullText, setShowFullText] = useState(false);
@@ -19,7 +20,7 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('http://localhost:8000/api/upload', {
+      const response = await fetch(`${API_BASE_URL}/api/upload`, {
         method: 'POST',
         body: formData,
       });

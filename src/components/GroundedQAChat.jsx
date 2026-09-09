@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, Send, Sparkles, ShieldCheck, Copy, Check, FileText, HelpCircle, Loader2, ArrowRight } from 'lucide-react';
+import { API_BASE_URL } from '../utils/apiConfig';
 
 export default function GroundedQAChat({ selectedDoc, customText }) {
   const [question, setQuestion] = useState('');
@@ -40,7 +41,7 @@ export default function GroundedQAChat({ selectedDoc, customText }) {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/api/chat', {
+      const response = await fetch(`${API_BASE_URL}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
