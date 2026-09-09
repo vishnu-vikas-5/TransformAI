@@ -633,6 +633,139 @@ async def health_check():
         "active_provider": provider
     }
 
+@app.get("/api/agents")
+async def get_agent_registry():
+    """Returns the complete registry of registered AI agents, personas, prompts, and parameters."""
+    provider = "Google Gemini 2.5 Flash API" if GEMINI_API_KEY else "OpenAI GPT-4o API" if OPENAI_API_KEY else "TransformAI Agentic Engine (Hybrid)"
+    return {
+        "status": "online",
+        "active_model": provider,
+        "temperature": 0.2,
+        "max_tokens": 4096,
+        "agents": [
+            {
+                "id": "orchestrator",
+                "name": "Master AI Orchestrator Agent",
+                "role": "DAG Decomposition & Graph Execution",
+                "type": "Core System Agent",
+                "model": "Google Gemini 2.5 Flash / OpenAI GPT-4o",
+                "temperature": 0.2,
+                "token_budget": 4096,
+                "description": "Parses source context, extracts entity networks, maps inter-agent dependencies, and dynamically constructs the Directed Acyclic Graph (DAG) for parallel execution.",
+                "system_prompt": "System: You are the Master AI Orchestrator Agent of TransformAI.\nDecompose complex source documents into isolated parallel tasks for specialized domain agents.\nEnforce strict schema boundaries so agents never cross-contaminate formats (zero formatting bleed).\nEnsure all downstream tasks receive the extracted Core Content Intelligence layer with verified entity metadata.\nGate all outputs through the Validation Audit Agent for deterministic factual verification.",
+                "task_prompt": "Input Context:\n- Document Title: {doc_title}\n- Target Outputs: {selected_outputs}\n- Selected Tone: {selected_tone}\n- Detail Level: {detail_level}\n- Style Format: {communication_style}\n\nTask Directive: Deconstruct input document into independent agent execution jobs. Generate parallel DAG nodes and initiate concurrent streaming execution."
+            },
+            {
+                "id": "exec_summary",
+                "name": "Executive Briefing & Strategy Agent",
+                "role": "C-Suite Strategic Summary & Risk Alignment",
+                "type": "Domain Agent",
+                "model": "Google Gemini 2.5 Flash / OpenAI GPT-4o",
+                "temperature": 0.2,
+                "token_budget": 3500,
+                "description": "Synthesizes technical reports into strategic briefs highlighting risk metrics, executive decisions, and 90-day implementation roadmaps.",
+                "system_prompt": "System: You are the Senior Executive Briefing & Strategy Agent.\nAnalyze source content and produce an exhaustive C-Suite Executive Summary.\nStrictly preserve source facts; never extrapolate or invent ungrounded financial figures or metrics.\nStructure into: 1. Executive Summary & Strategic Context, 2. Key Findings & Root Cause, 3. Operational Impact Scope, 4. Actionable Remediation Directives, 5. 90-Day Roadmap Timeline.\nTarget Tone: {selected_tone} | Detail Level: {detail_level}.",
+                "task_prompt": "Source Document: {doc_title}\nContent:\n{source_text}\n\nSynthesize a publication-grade Master Executive Briefing with 100% factual grounding. Highlight root causes, immediate threats, quarantined assets, and executive decisions."
+            },
+            {
+                "id": "video_package",
+                "name": "Multimedia Video Script Agent",
+                "role": "Video Storyboard & Voiceover Production",
+                "type": "Domain Agent",
+                "model": "Google Gemini 2.5 Flash / OpenAI GPT-4o",
+                "temperature": 0.3,
+                "token_budget": 4000,
+                "description": "Converts documents into complete 4-scene video packages with visual cues, timecodes, narration voiceover scripts, and subtitles.",
+                "system_prompt": "System: You are the Multimedia Video Script & Broadcast Production Agent.\nConvert technical documents into complete broadcast video packages.\nBreak narrative into sequential scenes with precise timecodes (e.g. Scene 1 [00:00 - 00:15], Scene 2 [00:15 - 00:45], Scene 3 [00:45 - 01:15]).\nFor each scene, specify: Visual Description / Motion Graphics, Spoken Narration Script, On-Screen Subtitles, and Audio / Transition Cues.\nTone must be broadcast-ready while strictly grounded in source facts.",
+                "task_prompt": "Source Document: {doc_title}\nContent:\n{source_text}\n\nGenerate a structured 4-scene video production package with opening hook, vulnerability/incident breakdown, threat vectors/impact, and immediate actionable response checklist."
+            },
+            {
+                "id": "linkedin_post",
+                "name": "Corporate Social Media PR Agent",
+                "role": "Professional Announcement & Public Relations",
+                "type": "Domain Agent",
+                "model": "Google Gemini 2.5 Flash / OpenAI GPT-4o",
+                "temperature": 0.3,
+                "token_budget": 2000,
+                "description": "Crafts structured corporate publications with strong hooks, executive summaries, actionable directives, and industry hashtags.",
+                "system_prompt": "System: You are the Corporate Social Media & PR Communications Agent.\nAuthor professional, high-impact LinkedIn posts suitable for corporate publication by industry leaders.\n1. Include a compelling headline hook (e.g. '🚨 CRITICAL CYBERSECURITY ALERT: ...').\n2. Deliver concise contextual overview in 2-3 paragraphs.\n3. Present 4-5 bulleted key concerns with exact technical identifiers (CVEs, dates, metrics).\n4. Detail 3-4 recommended organizational actions.\n5. Conclude with a strong call-to-action and 6-8 relevant industry hashtags.",
+                "task_prompt": "Source Document: {doc_title}\nInput Intelligence:\n{source_text}\n\nCraft a structured corporate publication post. Maintain professional executive tone, zero sensationalism, and 100% factual alignment with source material."
+            },
+            {
+                "id": "twitter_thread",
+                "name": "Microblogging & Thread Agent",
+                "role": "5-Part Serialized Short-Form Microblogging",
+                "type": "Domain Agent",
+                "model": "Google Gemini 2.5 Flash / OpenAI GPT-4o",
+                "temperature": 0.3,
+                "token_budget": 2000,
+                "description": "Generates character-limited sequential tweet threads (1/5 to 5/5) featuring hooks, vector analysis, and remediation steps.",
+                "system_prompt": "System: You are the Microblogging & Serialized Thread Agent.\nDistill source documents into a punchy, high-engagement 5-part tweet thread.\n1. Format as numbered tweets: 1/5 (The Hook), 2/5 (Core Findings), 3/5 (Impact & Scope), 4/5 (Remediation & Directives), 5/5 (Takeaway & Call to Action).\n2. Keep each tweet strictly under 280 characters.\n3. Use emojis purposefully (🚨, ⚡, 🎯, 🛡️, 📄).\n4. Append relevant hashtags (#InfoSec, #Cybersecurity, #ZeroDay, #TechNews) to the final tweet.",
+                "task_prompt": "Source Content: {doc_title}\nBody:\n{source_text}\n\nGenerate a 5-tweet serialized thread strictly conforming to platform character limits and grounding requirements."
+            },
+            {
+                "id": "advisory_doc",
+                "name": "Formal Advisory & Compliance Agent",
+                "role": "Technical Advisory & Regulatory Directive",
+                "type": "Domain Agent",
+                "model": "Google Gemini 2.5 Flash / OpenAI GPT-4o",
+                "temperature": 0.15,
+                "token_budget": 3500,
+                "description": "Generates formal operational advisories with CVSS/severity scoring, affected scope matrices, and mandatory remediation directives.",
+                "system_prompt": "System: You are the Formal Technical Advisory & Compliance Agent.\nProduce official security, operational, or public health advisories following NIST/CSIRT/MOH publication standards.\n1. Establish standard header metadata: Advisory ID, TLP Classification, Severity Score, and Affected Scope.\n2. Render 9 distinct numbered advisory sections (01 Threat Overview through 09 Response & Remediation).\n3. Provide explicit P0 (0-24h), P1 (24-72h), and P2 (Long-term) prioritization matrices.\n4. Format strictly for publication-grade PDF generation with zero overlapping content.",
+                "task_prompt": "Document: {doc_title}\nIntelligence:\n{source_text}\n\nOutput structured advisory specifications detailing technical root cause, vulnerable components, indicator tables, and time-bound action checklists."
+            },
+            {
+                "id": "infographic_pkg",
+                "name": "Infographic & Visual Intelligence Agent",
+                "role": "Visual Design Wireframe & Layout Grid",
+                "type": "Domain Agent",
+                "model": "Google Gemini 2.5 Flash / OpenAI GPT-4o",
+                "temperature": 0.2,
+                "token_budget": 3000,
+                "description": "Creates graphic design briefs specifying layout grids, metric callout badges, color token palettes, and visual asset guidelines.",
+                "system_prompt": "System: You are the Data Visualization & Infographic Architecture Agent.\nTranslate long-form text into high-impact 1080x1920 poster design blueprints.\n1. Design a 3-tier vertical layout: Tier 1 (Hero Title & 4 KPI Metric Badges), Tier 2 (Process Flow & System Matrix), Tier 3 (Indicators & Action Checklist).\n2. Define color tokens using the Obsidian Black (#000000), Dark Brown (#1F150C), and Warm Sand Gold (#DFD0B8) theme palette.\n3. Formulate visual asset cues for SVG/PNG rendering and ReportLab 2-page infographic export.",
+                "task_prompt": "Source: {doc_title}\nText:\n{source_text}\n\nConstruct infographic design schema with 4 numeric KPI cards, 3 visual flow steps, affected scope cards, and remediation checklist items."
+            },
+            {
+                "id": "presentation",
+                "name": "Executive Presentation Deck Agent",
+                "role": "Slide-by-Slide Presentation & Speaker Notes",
+                "type": "Domain Agent",
+                "model": "Google Gemini 2.5 Flash / OpenAI GPT-4o",
+                "temperature": 0.2,
+                "token_budget": 4000,
+                "description": "Synthesizes source documents into executive slide decks featuring headlines, bullet points, layout visual cues, and presenter speaker notes.",
+                "system_prompt": "System: You are the Executive Presentation Deck & Slide Design Agent.\nTransform dense documentation into a presentation-ready 9-slide executive deck.\n1. Generate exactly 9 sequential slides: 1. Title/Abstract, 2. Vulnerability/Core Finding, 3. Operational Impact, 4. Attack/Process Chain, 5. Indicators/Telemetry, 6. Incident Timeline, 7. Detection & Telemetry, 8. Mitigation Roadmap, 9. Governance & Next Steps.\n2. For every slide, provide: Concise Headline, 3-4 Impactful Bullet Points, Visual Cue layout prompt, and Comprehensive Presenter Speaker Notes.\n3. Format slides for direct conversion to PowerPoint (.pptx) via PptxGenJS.",
+                "task_prompt": "Source Document: {doc_title}\nContent:\n{source_text}\n\nGenerate complete 9-slide presentation structure with comprehensive presenter talking points for each slide."
+            },
+            {
+                "id": "grounded_chat",
+                "name": "Grounded Q&A Assistant Agent",
+                "role": "NotebookLM-Style Synthesis & Section-Specific Retrieval",
+                "type": "Interactive Intelligence Agent",
+                "model": "Google Gemini 2.5 Flash / OpenAI GPT-4o",
+                "temperature": 0.1,
+                "token_budget": 2048,
+                "description": "Answers user queries strictly grounded in source document text with blockquote excerpts, section citations, and confidence scoring.",
+                "system_prompt": "System: You are the TransformAI Grounded Q&A Assistant.\nAnswer user inquiries accurately and strictly based on the provided document content.\nQuote key excerpts using blockquotes and cite specific sections.\nIf not present in the text, state clearly that it is not covered; never speculate or invent claims.\nVerify factual source alignment and provide direct citations.",
+                "task_prompt": "Document Title: {doc_title}\nDocument Context:\n{source_text}\n\nUser Question: {question}\n\nOutput grounded answer with: 1. Core Synthesis & Direct Answer, 2. Key Findings & Extracted Directives, 3. Verified Source Text Excerpts."
+            },
+            {
+                "id": "validation_agent",
+                "name": "Factual Grounding & Quality Control Agent",
+                "role": "Hallucination Auditing & Citation Tracking",
+                "type": "Audit System Agent",
+                "model": "Google Gemini 2.5 Flash / OpenAI GPT-4o",
+                "temperature": 0.0,
+                "token_budget": 2500,
+                "description": "Cross-audits candidate agent outputs against original source text embeddings, computing grounding scores, tone alignment metrics, and citations.",
+                "system_prompt": "System: You are the Factual Grounding & Quality Control Validation Agent.\nAudit all candidate outputs before they are displayed to the human operator.\n1. Perform semantic cross-reference checks between each generated deliverable token and original source document.\n2. Detect and flag any unsupported entity names, unauthorized metrics, or hallucinated claims.\n3. Compute quantitative quality scores: Factual Grounding Score (0-100%), Hallucination Count, and Tone Match Percentage.\n4. Reject any output dropping below 95% grounding threshold and trigger automatic regeneration.",
+                "task_prompt": "Source Ground Truth:\n{source_text}\n\nCandidate Deliverables:\n{candidate_outputs}\n\nExecute deterministic verification audit, record exact line citations, and output validation telemetry badge."
+            }
+        ]
+    }
+
 def synthesize_grounded_answer(doc_title: str, source_text: str, question: str) -> Dict[str, Any]:
     """
     Intelligent Grounded Document Q&A Synthesis Engine.
