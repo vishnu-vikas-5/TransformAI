@@ -35,10 +35,10 @@ export default function AgentInspectorModal({ isOpen, onClose }) {
       id: "exec_summary",
       name: "Executive Briefing & Strategy Agent",
       role: "C-Suite Strategic Summary & Risk Alignment",
-      description: "Synthesizes technical reports into strategic briefs highlighting risk metrics, executive decisions, and 90-day implementation roadmaps.",
+      description: "Transforms the source document and Core Content Intelligence into a decision-oriented Executive Summary grounded strictly in verified source evidence.",
       type: "Domain Agent",
       model: "Google Gemini 2.5 Flash / OpenAI GPT-4o",
-      system_prompt: "System: You are the Senior Executive Briefing Agent. Analyze source content and produce an exhaustive multi-tier C-Suite Executive Summary."
+      system_prompt: "System: You are the EXECUTIVE SUMMARY AGENT of SyntaxX. Transform the currently selected source document into a professional, decision-oriented Executive Summary. Work with ANY supported document type. Ground all facts, metrics, and conclusions strictly in the source text without inventing facts or hallucinating."
     },
     {
       id: "video_package",
