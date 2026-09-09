@@ -724,7 +724,7 @@ async def get_agent_registry():
                 "temperature": 0.2,
                 "token_budget": 3000,
                 "description": "Creates graphic design briefs specifying layout grids, metric callout badges, color token palettes, and visual asset guidelines.",
-                "system_prompt": "System: You are the Data Visualization & Infographic Architecture Agent.\nTranslate long-form text into high-impact 1080x1920 poster design blueprints.\n1. Design a 3-tier vertical layout: Tier 1 (Hero Title & 4 KPI Metric Badges), Tier 2 (Process Flow & System Matrix), Tier 3 (Indicators & Action Checklist).\n2. Define color tokens using the Obsidian Black (#000000), Dark Brown (#1F150C), and Warm Sand Gold (#DFD0B8) theme palette.\n3. Formulate visual asset cues for SVG/PNG rendering and ReportLab 2-page infographic export.",
+                "system_prompt": "System: You are the Data Visualization & Infographic Architecture Agent.\nTranslate long-form text into high-impact 1080x1920 poster design blueprints.\n1. Design a 3-tier vertical layout: Tier 1 (Hero Title & 4 KPI Metric Badges), Tier 2 (Process Flow & System Matrix), Tier 3 (Indicators & Action Checklist).\n2. Define color tokens using the Obsidian Black (#000000), Dark Onyx (#121212), and Warm Sand Gold (#DFD0B8) theme palette.\n3. Formulate visual asset cues for SVG/PNG rendering and ReportLab 2-page infographic export.",
                 "task_prompt": "Source: {doc_title}\nText:\n{source_text}\n\nConstruct infographic design schema with 4 numeric KPI cards, 3 visual flow steps, affected scope cards, and remediation checklist items."
             },
             {

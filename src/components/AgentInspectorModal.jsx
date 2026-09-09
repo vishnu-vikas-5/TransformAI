@@ -206,7 +206,7 @@ Rules:
    - Tier 1: Hero Title & 4 KPI Metric Badges
    - Tier 2: Process Flow & System Scope Matrix
    - Tier 3: Indicators & Action Checklist
-2. Define color tokens using the Obsidian Black (#000000), Dark Brown (#1F150C), and Warm Sand Gold (#DFD0B8) theme palette.
+2. Define color tokens using the Obsidian Black (#000000), Deep Onyx (#121212), and Warm Sand Gold (#DFD0B8) theme palette.
 3. Formulate visual asset cues for SVG/PNG rendering and ReportLab 2-page infographic export.`,
       task_prompt: `Source: {doc_title}
 Text:

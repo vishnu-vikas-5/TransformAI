@@ -48,17 +48,17 @@ export function generateCybersecurityAdvisoryPdf(intel, returnBlob = false) {
   const contentWidth = pageWidth - marginX * 2; // 182mm
   const bottomMargin = 282;
 
-  // SyntaxX Curated 4-Color Editorial Palette
+  // TransformAI Curated Visual Editorial Palette
   const cNavy950 = [0, 0, 0];        // #000000 Black
-  const cNavy900 = [31, 21, 12];     // #1F150C Dark Brown
-  const cNavy800 = [65, 45, 21];     // #412D15 Deep Brown
-  const cSlate900 = [31, 21, 12];    // #1F150C High-legibility Primary Text
-  const cSlate700 = [46, 34, 23];    // Dark Brown Secondary
-  const cSlate600 = [101, 84, 66];   // Muted Text
-  const cSlate500 = [130, 113, 95];  // Subtle Text
-  const cSlate200 = [216, 210, 190]; // Borders
-  const cSlate100 = [235, 230, 216]; // Table Header Fill (Cream Tint)
-  const cSlate50 = [249, 248, 245];  // Alternating Row Fill (Pale Cream)
+  const cNavy900 = [18, 18, 18];     // #121212 Onyx
+  const cNavy800 = [223, 208, 184];  // #DFD0B8 Warm Sand Gold
+  const cSlate900 = [18, 18, 18];    // #121212 High-legibility Primary Text
+  const cSlate700 = [24, 24, 24];    // #181818 Deep Onyx Secondary
+  const cSlate600 = [160, 160, 160]; // #A0A0A0 Muted Grey
+  const cSlate500 = [160, 160, 160]; // #A0A0A0 Muted Grey
+  const cSlate200 = [223, 208, 184]; // Borders (#DFD0B8)
+  const cSlate100 = [245, 242, 233]; // Table Header Fill (Cream Tint)
+  const cSlate50 = [252, 251, 248];  // Alternating Row Fill (Pale Cream)
   const cRed800 = [139, 30, 30];     // Critical Red Text
   const cRed100 = [249, 236, 236];   // Critical Red Fill
   const cAmber800 = [166, 106, 30];  // TLP Amber Text

@@ -47,8 +47,17 @@ except ImportError:
         C_WHITE, C_CREAM, C_DARK_BROWN, C_DEEP_BROWN, C_BLACK,
         BRAND_SUITE_NAME, BRAND_NAME_FULL
     )
-C_PURPLE_800 = HexColor('#412D15')
-C_PURPLE_100 = HexColor('#F4F1EA')
+C_PURPLE_800 = HexColor('#121212')
+C_PURPLE_100 = HexColor('#F7F5EE')
+
+
+def escape_platypus(text: str) -> str:
+    """Escapes XML entities safely for ReportLab Paragraphs."""
+    if text is None:
+        return ""
+    val = str(text)
+    val = val.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+    return val
 
 
 def clean_text_for_pdf(val) -> str:
@@ -154,7 +163,7 @@ def make_video_canvas(advisory_id: str, tlp_str: str, title_str: str):
 def create_section_header(title: str, subtitle: str = "") -> list:
     """Creates a visual video production section header bar."""
     flowables = []
-    title_html = f'<font color="#1F150C" size="9.0"><b>{title.upper()}</b></font>'
+    title_html = f'<font color="#121212" size="9.0"><b>{title.upper()}</b></font>'
     if subtitle:
         title_html += f'<br/><font color="#655442" size="6.8">{subtitle}</font>'
 
@@ -495,6 +504,8 @@ def build_video_package_pdf(intel: Dict[str, Any]) -> bytes:
     advisory_id = data['advisory_id']
     tlp = data['tlp']
     title = data['title']
+    is_rdp = 'CVE-2024-38077' in str(intel).upper() or 'REMOTE DESKTOP' in str(intel).upper() or 'TERMSERV' in str(intel).upper()
+    is_nightfalcon = ('CVE-2026-88421' in str(intel).upper() or 'ORIONGATE' in str(intel).upper()) and not is_rdp
 
     # Typography styles calibrated for publication-grade density
     body_style = ParagraphStyle(
@@ -533,8 +544,8 @@ def build_video_package_pdf(intel: Dict[str, Any]) -> bytes:
     # =========================================================================
 
     hero_html = (
-        f'<font color="#412D15" size="7.5"><b>VIDEO PRODUCTION MASTER PACKAGE  |  EXECUTIVE BRIEFING &amp; BROADCAST SPECIFICATIONS</b></font><br/>'
-        f'<font color="#1F150C" size="14.5"><b>{clean_text_for_pdf(title)}</b></font><br/>'
+        f'<font color="#121212" size="7.5"><b>VIDEO PRODUCTION MASTER PACKAGE  |  EXECUTIVE BRIEFING &amp; BROADCAST SPECIFICATIONS</b></font><br/>'
+        f'<font color="#121212" size="14.5"><b>{clean_text_for_pdf(title)}</b></font><br/>'
         f'<font color="#2E2217" size="8.5"><b>{clean_text_for_pdf(specs["subtitle"])}</b></font>'
     )
     p_hero = Paragraph(hero_html, ParagraphStyle(name="HeroVTitle", leading=13.5))
@@ -542,10 +553,10 @@ def build_video_package_pdf(intel: Dict[str, Any]) -> bytes:
     meta_table_data = [
         [
             Paragraph(f'<b>SEVERITY</b><br/><font color="#8B1E1E" size="8"><b>{data["severity"]} (CVSS {data["cvss"]})</b></font>', body_style),
-            Paragraph(f'<b>CONFIDENCE</b><br/><font color="#412D15" size="8"><b>{data["confidence"]} CONFIDENCE</b></font>', body_style),
-            Paragraph(f'<b>CVE IDENTIFIER</b><br/><font color="#1F150C" size="8"><b>{data["cve"]}</b></font>', body_style),
-            Paragraph(f'<b>ADVISORY ID</b><br/><font color="#1F150C" size="8"><b>{advisory_id}</b></font>', body_style),
-            Paragraph(f'<b>DURATION</b><br/><font color="#1F150C" size="8"><b>90 SECONDS</b></font>', body_style),
+            Paragraph(f'<b>CONFIDENCE</b><br/><font color="#121212" size="8"><b>{data["confidence"]} CONFIDENCE</b></font>', body_style),
+            Paragraph(f'<b>CVE IDENTIFIER</b><br/><font color="#121212" size="8"><b>{data["cve"]}</b></font>', body_style),
+            Paragraph(f'<b>ADVISORY ID</b><br/><font color="#121212" size="8"><b>{advisory_id}</b></font>', body_style),
+            Paragraph(f'<b>DURATION</b><br/><font color="#121212" size="8"><b>90 SECONDS</b></font>', body_style),
             Paragraph(f'<b>CLASSIFICATION</b><br/><font color="#A66A1E" size="8"><b>{tlp}</b></font>', body_style)
         ]
     ]
@@ -1010,7 +1021,7 @@ def build_video_package_pdf(intel: Dict[str, Any]) -> bytes:
     gov_table = Table(
         [[
             Paragraph('<font color="#235E35"><b>HUMAN REVIEW &amp; VIDEO DISSEMINATION APPROVAL MANDATE</b></font><br/>'
-                      f'<font color="#1F150C">Human review and approval required before broadcast production or operational dissemination. '
+                      f'<font color="#121212">Human review and approval required before broadcast production or operational dissemination. '
                       f'This Video Production Package synthesizes verified intelligence from Security Advisory {advisory_id}.</font>', body_style)
         ]],
         colWidths=[CONTENT_WIDTH],

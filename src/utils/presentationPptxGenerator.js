@@ -7,28 +7,29 @@
 
 import pptxgen from "pptxgenjs";
 
-// SyntaxX Unified Editorial 4-Color Palette Constants (PPTX Native RGB Hex)
-export const C_BG          = "000000"; // Deep Black Canvas
-export const C_CARD_BG     = "1F150C"; // Structural Card / Box Fill (Dark Brown)
-export const C_PANEL_BG    = "412D15"; // Secondary Panel / Sub-Card Fill (Deep Brown)
-export const C_TEXT        = "E1DCC9"; // Primary Typography & Titles (SyntaxX Cream)
-export const C_BORDER      = "412D15"; // Structural Borders & Separators (Deep Brown)
-export const C_BORDER_LIGHT= "E1DCC9"; // Cream Accent Border
+// TransformAI Unified Visual Design System Palette Constants (PPTX Native RGB Hex)
+export const C_BG          = "000000"; // Deep Obsidian Black Canvas (#000000)
+export const C_CARD_BG     = "121212"; // Structural Card / Box Fill (Deep Onyx #121212)
+export const C_PANEL_BG    = "181818"; // Secondary Panel / Sub-Card Fill (Deep Onyx #181818)
+export const C_TEXT        = "FFFFFF"; // Primary Typography & Titles (Pure White #FFFFFF)
+export const C_BODY_TEXT   = "E1DCC9"; // High-Legibility Body Text (Warm Cream #E1DCC9)
+export const C_BORDER      = "DFD0B8"; // Structural Borders & Separators (Warm Sand Gold #DFD0B8)
+export const C_BORDER_LIGHT= "DFD0B8"; // Warm Sand Gold Accent Border
 
 // Semantic Aliases for PPTX Shape & Text Rendering
 export const C_BG_LIGHT    = C_BG;     // Canvas Background
-export const C_WHITE       = C_CARD_BG;// Structural Card Fill (Dark Brown)
-export const C_NAVY_DARK   = C_TEXT;   // Primary Typography & Titles (SyntaxX Cream)
-export const C_NAVY_BLUE   = C_TEXT;   // Heading Text (SyntaxX Cream)
-export const C_BLUE_ACCENT = C_TEXT;   // Primary Accent / Top Bars (SyntaxX Cream)
-export const C_BLUE_LIGHT  = C_PANEL_BG;// Tertiary / Sub-Card Fill (Deep Brown)
-export const C_SLATE_DARK  = C_TEXT;   // High-Legibility Body Text (SyntaxX Cream)
-export const C_SLATE_MUTED = "B8B2A0"; // Subtitles & Metadata (Warm Muted Cream)
-export const C_RED_DARK    = C_TEXT;   // Critical Alert Text
+export const C_WHITE       = C_CARD_BG;// Structural Card Fill (#121212)
+export const C_NAVY_DARK   = "FFFFFF"; // Primary Typography & Titles (Pure White)
+export const C_NAVY_BLUE   = "FFFFFF"; // Heading Text (Pure White)
+export const C_BLUE_ACCENT = "DFD0B8"; // Primary Accent / Badges (Warm Sand Gold)
+export const C_BLUE_LIGHT  = C_PANEL_BG;// Tertiary / Sub-Card Fill (#181818)
+export const C_SLATE_DARK  = "E1DCC9"; // High-Legibility Body Text (Warm Cream)
+export const C_SLATE_MUTED = "A0A0A0"; // Subtitles & Metadata (Muted Grey #A0A0A0)
+export const C_RED_DARK    = "FFFFFF"; // Critical Alert Text
 export const C_RED_LIGHT   = "8B1E1E"; // Critical Alert Fill (Dark Red)
-export const C_AMBER_DARK  = C_TEXT;   // Warning Alert Text
-export const C_AMBER_LIGHT = "A66A1E"; // Warning Alert Fill (Dark Amber)
-export const C_GREEN_DARK  = C_TEXT;   // Verified Text
+export const C_AMBER_DARK  = "000000"; // Warning Alert Text
+export const C_AMBER_LIGHT = "DFD0B8"; // Warning Alert Fill (Warm Sand Gold)
+export const C_GREEN_DARK  = "FFFFFF"; // Verified Text
 export const C_GREEN_LIGHT = "235E35"; // Verified Fill (Editorial Green)
 
 // Centralized PPTX Theme Definition
@@ -37,6 +38,7 @@ export const PPTX_THEME = {
   cardBackground: C_CARD_BG,
   panelBackground: C_PANEL_BG,
   text: C_TEXT,
+  bodyText: C_BODY_TEXT,
   border: C_BORDER,
   borderLight: C_BORDER_LIGHT,
   muted: C_SLATE_MUTED,

@@ -90,18 +90,18 @@ export const exportToPptx = async (title, rawContent, docId = "document", presen
 export const exportToPdf = (title, rawContent, docId = "document") => {
   try {
     const doc = new jsPDF();
-    doc.setFillColor(0, 0, 0); // #000000 Black
+    doc.setFillColor(0, 0, 0); // #000000 Pure Obsidian Black
     doc.rect(0, 0, 210, 297, "F");
 
-    doc.setTextColor(225, 220, 201); // #E1DCC9 Cream
+    doc.setTextColor(255, 255, 255); // #FFFFFF Pure Crisp White
     doc.setFontSize(18);
     doc.text(title || "Generated Report", 14, 20);
 
-    doc.setTextColor(184, 178, 160); // Muted cream
+    doc.setTextColor(223, 208, 184); // #DFD0B8 Warm Sand Gold
     doc.setFontSize(10);
-    doc.text("SyntaxX Agentic Intelligence Suite", 14, 28);
+    doc.text("TransformAI Agentic Intelligence Suite", 14, 28);
 
-    doc.setTextColor(225, 220, 201);
+    doc.setTextColor(225, 220, 201); // #E1DCC9 Warm Cream Sand
     doc.setFontSize(10);
 
     const splitText = doc.splitTextToSize((rawContent || "").replace(/[#*`]/g, ''), 180);

@@ -340,28 +340,28 @@ function renderFormattedAdvisoryPreview(rawContent, result, selectedDoc) {
 
       {/* Key Metadata Row */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.15rem' }}>
-        <div style={{ background: '#1F150C', border: '1px solid rgba(225, 220, 201, 0.72)', borderRadius: '4px', padding: '0.2rem 0.55rem', fontSize: '0.72rem' }}>
-          <span style={{ color: 'rgba(225, 220, 201, 0.72)', marginRight: '0.35rem' }}>Severity</span>
-          <strong style={{ color: (meta.severity || '').toUpperCase().includes('CRITICAL') ? '#F87171' : '#E1DCC9' }}>
+        <div style={{ background: '#121212', border: '1px solid #DFD0B8', borderRadius: '4px', padding: '0.2rem 0.55rem', fontSize: '0.72rem' }}>
+          <span style={{ color: '#DFD0B8', marginRight: '0.35rem' }}>Severity</span>
+          <strong style={{ color: (meta.severity || '').toUpperCase().includes('CRITICAL') ? '#F87171' : '#FFFFFF' }}>
             {meta.severity || 'CRITICAL'}
           </strong>
         </div>
         {meta.classification && (
-          <div style={{ background: '#1F150C', border: '1px solid rgba(225, 220, 201, 0.72)', borderRadius: '4px', padding: '0.2rem 0.55rem', fontSize: '0.72rem' }}>
-            <span style={{ color: 'rgba(225, 220, 201, 0.72)', marginRight: '0.35rem' }}>Classification</span>
-            <strong style={{ color: '#E1DCC9' }}>{meta.classification}</strong>
+          <div style={{ background: '#121212', border: '1px solid #DFD0B8', borderRadius: '4px', padding: '0.2rem 0.55rem', fontSize: '0.72rem' }}>
+            <span style={{ color: '#DFD0B8', marginRight: '0.35rem' }}>Classification</span>
+            <strong style={{ color: '#FFFFFF' }}>{meta.classification}</strong>
           </div>
         )}
         {meta.confidence && (
-          <div style={{ background: '#1F150C', border: '1px solid rgba(225, 220, 201, 0.72)', borderRadius: '4px', padding: '0.2rem 0.55rem', fontSize: '0.72rem' }}>
-            <span style={{ color: 'rgba(225, 220, 201, 0.72)', marginRight: '0.35rem' }}>Confidence</span>
-            <strong style={{ color: '#10B981' }}>{meta.confidence}</strong>
+          <div style={{ background: '#121212', border: '1px solid #DFD0B8', borderRadius: '4px', padding: '0.2rem 0.55rem', fontSize: '0.72rem' }}>
+            <span style={{ color: '#DFD0B8', marginRight: '0.35rem' }}>Confidence</span>
+            <strong style={{ color: '#FFFFFF' }}>{meta.confidence}</strong>
           </div>
         )}
       </div>
 
       {/* Divider */}
-      <div style={{ borderBottom: '1px solid rgba(172, 186, 196, 0.25)', margin: '0.4rem 0' }} />
+      <div style={{ borderBottom: '1px solid rgba(223, 208, 184, 0.25)', margin: '0.4rem 0' }} />
 
       {/* Sections Header */}
       <div style={{ fontSize: '0.74rem', fontWeight: '800', color: '#E1DCC9', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
@@ -424,8 +424,9 @@ function renderFormattedInfographicPreview(rawContent, result, selectedDoc) {
           <span style={{ 
             fontSize: '0.66rem', 
             fontWeight: '700', 
-            background: info.classification?.includes('CRITICAL') || info.classification?.includes('STRICT') ? '#8B1E1E' : '#412D15', 
-            color: '#E1DCC9', 
+            background: info.classification?.includes('CRITICAL') || info.classification?.includes('STRICT') ? '#8B1E1E' : '#121212', 
+            border: '1px solid #DFD0B8',
+            color: '#FFFFFF', 
             padding: '0.15rem 0.45rem', 
             borderRadius: '3px',
             fontFamily: 'monospace'
@@ -443,20 +444,20 @@ function renderFormattedInfographicPreview(rawContent, result, selectedDoc) {
         <div style={{ display: 'grid', gridTemplateColumns: `repeat(${Math.min(metrics.length, 4)}, 1fr)`, gap: '0.4rem' }}>
           {metrics.slice(0, 4).map((m, mIdx) => (
             <div key={mIdx} style={{ 
-              background: '#1F150C', 
-              border: `1px solid ${m.severity === 'CRITICAL' ? '#8B1E1E' : 'rgba(225, 220, 201, 0.22)'}`,
+              background: '#121212', 
+              border: `1.5px solid ${m.severity === 'CRITICAL' ? '#8B1E1E' : '#DFD0B8'}`,
               borderRadius: '4px', 
               padding: '0.35rem 0.45rem',
               display: 'flex',
               flexDirection: 'column'
             }}>
-              <div style={{ fontSize: '0.62rem', color: 'rgba(225, 220, 201, 0.7)', fontWeight: '600', textTransform: 'uppercase' }}>
+              <div style={{ fontSize: '0.62rem', color: '#DFD0B8', fontWeight: '600', textTransform: 'uppercase' }}>
                 {m.label}
               </div>
-              <div style={{ fontSize: '0.95rem', fontWeight: '800', color: m.severity === 'CRITICAL' ? '#FF6B6B' : '#E1DCC9', lineHeight: '1.2' }}>
+              <div style={{ fontSize: '0.95rem', fontWeight: '800', color: m.severity === 'CRITICAL' ? '#FF6B6B' : '#FFFFFF', lineHeight: '1.2' }}>
                 {m.value}
               </div>
-              <div style={{ fontSize: '0.6rem', color: 'rgba(225, 220, 201, 0.6)', textTransform: 'uppercase', marginTop: '0.1rem' }}>
+              <div style={{ fontSize: '0.6rem', color: '#E1DCC9', textTransform: 'uppercase', marginTop: '0.1rem' }}>
                 {m.sub || m.severity}
               </div>
             </div>
@@ -466,11 +467,11 @@ function renderFormattedInfographicPreview(rawContent, result, selectedDoc) {
 
       {/* Threat / Situation Overview Box */}
       {(info.summary || overviewSec) && (
-        <div style={{ background: '#1F150C', border: '1px solid rgba(225, 220, 201, 0.18)', borderRadius: '4px', padding: '0.45rem 0.6rem' }}>
-          <div style={{ fontSize: '0.66rem', color: '#E1DCC9', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.2rem' }}>
+        <div style={{ background: '#121212', border: '1.5px solid #DFD0B8', borderRadius: '4px', padding: '0.45rem 0.6rem' }}>
+          <div style={{ fontSize: '0.66rem', color: '#FFFFFF', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.2rem' }}>
             OVERVIEW
           </div>
-          <div style={{ fontSize: '0.76rem', color: 'rgba(225, 220, 201, 0.88)', lineHeight: '1.4' }}>
+          <div style={{ fontSize: '0.76rem', color: '#E1DCC9', lineHeight: '1.4' }}>
             {info.summary || overviewSec?.items?.[0]}
           </div>
         </div>
@@ -478,25 +479,25 @@ function renderFormattedInfographicPreview(rawContent, result, selectedDoc) {
 
       {/* Attack / Process Flow Progression */}
       {flowSec && (flowSec.steps || flowSec.items) && (
-        <div style={{ background: '#1F150C', border: '1px solid rgba(225, 220, 201, 0.18)', borderRadius: '4px', padding: '0.45rem 0.6rem' }}>
-          <div style={{ fontSize: '0.66rem', color: '#E1DCC9', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.3rem' }}>
+        <div style={{ background: '#121212', border: '1.5px solid #DFD0B8', borderRadius: '4px', padding: '0.45rem 0.6rem' }}>
+          <div style={{ fontSize: '0.66rem', color: '#FFFFFF', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: '0.3rem' }}>
             {flowSec.title || 'ATTACK PROGRESSION FLOW'}
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', flexWrap: 'wrap' }}>
             {(flowSec.steps || flowSec.items).map((st, sIdx, arr) => (
               <React.Fragment key={sIdx}>
                 <span style={{ 
-                  background: '#150E08', 
-                  border: '1px solid #412D15', 
+                  background: '#000000', 
+                  border: '1px solid #DFD0B8', 
                   borderRadius: '3px', 
                   padding: '0.15rem 0.4rem', 
                   fontSize: '0.68rem', 
                   fontWeight: '600',
-                  color: '#E1DCC9'
+                  color: '#FFFFFF'
                 }}>
                   {st.step ? `${st.step} ` : ''}{st.name || st.title || (typeof st === 'string' ? st : '')}
                 </span>
-                {sIdx < arr.length - 1 && <span style={{ color: '#E1DCC9', fontSize: '0.75rem' }}>➔</span>}
+                {sIdx < arr.length - 1 && <span style={{ color: '#DFD0B8', fontSize: '0.75rem' }}>➔</span>}
               </React.Fragment>
             ))}
           </div>
@@ -506,32 +507,32 @@ function renderFormattedInfographicPreview(rawContent, result, selectedDoc) {
       {/* Affected Systems / Indicators / Response Summary */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.4rem' }}>
         {systemsSec && (
-          <div style={{ background: '#1F150C', border: '1px solid rgba(225, 220, 201, 0.18)', borderRadius: '4px', padding: '0.4rem 0.55rem' }}>
-            <div style={{ fontSize: '0.64rem', color: '#E1DCC9', fontWeight: '700', textTransform: 'uppercase', marginBottom: '0.2rem' }}>
+          <div style={{ background: '#121212', border: '1px solid #DFD0B8', borderRadius: '4px', padding: '0.4rem 0.55rem' }}>
+            <div style={{ fontSize: '0.64rem', color: '#FFFFFF', fontWeight: '700', textTransform: 'uppercase', marginBottom: '0.2rem' }}>
               AFFECTED SYSTEMS
             </div>
-            <div style={{ fontSize: '0.7rem', color: 'rgba(225, 220, 201, 0.8)' }}>
+            <div style={{ fontSize: '0.7rem', color: '#E1DCC9' }}>
               {systemsSec.items?.map(i => i.title || i).slice(0, 2).join(', ')}
               {systemsSec.items?.length > 2 && ` +${systemsSec.items.length - 2} more`}
             </div>
           </div>
         )}
         {iocSec && (
-          <div style={{ background: '#1F150C', border: '1px solid rgba(225, 220, 201, 0.18)', borderRadius: '4px', padding: '0.4rem 0.55rem' }}>
-            <div style={{ fontSize: '0.64rem', color: '#E1DCC9', fontWeight: '700', textTransform: 'uppercase', marginBottom: '0.2rem' }}>
+          <div style={{ background: '#121212', border: '1px solid #DFD0B8', borderRadius: '4px', padding: '0.4rem 0.55rem' }}>
+            <div style={{ fontSize: '0.64rem', color: '#FFFFFF', fontWeight: '700', textTransform: 'uppercase', marginBottom: '0.2rem' }}>
               KEY INDICATORS
             </div>
-            <div style={{ fontSize: '0.7rem', color: 'rgba(225, 220, 201, 0.8)', fontFamily: 'monospace' }}>
+            <div style={{ fontSize: '0.7rem', color: '#E1DCC9', fontFamily: 'monospace' }}>
               {iocSec.items?.length || 0} Indicators Logged
             </div>
           </div>
         )}
         {respSec && (
-          <div style={{ background: '#1F150C', border: '1px solid rgba(225, 220, 201, 0.18)', borderRadius: '4px', padding: '0.4rem 0.55rem' }}>
-            <div style={{ fontSize: '0.64rem', color: '#E1DCC9', fontWeight: '700', textTransform: 'uppercase', marginBottom: '0.2rem' }}>
+          <div style={{ background: '#121212', border: '1px solid #DFD0B8', borderRadius: '4px', padding: '0.4rem 0.55rem' }}>
+            <div style={{ fontSize: '0.64rem', color: '#FFFFFF', fontWeight: '700', textTransform: 'uppercase', marginBottom: '0.2rem' }}>
               RESPONSE DIRECTIVES
             </div>
-            <div style={{ fontSize: '0.7rem', color: '#10B981', fontWeight: '600' }}>
+            <div style={{ fontSize: '0.7rem', color: '#DFD0B8', fontWeight: '600' }}>
               ✓ {respSec.items?.length || 0} Prioritized Actions
             </div>
           </div>
@@ -549,28 +550,28 @@ function renderFormattedPresentationPreview(rawContent, result, selectedDoc) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
       {/* Header */}
-      <div style={{ fontSize: '0.88rem', fontWeight: '800', color: '#E1DCC9', letterSpacing: '0.04em' }}>
+      <div style={{ fontSize: '0.88rem', fontWeight: '800', color: '#FFFFFF', letterSpacing: '0.04em' }}>
         PRESENTATION SLIDES & NOTES
       </div>
 
       {/* Title */}
       <div style={{ marginTop: '0.1rem' }}>
-        <div style={{ fontSize: '0.7rem', color: 'rgba(225, 220, 201, 0.72)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '600' }}>Title</div>
-        <div style={{ fontSize: '0.86rem', fontWeight: '700', color: '#E1DCC9', lineHeight: '1.35' }}>
+        <div style={{ fontSize: '0.7rem', color: '#DFD0B8', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '600' }}>Title</div>
+        <div style={{ fontSize: '0.86rem', fontWeight: '700', color: '#FFFFFF', lineHeight: '1.35' }}>
           {pres.title || "Executive Briefing Deck"}
         </div>
       </div>
 
       {/* Slides Count Badge */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.15rem' }}>
-        <div style={{ background: '#1F150C', border: '1px solid rgba(225, 220, 201, 0.72)', borderRadius: '4px', padding: '0.2rem 0.55rem', fontSize: '0.72rem' }}>
-          <span style={{ color: 'rgba(225, 220, 201, 0.72)', marginRight: '0.35rem' }}>Slides</span>
-          <strong style={{ color: '#E1DCC9' }}>{pres.slide_count || slides.length} Slides</strong>
+        <div style={{ background: '#121212', border: '1px solid #DFD0B8', borderRadius: '4px', padding: '0.2rem 0.55rem', fontSize: '0.72rem' }}>
+          <span style={{ color: '#DFD0B8', marginRight: '0.35rem' }}>Slides</span>
+          <strong style={{ color: '#FFFFFF' }}>{pres.slide_count || slides.length} Slides</strong>
         </div>
       </div>
 
       {/* Divider */}
-      <div style={{ borderBottom: '1px solid rgba(172, 186, 196, 0.25)', margin: '0.4rem 0' }} />
+      <div style={{ borderBottom: '1px solid rgba(223, 208, 184, 0.25)', margin: '0.4rem 0' }} />
 
       {/* Slide Outline */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.55rem', marginTop: '0.1rem' }}>
@@ -594,13 +595,13 @@ function renderFormattedPresentationPreview(rawContent, result, selectedDoc) {
       </div>
 
       {/* Divider */}
-      <div style={{ borderBottom: '1px solid rgba(172, 186, 196, 0.25)', margin: '0.4rem 0' }} />
+      <div style={{ borderBottom: '1px solid rgba(223, 208, 184, 0.25)', margin: '0.4rem 0' }} />
 
       {/* Speaker Notes Status */}
       <div style={{ fontSize: '0.74rem', fontWeight: '800', color: '#E1DCC9', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
         SPEAKER NOTES
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', color: '#10B981', fontSize: '0.8rem', fontWeight: '600' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', color: '#DFD0B8', fontSize: '0.8rem', fontWeight: '600' }}>
         <Check size={14} /> Notes generated for all slides
       </div>
     </div>
@@ -1290,28 +1291,28 @@ export default function ArtifactsWorkbench({
         alignItems: 'center',
         gap: '0.6rem',
         padding: '0.4rem 0.85rem',
-        background: '#1F150C',
-        border: '1px solid rgba(225, 220, 201, 0.25)',
+        background: '#121212',
+        border: '1px solid #DFD0B8',
         borderRadius: 'var(--radius-sm)',
         marginBottom: '1.25rem',
         fontSize: '0.8rem',
-        color: 'rgba(225, 220, 201, 0.85)'
+        color: '#E1DCC9'
       }}>
-        <span style={{ color: 'rgba(225, 220, 201, 0.65)', fontWeight: '800', letterSpacing: '0.05em', fontSize: '0.72rem' }}>SOURCE:</span>
-        <span style={{ color: '#E1DCC9', fontWeight: '700' }}>{selectedDoc?.title || 'Selected Source Document'}</span>
+        <span style={{ color: '#DFD0B8', fontWeight: '800', letterSpacing: '0.05em', fontSize: '0.72rem' }}>SOURCE:</span>
+        <span style={{ color: '#FFFFFF', fontWeight: '700' }}>{selectedDoc?.title || 'Selected Source Document'}</span>
       </div>
 
       {completedOutputs.length === 0 ? (
         <div style={{
           textAlign: 'center',
           padding: '3rem 1.5rem',
-          background: '#1F150C',
+          background: '#121212',
           borderRadius: 'var(--radius-md)',
-          border: '1.5px solid rgba(225, 220, 201, 0.72)'
+          border: '1.5px solid #DFD0B8'
         }}>
-          <Sparkles size={36} color="#E1DCC9" style={{ marginBottom: '1rem' }} />
-          <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: '#E1DCC9' }}>No Generated Deliverables Yet</h3>
-          <p style={{ fontSize: '0.85rem', color: 'rgba(225, 220, 201, 0.72)' }}>
+          <Sparkles size={36} color="#DFD0B8" style={{ marginBottom: '1rem' }} />
+          <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: '#FFFFFF' }}>No Generated Deliverables Yet</h3>
+          <p style={{ fontSize: '0.85rem', color: '#E1DCC9' }}>
             Click "Run Agentic Orchestration" above to trigger parallel micro-agents and validation checks.
           </p>
         </div>
@@ -1344,22 +1345,22 @@ export default function ArtifactsWorkbench({
                     justifyContent: 'center',
                     textAlign: 'center',
                     gap: '1rem',
-                    background: '#1F150C',
-                    borderColor: 'rgba(225, 220, 201, 0.4)',
+                    background: '#121212',
+                    borderColor: '#DFD0B8',
                     borderStyle: 'dashed',
                     minHeight: '340px'
                   }}
                 >
-                  <div style={{ fontSize: '0.92rem', fontWeight: '800', color: '#E1DCC9', letterSpacing: '0.05em' }}>
+                  <div style={{ fontSize: '0.92rem', fontWeight: '800', color: '#FFFFFF', letterSpacing: '0.05em' }}>
                     SOURCE CHANGED
                   </div>
-                  <p style={{ fontSize: '0.82rem', color: 'rgba(225, 220, 201, 0.72)', maxWidth: '320px', lineHeight: '1.45' }}>
-                    Please regenerate outputs for the selected source: <strong style={{ color: '#E1DCC9' }}>{selectedDoc?.title}</strong>
+                  <p style={{ fontSize: '0.82rem', color: '#E1DCC9', maxWidth: '320px', lineHeight: '1.45' }}>
+                    Please regenerate outputs for the selected source: <strong style={{ color: '#FFFFFF' }}>{selectedDoc?.title}</strong>
                   </p>
                   <button
                     className="btn btn-primary btn-sm"
                     onClick={onRunOrchestration}
-                    style={{ background: '#E1DCC9', color: '#000000', fontWeight: '800', padding: '0.45rem 1.15rem' }}
+                    style={{ background: '#DFD0B8', color: '#000000', fontWeight: '800', padding: '0.45rem 1.15rem' }}
                   >
                     Generate Outputs
                   </button>
@@ -1376,8 +1377,8 @@ export default function ArtifactsWorkbench({
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '1rem',
-                  background: '#1F150C',
-                  borderColor: 'rgba(225, 220, 201, 0.72)'
+                  background: '#121212',
+                  borderColor: '#DFD0B8'
                 }}
               >
                 {/* Standardized Reusable Agent Card Header */}
@@ -1408,14 +1409,14 @@ export default function ArtifactsWorkbench({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  background: '#412D15',
+                  background: '#000000',
                   padding: '0.6rem 0.85rem',
                   borderRadius: 'var(--radius-sm)',
                   fontSize: '0.78rem',
-                  color: 'rgba(225, 220, 201, 0.72)',
+                  color: '#E1DCC9',
                   gap: '0.75rem',
                   flexWrap: 'wrap',
-                  border: '1px solid rgba(225, 220, 201, 0.72)'
+                  border: '1px solid #DFD0B8'
                 }}>
                   <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                     {formatId === 'exec_summary' ? (

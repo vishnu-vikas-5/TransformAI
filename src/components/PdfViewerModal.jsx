@@ -21,9 +21,10 @@ import { downloadBlob } from '../utils/exportUtils';
  * 
  * Strict 4-Color Theme:
  * - BLACK: #000000
- * - DARK BROWN: #1F150C
- * - BROWN: #412D15
+ * - ONYX: #121212
+ * - SAND GOLD: #DFD0B8
  * - CREAM: #E1DCC9
+ * - WHITE: #FFFFFF
  * 
  * Features:
  * - Mounted via React Portal (createPortal) directly to document.body
@@ -353,11 +354,11 @@ export default function PDFPreviewModal({
                 width: '34px', 
                 height: '34px', 
                 borderRadius: '6px',
-                backgroundColor: '#1F150C',
-                border: '1px solid rgba(225, 220, 201, 0.25)'
+                backgroundColor: '#121212',
+                border: '1.5px solid #DFD0B8'
               }}
             >
-              <FileText size={17} style={{ color: '#E1DCC9' }} />
+              <FileText size={17} style={{ color: '#DFD0B8' }} />
             </div>
 
             <div>
@@ -365,7 +366,7 @@ export default function PDFPreviewModal({
                 <h3 
                   id="syntaxx-pdf-title"
                   style={{ 
-                    color: '#E1DCC9', 
+                    color: '#FFFFFF', 
                     fontSize: '0.95rem', 
                     fontWeight: '700', 
                     letterSpacing: '0.02em',
@@ -431,7 +432,7 @@ export default function PDFPreviewModal({
         </div>
 
         {/* ================================================================= */}
-        {/* 2. PDF VIEWER WORKSPACE: #412D15                                 */}
+        {/* 2. PDF VIEWER WORKSPACE: #000000                                 */}
         {/* ================================================================= */}
         <div ref={workspaceRef} className="syntaxx-pdf-workspace">
           {/* A. Generation/Loading Error State */}
@@ -441,18 +442,18 @@ export default function PDFPreviewModal({
                 margin: 'auto',
                 maxWidth: '520px',
                 padding: '2.5rem 2rem',
-                backgroundColor: '#1F150C',
+                backgroundColor: '#121212',
                 borderRadius: '12px',
-                border: '1px solid rgba(225, 220, 201, 0.25)',
+                border: '1.5px solid #DFD0B8',
                 textAlign: 'center',
-                boxShadow: '0 16px 40px rgba(0, 0, 0, 0.6)',
+                boxShadow: '0 16px 40px rgba(0, 0, 0, 0.8)',
               }}
             >
-              <AlertCircle size={40} style={{ color: '#E1DCC9', margin: '0 auto 1rem auto' }} />
-              <h4 style={{ color: '#E1DCC9', fontSize: '1.1rem', fontWeight: '700', letterSpacing: '0.04em', marginBottom: '0.5rem' }}>
+              <AlertCircle size={40} style={{ color: '#DFD0B8', margin: '0 auto 1rem auto' }} />
+              <h4 style={{ color: '#FFFFFF', fontSize: '1.1rem', fontWeight: '700', letterSpacing: '0.04em', marginBottom: '0.5rem' }}>
                 PDF PREVIEW UNAVAILABLE
               </h4>
-              <p style={{ color: 'rgba(225, 220, 201, 0.75)', fontSize: '0.85rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
+              <p style={{ color: '#E1DCC9', fontSize: '0.85rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
                 {error}
               </p>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
@@ -477,18 +478,18 @@ export default function PDFPreviewModal({
                 margin: 'auto',
                 maxWidth: '520px',
                 padding: '2.5rem 2rem',
-                backgroundColor: '#1F150C',
+                backgroundColor: '#121212',
                 borderRadius: '12px',
-                border: '1px solid rgba(225, 220, 201, 0.25)',
+                border: '1.5px solid #DFD0B8',
                 textAlign: 'center',
-                boxShadow: '0 16px 40px rgba(0, 0, 0, 0.6)',
+                boxShadow: '0 16px 40px rgba(0, 0, 0, 0.8)',
               }}
             >
-              <AlertCircle size={40} style={{ color: '#E1DCC9', margin: '0 auto 1rem auto' }} />
-              <h4 style={{ color: '#E1DCC9', fontSize: '1.1rem', fontWeight: '700', letterSpacing: '0.04em', marginBottom: '0.5rem' }}>
+              <AlertCircle size={40} style={{ color: '#DFD0B8', margin: '0 auto 1rem auto' }} />
+              <h4 style={{ color: '#FFFFFF', fontSize: '1.1rem', fontWeight: '700', letterSpacing: '0.04em', marginBottom: '0.5rem' }}>
                 PDF PREVIEW UNAVAILABLE
               </h4>
-              <p style={{ color: 'rgba(225, 220, 201, 0.75)', fontSize: '0.85rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
+              <p style={{ color: '#E1DCC9', fontSize: '0.85rem', marginBottom: '1.5rem', lineHeight: 1.5 }}>
                 The PDF was generated successfully, but the preview could not be rendered.
               </p>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
@@ -510,26 +511,26 @@ export default function PDFPreviewModal({
             </div>
           )}
 
-          {/* C. Loading State Matching SyntaxX Spec */}
+          {/* C. Loading State Matching Spec */}
           {!error && !renderError && isDocLoading && (
             <div 
               style={{
                 margin: 'auto',
                 maxWidth: '440px',
                 padding: '2.5rem 2rem',
-                backgroundColor: '#1F150C',
+                backgroundColor: '#121212',
                 borderRadius: '12px',
-                border: '1px solid rgba(225, 220, 201, 0.25)',
+                border: '1.5px solid #DFD0B8',
                 textAlign: 'center',
-                boxShadow: '0 16px 40px rgba(0, 0, 0, 0.6)',
+                boxShadow: '0 16px 40px rgba(0, 0, 0, 0.8)',
               }}
             >
-              <Loader2 size={36} className="animate-spin" style={{ color: '#E1DCC9', margin: '0 auto 1rem auto' }} />
-              <h4 style={{ color: '#E1DCC9', fontSize: '1.05rem', fontWeight: '700', letterSpacing: '0.03em', marginBottom: '0.75rem' }}>
+              <Loader2 size={36} className="animate-spin" style={{ color: '#DFD0B8', margin: '0 auto 1rem auto' }} />
+              <h4 style={{ color: '#FFFFFF', fontSize: '1.05rem', fontWeight: '700', letterSpacing: '0.03em', marginBottom: '0.75rem' }}>
                 Preparing PDF...
               </h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', fontSize: '0.8rem', color: 'rgba(225, 220, 201, 0.7)' }}>
-                <span>• Applying SyntaxX design</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', fontSize: '0.8rem', color: '#E1DCC9' }}>
+                <span>• Applying TransformAI design</span>
                 <span>• Rendering document</span>
                 <span>• Preparing preview</span>
               </div>
@@ -552,7 +553,7 @@ export default function PDFPreviewModal({
         </div>
 
         {/* ================================================================= */}
-        {/* 3. VIEWER CONTROLS BAR: #1F150C                                  */}
+        {/* 3. VIEWER CONTROLS BAR: #121212                                  */}
         {/* ================================================================= */}
         <div className="syntaxx-pdf-controls">
           {/* Zoom Controls */}
@@ -599,8 +600,8 @@ export default function PDFPreviewModal({
               className="syntaxx-btn-secondary"
               style={{ 
                 padding: '0.4rem 0.75rem',
-                backgroundColor: isFitWidth ? '#412D15' : 'transparent',
-                borderColor: isFitWidth ? '#E1DCC9' : 'rgba(225, 220, 201, 0.35)',
+                backgroundColor: isFitWidth ? '#181818' : 'transparent',
+                borderColor: isFitWidth ? '#DFD0B8' : 'rgba(223, 208, 184, 0.35)',
               }}
               title="Fit to Workspace Width"
             >
@@ -624,12 +625,12 @@ export default function PDFPreviewModal({
               style={{ 
                 fontSize: '0.8rem', 
                 fontFamily: 'var(--font-mono, monospace)', 
-                color: '#E1DCC9',
+                color: '#FFFFFF',
                 fontWeight: '700',
                 padding: '0.35rem 0.75rem',
                 borderRadius: '6px',
-                backgroundColor: '#412D15',
-                border: '1px solid rgba(225, 220, 201, 0.2)'
+                backgroundColor: '#000000',
+                border: '1.5px solid #DFD0B8'
               }}
             >
               Page {currentPage} of {totalPages}

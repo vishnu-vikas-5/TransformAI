@@ -779,7 +779,7 @@ def build_advisory_pdf(intel: dict) -> bytes:
         [Paragraph("Priority Tier", styles['TableHeader']), Paragraph("Mandatory Operational Directives", styles['TableHeader'])],
         [Paragraph("P0 &mdash; IMMEDIATE<br/><font size='5.8' color='#8B1E1E'><b>CONTAINMENT</b></font>", styles['BodyBold']), Paragraph(p0_acts or "Immediate perimeter isolation and credential invalidation.", styles['TableText'])],
         [Paragraph("P1 &mdash; 24&ndash;72h<br/><font size='5.8' color='#A66A1E'><b>REMEDIATION</b></font>", styles['BodyBold']), Paragraph(p1_acts or "Deploy patched firmware and conduct host triage.", styles['TableText'])],
-        [Paragraph("HARDENING<br/><font size='5.8' color='#412D15'><b>STRATEGIC</b></font>", styles['BodyBold']), Paragraph(hard_acts or "Enforce network segmentation and continuous monitoring.", styles['TableText'])]
+        [Paragraph("HARDENING<br/><font size='5.8' color='#121212'><b>STRATEGIC</b></font>", styles['BodyBold']), Paragraph(hard_acts or "Enforce network segmentation and continuous monitoring.", styles['TableText'])]
     ]
     rec_table = Table(rec_rows, colWidths=[95, CONTENT_WIDTH - 95])
     rec_table.setStyle([

@@ -282,11 +282,13 @@ export default function VideoPlayerModal({
         style={{ 
           maxWidth: '960px', 
           width: '95%',
-          background: '#1F150C', 
-          borderColor: '#E1DCC9',
+          background: '#121212', 
+          borderColor: '#DFD0B8',
+          borderWidth: '1.5px',
+          borderStyle: 'solid',
           borderRadius: '12px',
           padding: '1.75rem',
-          boxShadow: '0 20px 50px rgba(0,0,0,0.6)'
+          boxShadow: '0 24px 60px rgba(0,0,0,0.9)'
         }} 
         onClick={(e) => e.stopPropagation()}
       >
@@ -296,7 +298,7 @@ export default function VideoPlayerModal({
           alignItems: 'center', 
           justifyContent: 'space-between', 
           marginBottom: '1.25rem', 
-          borderBottom: '1.5px solid rgba(225, 220, 201, 0.72)', 
+          borderBottom: '1.5px solid rgba(223, 208, 184, 0.25)', 
           paddingBottom: '0.85rem' 
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -304,7 +306,7 @@ export default function VideoPlayerModal({
               width: '38px', 
               height: '38px', 
               borderRadius: '8px', 
-              background: '#E1DCC9', 
+              background: '#DFD0B8', 
               display: 'flex', 
               alignItems: 'center', 
               justifyContent: 'center',
@@ -313,7 +315,7 @@ export default function VideoPlayerModal({
               <Film size={22} />
             </div>
             <div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#E1DCC9', margin: 0 }}>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>
                 Video Package Production Studio
               </h3>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginTop: '0.35rem' }}>
@@ -321,7 +323,7 @@ export default function VideoPlayerModal({
                   fontSize: '0.68rem', 
                   fontWeight: '800', 
                   color: '#000000', 
-                  background: '#E1DCC9',
+                  background: '#DFD0B8',
                   padding: '1px 6px',
                   borderRadius: '3px',
                   letterSpacing: '0.05em'
@@ -338,7 +340,7 @@ export default function VideoPlayerModal({
           <button 
             className="btn btn-secondary btn-sm" 
             onClick={onClose} 
-            style={{ padding: '0.45rem', borderColor: 'rgba(225, 220, 201, 0.72)' }}
+            style={{ padding: '0.45rem', borderColor: '#DFD0B8', color: '#DFD0B8' }}
             title="Close Video Studio"
           >
             <X size={18} />
@@ -352,23 +354,23 @@ export default function VideoPlayerModal({
           <div style={{
             background: '#000000',
             borderRadius: '10px',
-            border: '1.5px solid rgba(225, 220, 201, 0.72)',
+            border: '1.5px solid #DFD0B8',
             padding: '2rem',
             marginBottom: '1rem',
             textAlign: 'left'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
               <div>
-                <span className="badge" style={{ background: '#E1DCC9', color: '#000000', fontWeight: '800', fontSize: '0.75rem', marginBottom: '0.4rem' }}>
+                <span className="badge" style={{ background: '#DFD0B8', color: '#000000', fontWeight: '800', fontSize: '0.75rem', marginBottom: '0.4rem' }}>
                   RENDERING IN PROGRESS
                 </span>
-                <h4 style={{ fontSize: '1.15rem', color: '#E1DCC9', margin: 0, fontWeight: '700' }}>
+                <h4 style={{ fontSize: '1.15rem', color: '#FFFFFF', margin: 0, fontWeight: '700' }}>
                   {statusMessage}
                 </h4>
               </div>
 
               <div style={{ textAlign: 'right' }}>
-                <span style={{ fontSize: '1.4rem', fontWeight: '800', color: '#E1DCC9' }}>
+                <span style={{ fontSize: '1.4rem', fontWeight: '800', color: '#FFFFFF' }}>
                   {renderPercent}%
                 </span>
               </div>
@@ -378,16 +380,16 @@ export default function VideoPlayerModal({
             <div style={{ 
               width: '100%', 
               height: '8px', 
-              background: '#1F150C', 
+              background: '#121212', 
               borderRadius: '4px', 
               overflow: 'hidden',
               marginBottom: '1.75rem',
-              border: '1px solid rgba(225, 220, 201, 0.25)'
+              border: '1px solid rgba(223, 208, 184, 0.25)'
             }}>
               <div style={{ 
                 width: `${renderPercent}%`, 
                 height: '100%', 
-                background: 'linear-gradient(90deg, #412D15, #E1DCC9)', 
+                background: 'linear-gradient(90deg, #121212, #DFD0B8)', 
                 transition: 'width 0.4s ease' 
               }} />
             </div>
@@ -407,23 +409,23 @@ export default function VideoPlayerModal({
                       alignItems: 'center',
                       gap: '0.65rem',
                       padding: '0.65rem 0.85rem',
-                      background: isCurrent ? 'rgba(65, 45, 21, 0.4)' : '#1F150C',
+                      background: isCurrent ? 'rgba(223, 208, 184, 0.15)' : '#121212',
                       borderRadius: '6px',
-                      border: `1px solid ${isCurrent ? '#E1DCC9' : isDone ? '#235E35' : 'rgba(225, 220, 201, 0.25)'}`
+                      border: `1.5px solid ${isCurrent ? '#DFD0B8' : isDone ? '#235E35' : 'rgba(223, 208, 184, 0.25)'}`
                     }}
                   >
                     {isDone ? (
                       <CheckCircle2 size={16} color="#235E35" />
                     ) : isCurrent ? (
-                      <RefreshCw size={15} color="#E1DCC9" className="animate-spin" />
+                      <RefreshCw size={15} color="#DFD0B8" className="animate-spin" />
                     ) : (
-                      <div style={{ width: '15px', height: '15px', borderRadius: '50%', border: '1.5px solid rgba(225, 220, 201, 0.72)' }} />
+                      <div style={{ width: '15px', height: '15px', borderRadius: '50%', border: '1.5px solid #DFD0B8' }} />
                     )}
 
                     <span style={{ 
                       fontSize: '0.825rem', 
                       fontWeight: isCurrent ? '700' : '500', 
-                      color: isCurrent ? '#E1DCC9' : isDone ? '#E1DCC9' : 'rgba(225, 220, 201, 0.72)' 
+                      color: isCurrent ? '#FFFFFF' : isDone ? '#FFFFFF' : '#E1DCC9'
                     }}>
                       {stg.label} {isDone ? '✓' : isCurrent && stg.id === 'rendering_video' ? `${renderPercent}%` : isCurrent ? '...' : ''}
                     </span>
@@ -536,8 +538,8 @@ export default function VideoPlayerModal({
               borderRadius: '10px', 
               overflow: 'hidden',
               background: '#000000',
-              border: '2px solid #E1DCC9',
-              boxShadow: '0 12px 35px rgba(0, 0, 0, 0.6)',
+              border: '1.5px solid #DFD0B8',
+              boxShadow: '0 12px 35px rgba(0, 0, 0, 0.8)',
               marginBottom: '1rem'
             }}>
               <video
@@ -558,14 +560,14 @@ export default function VideoPlayerModal({
               background: '#000000',
               padding: '0.75rem 1rem',
               borderRadius: '8px',
-              border: '1px solid rgba(225, 220, 201, 0.72)',
+              border: '1px solid #DFD0B8',
               marginBottom: '1.25rem',
               fontSize: '0.76rem',
-              color: 'rgba(225, 220, 201, 0.72)'
+              color: '#E1DCC9'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.4rem' }}>
-                <ShieldCheck size={14} color="#E1DCC9" />
-                <span style={{ fontWeight: '700', color: '#E1DCC9' }}>
+                <ShieldCheck size={14} color="#DFD0B8" />
+                <span style={{ fontWeight: '700', color: '#FFFFFF' }}>
                   Pre-Export Intelligence & Integrity Validation:
                 </span>
                 <span style={{ color: '#235E35', fontWeight: '700' }}>✓ 100% Passed</span>
@@ -592,7 +594,7 @@ export default function VideoPlayerModal({
                 <button 
                   className="btn btn-secondary btn-sm" 
                   onClick={togglePlay}
-                  style={{ fontWeight: '700' }}
+                  style={{ fontWeight: '700', borderColor: '#DFD0B8', color: '#FFFFFF' }}
                 >
                   {isPlaying ? <Pause size={14} /> : <Play size={14} />}
                   {isPlaying ? 'Pause Preview' : '▶ Preview'}
@@ -601,6 +603,7 @@ export default function VideoPlayerModal({
                 <button 
                   className="btn btn-secondary btn-sm" 
                   onClick={handleRetry}
+                  style={{ borderColor: '#DFD0B8', color: '#FFFFFF' }}
                   title="Re-run video composition pipeline"
                 >
                   <RefreshCw size={13} /> Re-render
@@ -614,7 +617,7 @@ export default function VideoPlayerModal({
                   download={displayFilename || 'Executive-Video-Advisory.mp4'}
                   className="btn btn-primary btn-sm"
                   style={{
-                    background: '#E1DCC9',
+                    background: '#DFD0B8',
                     color: '#000000',
                     fontWeight: '800',
                     border: 'none',
@@ -633,8 +636,8 @@ export default function VideoPlayerModal({
                     download={(displayFilename || 'Executive-Video-Advisory.mp4').replace('.mp4', '.srt')}
                     className="btn btn-secondary btn-sm"
                     style={{
-                      borderColor: '#E1DCC9',
-                      color: '#E1DCC9',
+                      borderColor: '#DFD0B8',
+                      color: '#DFD0B8',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '0.45rem'

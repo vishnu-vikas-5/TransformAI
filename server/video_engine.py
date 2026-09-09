@@ -41,16 +41,16 @@ except ImportError:
         RGB_ACCENT_GREEN, RGB_BORDER, RGB_BG_INNER
     )
 
-BG_DARK = RGB_BG_DARK        # #000000 black
-BG_CARD = RGB_BG_CARD        # #1F150C dark brown
-TEXT_LIGHT = RGB_TEXT_LIGHT  # #E1DCC9 cream
-TEXT_MUTED = RGB_TEXT_MUTED  # warm muted cream
-ACCENT_GOLD = RGB_ACCENT_GOLD# #E1DCC9 cream
-ACCENT_RED = RGB_ACCENT_RED  # #8B1E1E alert red
-ACCENT_AMBER = RGB_ACCENT_AMBER # #A66A1E warning amber
-ACCENT_CYAN = RGB_ACCENT_CYAN  # #E1DCC9 cream
-ACCENT_GREEN = RGB_ACCENT_GREEN # #235E35 success green
-BORDER_COLOR = RGB_BORDER    # #412D15 deep brown
+BG_DARK = RGB_BG_DARK        # #000000 Pure Obsidian Black
+BG_CARD = RGB_BG_CARD        # #121212 Dark Onyx Surface
+TEXT_LIGHT = RGB_TEXT_LIGHT  # #FFFFFF Pure Crisp White
+TEXT_MUTED = RGB_TEXT_MUTED  # #E1DCC9 Warm Cream Sand
+ACCENT_GOLD = RGB_ACCENT_GOLD# #DFD0B8 Warm Sand Gold
+ACCENT_RED = RGB_ACCENT_RED  # #8B1E1E Alert Red
+ACCENT_AMBER = RGB_ACCENT_AMBER # #DFD0B8 Warm Sand Gold
+ACCENT_CYAN = RGB_ACCENT_CYAN  # #DFD0B8 Warm Sand Gold
+ACCENT_GREEN = RGB_ACCENT_GREEN # #235E35 Success Green
+BORDER_COLOR = RGB_BORDER    # #DFD0B8 Warm Sand Gold Border
 
 
 def get_default_font(size: int, bold: bool = False):

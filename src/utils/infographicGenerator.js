@@ -6,7 +6,8 @@
  * - Pure White document background
  * - Cream filled section banners (#EBE6D8)
  * - Thin brown borders (#B8B2A0 / #9C9286)
- * - Dark brown / black typography (#000000, #1F150C)
+ * - Obsidian Black / Onyx typography (#000000, #121212)
+ * - Warm Sand Gold accents (#DFD0B8)
  * - Restrained alerts (#8B1E1E for Critical, #A66A1E for Amber)
  * - Modular components: renderHeader, renderMetadataGrid, renderSummary,
  *   renderKeyFindings, renderTechnicalGrid, renderAttackFlow, renderResponse, renderFooter
@@ -163,19 +164,21 @@ export async function generateInfographicPdfBlob(inputModel) {
   const contentWidth = pageWidth - marginX * 2; // 182mm
   const bottomMargin = 280;
 
-  // SyntaxX Document Editorial Palette
-  const cBlack = [0, 0, 0];
-  const cDarkBrown = [31, 21, 12];
-  const cDeepBrown = [65, 45, 21];
-  const cCream = [225, 220, 201];
-  const cSlate100 = [235, 230, 216]; // #EBE6D8 (Section Header Fill)
-  const cSlate50 = [249, 248, 245];  // Pale Cream row fill
-  const cBorder = [184, 178, 160];   // #B8B2A0 (Thin border)
-  const cBorderFrame = [156, 146, 134]; // #9C9286 (Outer frame)
-  const cRed = [139, 30, 30];        // Alert Red
-  const cAmber = [166, 106, 30];      // Amber TLP
-  const cMuted = [101, 84, 66];      // Secondary text
-  const cWhite = [255, 255, 255];
+  // Official Reference Palette: Luxury Obsidian, Crisp White & Warm Sand Gold
+  const cBlack = [0, 0, 0];            // #000000 Pure Obsidian Black
+  const cOnyx = [18, 18, 18];          // #121212 Dark Onyx Surface
+  const cDarkBrown = cOnyx;            // Alias
+  const cDeepBrown = [24, 24, 24];     // #181818
+  const cSandGold = [223, 208, 184];   // #DFD0B8 Warm Sand Gold
+  const cCream = [225, 220, 201];      // #E1DCC9 Warm Cream Sand
+  const cSlate100 = [245, 242, 233];   // Light Cream header fill
+  const cSlate50 = [250, 250, 248];    // Pale Cream row fill
+  const cBorder = [223, 208, 184];     // #DFD0B8 Warm Sand Gold Border
+  const cBorderFrame = [223, 208, 184];// #DFD0B8 Outer Frame Border
+  const cRed = [139, 30, 30];          // Alert Red
+  const cAmber = [223, 208, 184];      // #DFD0B8 Warm Sand Gold
+  const cMuted = [160, 160, 160];      // #A0A0A0 Muted Grey
+  const cWhite = [255, 255, 255];      // #FFFFFF Pure Crisp White
 
   let currentY = 16;
 

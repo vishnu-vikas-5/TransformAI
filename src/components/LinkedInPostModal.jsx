@@ -94,7 +94,7 @@ export default function LinkedInPostModal({ isOpen, onClose, postData, docTitle 
       left: 0,
       right: 0,
       bottom: 0,
-      background: 'rgba(0, 0, 0, 0.85)',
+      background: 'rgba(0, 0, 0, 0.94)',
       backdropFilter: 'blur(8px)',
       display: 'flex',
       alignItems: 'center',
@@ -103,21 +103,21 @@ export default function LinkedInPostModal({ isOpen, onClose, postData, docTitle 
       padding: '1.5rem'
     }}>
       <div style={{
-        background: '#1F150C',
-        border: '1px solid #E1DCC9',
+        background: '#121212',
+        border: '1.5px solid #DFD0B8',
         borderRadius: 'var(--radius-lg, 12px)',
         width: '100%',
         maxWidth: '680px',
         maxHeight: '90vh',
         display: 'flex',
         flexDirection: 'column',
-        boxShadow: '0 24px 48px rgba(0,0,0,0.7)',
+        boxShadow: '0 24px 48px rgba(0,0,0,0.9)',
         overflow: 'hidden'
       }}>
         {/* Modal Top Bar */}
         <div style={{
           padding: '1rem 1.4rem',
-          borderBottom: '1px solid rgba(225, 220, 201, 0.2)',
+          borderBottom: '1.5px solid rgba(223, 208, 184, 0.25)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -128,8 +128,8 @@ export default function LinkedInPostModal({ isOpen, onClose, postData, docTitle 
               width: '28px',
               height: '28px',
               borderRadius: '6px',
-              background: '#E1DCC9',
-              color: '#1F150C',
+              background: '#DFD0B8',
+              color: '#000000',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -137,17 +137,17 @@ export default function LinkedInPostModal({ isOpen, onClose, postData, docTitle 
               <Share2 size={16} />
             </div>
             <div>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#E1DCC9', margin: 0 }}>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#FFFFFF', margin: 0 }}>
                 LinkedIn Post
               </h3>
-              <p style={{ fontSize: '0.725rem', color: 'rgba(225, 220, 201, 0.72)', margin: 0 }}>
+              <p style={{ fontSize: '0.725rem', color: '#DFD0B8', margin: 0 }}>
                 Public-Safe Social Media Communication Preview
               </p>
             </div>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <span className="badge" style={{ fontSize: '0.68rem' }}>
+            <span className="badge" style={{ fontSize: '0.68rem', background: '#DFD0B8', color: '#000000' }}>
               <ShieldCheck size={12} /> 0 Hallucinations
             </span>
             <button
@@ -155,7 +155,7 @@ export default function LinkedInPostModal({ isOpen, onClose, postData, docTitle 
               style={{
                 background: 'transparent',
                 border: 'none',
-                color: '#E1DCC9',
+                color: '#DFD0B8',
                 cursor: 'pointer',
                 padding: '0.3rem',
                 display: 'flex',
@@ -179,20 +179,20 @@ export default function LinkedInPostModal({ isOpen, onClose, postData, docTitle 
           {/* LinkedIn-Style Preview Box */}
           <div style={{
             background: '#000000',
-            border: '1px solid rgba(225, 220, 201, 0.2)',
+            border: '1.5px solid #DFD0B8',
             borderRadius: '8px',
             padding: '1.25rem',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.4)'
+            boxShadow: '0 4px 16px rgba(0,0,0,0.6)'
           }}>
             {/* Author Header */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.1rem', paddingBottom: '0.85rem', borderBottom: '1px solid rgba(225, 220, 201, 0.18)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.1rem', paddingBottom: '0.85rem', borderBottom: '1px solid rgba(223, 208, 184, 0.2)' }}>
               <div style={{
                 width: '44px',
                 height: '44px',
                 borderRadius: '50%',
-                background: '#412D15',
-                color: '#E1DCC9',
-                border: '1px solid #E1DCC9',
+                background: '#121212',
+                color: '#DFD0B8',
+                border: '1.5px solid #DFD0B8',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -203,15 +203,15 @@ export default function LinkedInPostModal({ isOpen, onClose, postData, docTitle 
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#E1DCC9' }}>
-                    SyntaxX
+                  <span style={{ fontSize: '0.95rem', fontWeight: '700', color: '#FFFFFF' }}>
+                    TransformAI
                   </span>
-                  <span style={{ fontSize: '0.72rem', color: 'rgba(225, 220, 201, 0.72)' }}>• 1st</span>
+                  <span style={{ fontSize: '0.72rem', color: '#DFD0B8' }}>• 1st</span>
                 </div>
-                <div style={{ fontSize: '0.76rem', color: 'rgba(225, 220, 201, 0.72)' }}>
+                <div style={{ fontSize: '0.76rem', color: '#E1DCC9' }}>
                   Cybersecurity Intelligence & Threat Advisory
                 </div>
-                <div style={{ fontSize: '0.72rem', color: 'rgba(225, 220, 201, 0.5)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <div style={{ fontSize: '0.72rem', color: 'rgba(225, 220, 201, 0.6)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                   <span>Just now</span> • <span>🌐 Public Safe</span>
                 </div>
               </div>

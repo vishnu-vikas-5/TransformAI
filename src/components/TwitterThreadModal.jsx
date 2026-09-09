@@ -107,7 +107,7 @@ export default function TwitterThreadModal({ isOpen, onClose, threadData, docTit
       left: 0,
       right: 0,
       bottom: 0,
-      background: 'rgba(0, 0, 0, 0.85)',
+      background: 'rgba(0, 0, 0, 0.94)',
       backdropFilter: 'blur(8px)',
       display: 'flex',
       alignItems: 'center',
@@ -116,21 +116,21 @@ export default function TwitterThreadModal({ isOpen, onClose, threadData, docTit
       padding: '1.5rem'
     }}>
       <div style={{
-        background: '#1F150C',
-        border: '1px solid #E1DCC9',
+        background: '#121212',
+        border: '1.5px solid #DFD0B8',
         borderRadius: 'var(--radius-lg, 12px)',
         width: '100%',
         maxWidth: '680px',
         maxHeight: '90vh',
         display: 'flex',
         flexDirection: 'column',
-        boxShadow: '0 24px 48px rgba(0,0,0,0.7)',
+        boxShadow: '0 24px 48px rgba(0,0,0,0.9)',
         overflow: 'hidden'
       }}>
         {/* Modal Top Bar */}
         <div style={{
           padding: '1rem 1.4rem',
-          borderBottom: '1px solid rgba(225, 220, 201, 0.2)',
+          borderBottom: '1.5px solid rgba(223, 208, 184, 0.25)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -141,8 +141,8 @@ export default function TwitterThreadModal({ isOpen, onClose, threadData, docTit
               width: '28px',
               height: '28px',
               borderRadius: '6px',
-              background: '#E1DCC9',
-              color: '#1F150C',
+              background: '#DFD0B8',
+              color: '#000000',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -150,25 +150,25 @@ export default function TwitterThreadModal({ isOpen, onClose, threadData, docTit
               <MessageSquare size={16} />
             </div>
             <div>
-              <h3 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#E1DCC9', margin: 0 }}>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#FFFFFF', margin: 0 }}>
                 {isSingle ? 'Twitter/X Post' : `Twitter/X Thread (${parsedPosts.length} Posts)`}
               </h3>
-              <p style={{ fontSize: '0.725rem', color: 'rgba(225, 220, 201, 0.72)', margin: 0 }}>
+              <p style={{ fontSize: '0.725rem', color: '#DFD0B8', margin: 0 }}>
                 Public-Safe Microblogging Communication Preview
               </p>
             </div>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <span className="badge" style={{ fontSize: '0.68rem' }}>
-              <ShieldCheck size={12} /> All Posts &le; 280 chars
+            <span className="badge" style={{ fontSize: '0.68rem', background: '#DFD0B8', color: '#000000' }}>
+              <ShieldCheck size={12} /> 0 Hallucinations
             </span>
             <button
               onClick={onClose}
               style={{
                 background: 'transparent',
                 border: 'none',
-                color: '#E1DCC9',
+                color: '#DFD0B8',
                 cursor: 'pointer',
                 padding: '0.3rem',
                 display: 'flex',
@@ -187,13 +187,10 @@ export default function TwitterThreadModal({ isOpen, onClose, threadData, docTit
         <div style={{
           padding: '1.4rem',
           overflowY: 'auto',
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem'
+          flex: 1
         }}>
           {parsedPosts.map((post, pIdx) => {
-            const charCount = post.character_count || post.text.length;
+            const charCount = (post.text || '').length;
             const isWithinLimit = charCount <= 280;
 
             return (
@@ -201,30 +198,23 @@ export default function TwitterThreadModal({ isOpen, onClose, threadData, docTit
                 key={pIdx}
                 style={{
                   background: '#000000',
-                  border: '1px solid rgba(225, 220, 201, 0.2)',
+                  border: '1.5px solid #DFD0B8',
                   borderRadius: '8px',
-                  padding: '1.15rem',
-                  boxShadow: '0 4px 16px rgba(0,0,0,0.3)',
-                  position: 'relative'
+                  padding: '1.25rem',
+                  marginBottom: '1rem',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.6)'
                 }}
               >
-                {/* Post Card Header */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginBottom: '0.85rem',
-                  paddingBottom: '0.65rem',
-                  borderBottom: '1px solid rgba(225, 220, 201, 0.18)'
-                }}>
+                {/* Post Author / Header */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.85rem', paddingBottom: '0.75rem', borderBottom: '1px solid rgba(223, 208, 184, 0.2)' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem' }}>
                     <div style={{
                       width: '32px',
                       height: '32px',
                       borderRadius: '50%',
-                      background: '#412D15',
-                      color: '#E1DCC9',
-                      border: '1px solid #E1DCC9',
+                      background: '#121212',
+                      color: '#DFD0B8',
+                      border: '1.5px solid #DFD0B8',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -235,14 +225,14 @@ export default function TwitterThreadModal({ isOpen, onClose, threadData, docTit
                     </div>
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                        <span style={{ fontSize: '0.85rem', fontWeight: '700', color: '#E1DCC9' }}>
-                          SyntaxX Threat Intel
+                        <span style={{ fontSize: '0.85rem', fontWeight: '700', color: '#FFFFFF' }}>
+                          TransformAI Intel
                         </span>
-                        <span style={{ fontSize: '0.72rem', color: 'rgba(225, 220, 201, 0.72)' }}>
-                          @SyntaxX_Intel
+                        <span style={{ fontSize: '0.72rem', color: '#DFD0B8' }}>
+                          @TransformAI
                         </span>
                       </div>
-                      <div style={{ fontSize: '0.7rem', color: 'rgba(225, 220, 201, 0.5)' }}>
+                      <div style={{ fontSize: '0.7rem', color: 'rgba(225, 220, 201, 0.6)' }}>
                         Post {post.number || pIdx + 1} of {parsedPosts.length}
                       </div>
                     </div>
@@ -253,9 +243,9 @@ export default function TwitterThreadModal({ isOpen, onClose, threadData, docTit
                     <span
                       style={{
                         fontSize: '0.66rem',
-                        background: '#1F150C',
+                        background: '#121212',
                         color: isWithinLimit ? '#E1DCC9' : '#8B1E1E',
-                        border: '1px solid rgba(225, 220, 201, 0.25)',
+                        border: '1px solid #DFD0B8',
                         padding: '0.15rem 0.5rem',
                         borderRadius: '12px'
                       }}

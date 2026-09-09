@@ -125,7 +125,7 @@ class InfographicNumberedCanvas(canvas.Canvas):
         # 1. Page Background is white by default in PDF - DO NOT paint an opaque rect over Platypus content!
         
         # Outer document border accent (Matching reference image double line frame)
-        self.setStrokeColor(HexColor('#9C9286'))
+        self.setStrokeColor(C_SLATE_200)
         self.setLineWidth(0.75)
         self.rect(16, 16, PAGE_WIDTH - 32, PAGE_HEIGHT - 32, fill=False, stroke=True)
         
@@ -141,13 +141,13 @@ class InfographicNumberedCanvas(canvas.Canvas):
             sub_header = f"{self.advisory_id}  |  {self.title_str[:30]}"
             self.drawRightString(PAGE_WIDTH - RIGHT_MARGIN, PAGE_HEIGHT - 26, sub_header)
             
-            self.setStrokeColor(HexColor('#B8B2A0'))
+            self.setStrokeColor(C_SLATE_200)
             self.setLineWidth(0.5)
             self.line(LEFT_MARGIN, PAGE_HEIGHT - 30, PAGE_WIDTH - RIGHT_MARGIN, PAGE_HEIGHT - 30)
             
         # 3. Running Footer for All Pages (Matching reference image footer exact layout)
         footer_y = 22
-        self.setStrokeColor(HexColor('#B8B2A0'))
+        self.setStrokeColor(C_SLATE_200)
         self.setLineWidth(0.5)
         self.line(LEFT_MARGIN, footer_y + 10, PAGE_WIDTH - RIGHT_MARGIN, footer_y + 10)
         
@@ -306,13 +306,13 @@ def make_section_header(num_str: str, title_str: str, subtitle_str: str, styles:
     data = [[[title_p, sub_p]]]
     sec_table = Table(data, colWidths=[CONTENT_WIDTH])
     sec_table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, -1), HexColor('#EBE6D8')),
+        ('BACKGROUND', (0, 0), (-1, -1), C_SLATE_100),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
         ('TOPPADDING', (0, 0), (-1, -1), 4),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
         ('LEFTPADDING', (0, 0), (-1, -1), 6),
         ('RIGHTPADDING', (0, 0), (-1, -1), 6),
-        ('BOX', (0, 0), (-1, -1), 0.5, HexColor('#B8B2A0'))
+        ('BOX', (0, 0), (-1, -1), 0.5, C_SLATE_200)
     ]))
     return sec_table
 
@@ -505,7 +505,7 @@ def build_metadata_grid(data: dict, styles: dict) -> Table:
     col_w = CONTENT_WIDTH / 6.0
     grid_table = Table(grid_data, colWidths=[col_w] * 6)
     grid_table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), HexColor('#EBE6D8')),
+        ('BACKGROUND', (0, 0), (-1, 0), C_SLATE_100),
         ('BACKGROUND', (0, 1), (-1, 1), C_WHITE),
         ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
@@ -513,8 +513,8 @@ def build_metadata_grid(data: dict, styles: dict) -> Table:
         ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
         ('LEFTPADDING', (0, 0), (-1, -1), 4),
         ('RIGHTPADDING', (0, 0), (-1, -1), 4),
-        ('BOX', (0, 0), (-1, -1), 0.75, HexColor('#9C9286')),
-        ('INNERGRID', (0, 0), (-1, -1), 0.5, HexColor('#D3CCA8'))
+        ('BOX', (0, 0), (-1, -1), 0.75, C_SLATE_200),
+        ('INNERGRID', (0, 0), (-1, -1), 0.5, C_SLATE_200)
     ]))
     return grid_table
 
@@ -580,7 +580,7 @@ def build_infographic_pdf(intel: dict) -> bytes:
         ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
         ('LEFTPADDING', (0, 0), (-1, -1), 6),
         ('RIGHTPADDING', (0, 0), (-1, -1), 6),
-        ('BOX', (0, 0), (-1, -1), 0.5, HexColor('#B8B2A0'))
+        ('BOX', (0, 0), (-1, -1), 0.5, C_SLATE_200)
     ]))
     story.append(summary_table)
     story.append(Spacer(1, 8))
@@ -615,17 +615,17 @@ def build_infographic_pdf(intel: dict) -> bytes:
     col_w3 = CONTENT_WIDTH / 3.0
     glance_table = Table(glance_grid_data, colWidths=[col_w3] * 3)
     glance_table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), HexColor('#F4F1EA')),
+        ('BACKGROUND', (0, 0), (-1, 0), C_SLATE_100),
         ('BACKGROUND', (0, 1), (-1, 1), C_WHITE),
-        ('BACKGROUND', (0, 2), (-1, 2), HexColor('#F4F1EA')),
+        ('BACKGROUND', (0, 2), (-1, 2), C_SLATE_100),
         ('BACKGROUND', (0, 3), (-1, 3), C_WHITE),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
         ('TOPPADDING', (0, 0), (-1, -1), 4),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
         ('LEFTPADDING', (0, 0), (-1, -1), 5),
         ('RIGHTPADDING', (0, 0), (-1, -1), 5),
-        ('BOX', (0, 0), (-1, -1), 0.5, HexColor('#B8B2A0')),
-        ('INNERGRID', (0, 0), (-1, -1), 0.5, HexColor('#D3CCA8'))
+        ('BOX', (0, 0), (-1, -1), 0.5, C_SLATE_200),
+        ('INNERGRID', (0, 0), (-1, -1), 0.5, C_SLATE_200)
     ]))
     story.append(glance_table)
     story.append(Spacer(1, 8))
@@ -647,7 +647,7 @@ def build_infographic_pdf(intel: dict) -> bytes:
         ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
         ('LEFTPADDING', (0, 0), (-1, -1), 6),
         ('RIGHTPADDING', (0, 0), (-1, -1), 6),
-        ('BOX', (0, 0), (-1, -1), 0.5, HexColor('#B8B2A0'))
+        ('BOX', (0, 0), (-1, -1), 0.5, C_SLATE_200)
     ]))
     story.append(findings_table)
     story.append(Spacer(1, 8))
@@ -673,7 +673,7 @@ def build_infographic_pdf(intel: dict) -> bytes:
         ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
         ('LEFTPADDING', (0, 0), (-1, -1), 6),
         ('RIGHTPADDING', (0, 0), (-1, -1), 6),
-        ('BOX', (0, 0), (-1, -1), 0.5, HexColor('#B8B2A0'))
+        ('BOX', (0, 0), (-1, -1), 0.5, C_SLATE_200)
     ]))
     story.append(impact_table)
     story.append(Spacer(1, 10))
@@ -703,15 +703,15 @@ def build_infographic_pdf(intel: dict) -> bytes:
     
     tech_table = Table(tech_data, colWidths=[150, CONTENT_WIDTH - 150])
     tech_table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (0, -1), HexColor('#F4F1EA')),
+        ('BACKGROUND', (0, 0), (0, -1), C_SLATE_100),
         ('BACKGROUND', (1, 0), (1, -1), C_WHITE),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
         ('TOPPADDING', (0, 0), (-1, -1), 4),
         ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
         ('LEFTPADDING', (0, 0), (-1, -1), 5),
         ('RIGHTPADDING', (0, 0), (-1, -1), 5),
-        ('BOX', (0, 0), (-1, -1), 0.5, HexColor('#B8B2A0')),
-        ('INNERGRID', (0, 0), (-1, -1), 0.5, HexColor('#D3CCA8'))
+        ('BOX', (0, 0), (-1, -1), 0.5, C_SLATE_200),
+        ('INNERGRID', (0, 0), (-1, -1), 0.5, C_SLATE_200)
     ]))
     story.append(tech_table)
     story.append(Spacer(1, 8))
@@ -731,15 +731,15 @@ def build_infographic_pdf(intel: dict) -> bytes:
         col_w_flow = CONTENT_WIDTH / float(len(flow_cells))
         flow_table = Table([flow_cells], colWidths=[col_w_flow] * len(flow_cells))
         flow_table.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, -1), HexColor('#F4F1EA')),
+            ('BACKGROUND', (0, 0), (-1, -1), C_SLATE_100),
             ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
             ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
             ('TOPPADDING', (0, 0), (-1, -1), 5),
             ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
             ('LEFTPADDING', (0, 0), (-1, -1), 4),
             ('RIGHTPADDING', (0, 0), (-1, -1), 4),
-            ('BOX', (0, 0), (-1, -1), 0.5, HexColor('#B8B2A0')),
-            ('INNERGRID', (0, 0), (-1, -1), 0.5, C_DEEP_BROWN)
+            ('BOX', (0, 0), (-1, -1), 0.5, C_SLATE_200),
+            ('INNERGRID', (0, 0), (-1, -1), 0.5, C_SLATE_200)
         ]))
         story.append(flow_table)
         story.append(Spacer(1, 8))
@@ -778,8 +778,8 @@ def build_infographic_pdf(intel: dict) -> bytes:
         ('BOTTOMPADDING', (0, 0), (-1, -1), 5),
         ('LEFTPADDING', (0, 0), (-1, -1), 6),
         ('RIGHTPADDING', (0, 0), (-1, -1), 6),
-        ('BOX', (0, 0), (-1, -1), 0.5, HexColor('#B8B2A0')),
-        ('INNERGRID', (0, 0), (-1, -1), 0.5, HexColor('#D3CCA8'))
+        ('BOX', (0, 0), (-1, -1), 0.5, C_SLATE_200),
+        ('INNERGRID', (0, 0), (-1, -1), 0.5, C_SLATE_200)
     ]))
     story.append(rem_table)
     story.append(Spacer(1, 8))
@@ -811,15 +811,15 @@ def build_infographic_pdf(intel: dict) -> bytes:
             
         ioc_table = Table(ioc_rows, colWidths=[90, 230, CONTENT_WIDTH - 320])
         ioc_table.setStyle(TableStyle([
-            ('BACKGROUND', (0, 0), (-1, 0), HexColor('#F4F1EA')),
+            ('BACKGROUND', (0, 0), (-1, 0), C_SLATE_100),
             ('BACKGROUND', (0, 1), (-1, -1), C_WHITE),
             ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
             ('TOPPADDING', (0, 0), (-1, -1), 4),
             ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
             ('LEFTPADDING', (0, 0), (-1, -1), 5),
             ('RIGHTPADDING', (0, 0), (-1, -1), 5),
-            ('BOX', (0, 0), (-1, -1), 0.5, HexColor('#B8B2A0')),
-            ('INNERGRID', (0, 0), (-1, -1), 0.5, HexColor('#D3CCA8'))
+            ('BOX', (0, 0), (-1, -1), 0.5, C_SLATE_200),
+            ('INNERGRID', (0, 0), (-1, -1), 0.5, C_SLATE_200)
         ]))
         story.append(ioc_table)
         

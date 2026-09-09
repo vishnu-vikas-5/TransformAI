@@ -2,11 +2,35 @@
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Strict Reference Color Palette */
-  --color-black: #000000;
-  --color-dark-brown: #1F150C;
-  --color-brown: #412D15;
-  --color-cream: #E1DCC9;
+  /* ==========================================================================
+     Official Luxury Obsidian, Crisp White & Warm Sand Gold Theme Palette
+     Reference Source of Truth
+     ========================================================================== */
+  --c-dark-espresso: #000000;   /* Pure Obsidian Black: Main Page Background (body), Modal Backdrops & Deep Surfaces */
+  --c-choc-brown: #121212;      /* Dark Onyx Surface: Panel backgrounds, Cards (.glass-panel), Code Blocks & Dropdowns */
+  --c-sand-gold: #DFD0B8;       /* Warm Sand Gold: Primary Accents, Active Indicators, Card Borders, Primary Buttons (.btn-primary), & Icons */
+  --c-warm-cream: #E1DCC9;      /* Warm Cream Sand: Secondary Text, Sub-accents, Button Hover States & Badge Borders */
+  --c-cream-ivory: #FFFFFF;     /* Pure Crisp White: Primary Headings (h1 - h6), Main Body Text & High Contrast Elements */
+  --text-muted: #A0A0A0;        /* Muted Grey: Subtitles, Muted Metadata & Placeholder text */
+
+  /* Gradients & Visual Effects */
+  --brand-accent-gradient: linear-gradient(135deg, #DFD0B8 0%, #E1DCC9 100%);
+  --surface-card-gradient: linear-gradient(135deg, #000000 0%, #121212 100%);
+  --sand-gold-glow: 0 0 20px rgba(223, 208, 184, 0.3);
+  --modal-overlay-backdrop: rgba(0, 0, 0, 0.94);
+  --modal-backdrop-filter: blur(8px);
+
+  /* Color aliases mapped directly to official tokens */
+  --color-black: var(--c-dark-espresso);
+  --color-dark-onyx: var(--c-choc-brown);
+  --color-onyx-card: #181818;
+  --color-sand-gold: var(--c-sand-gold);
+  --color-cream: var(--c-warm-cream);
+  --color-white: var(--c-cream-ivory);
+
+  /* Backward-compatible legacy color bridges */
+  --color-dark-brown: var(--c-choc-brown);
+  --color-brown: #181818;
 
   /* Editorial Variations & Semantic Tokens */
   --color-cream-muted: rgba(225, 220, 201, 0.75);
@@ -14,52 +38,51 @@
   --color-cream-light: #F5F2E9;
 
   /* Surfaces */
-  --background-primary: var(--color-black);
-  --background-secondary: var(--color-dark-brown);
-  --surface-primary: var(--color-dark-brown);
-  --surface-secondary: var(--color-brown);
-  --surface-accent: var(--color-cream);
+  --background-primary: var(--c-dark-espresso);
+  --background-secondary: var(--c-choc-brown);
+  --surface-primary: var(--c-choc-brown);
+  --surface-secondary: var(--color-onyx-card);
+  --surface-accent: var(--c-sand-gold);
 
-  /* Legacy variable bridges mapped to exact SyntaxX design system */
-  --bg-primary: var(--color-black);
-  --bg-secondary: var(--color-dark-brown);
-  --bg-tertiary: var(--color-brown);
+  /* Legacy variable bridges mapped to exact design system */
+  --bg-primary: var(--c-dark-espresso);
+  --bg-secondary: var(--c-choc-brown);
+  --bg-tertiary: var(--color-onyx-card);
 
-  --c-navy: var(--color-dark-brown);
+  --c-navy: var(--c-choc-brown);
   --c-steel: var(--color-cream-muted);
-  --c-sand: var(--color-cream);
-  --c-cream: var(--color-cream);
+  --c-sand: var(--c-sand-gold);
+  --c-cream: var(--c-warm-cream);
 
-  --glass-bg: rgba(31, 21, 12, 0.95);
-  --glass-card: var(--color-dark-brown);
-  --glass-border: rgba(225, 220, 201, 0.2);
-  --glass-border-glow: var(--color-cream);
+  --glass-bg: rgba(18, 18, 18, 0.95);
+  --glass-card: var(--c-choc-brown);
+  --glass-border: rgba(223, 208, 184, 0.35);
+  --glass-border-glow: var(--c-sand-gold);
 
-  --accent-primary: var(--color-cream);
-  --accent-secondary: var(--color-brown);
-  --accent-dark: var(--color-dark-brown);
+  --accent-primary: var(--c-sand-gold);
+  --accent-secondary: var(--c-warm-cream);
+  --accent-dark: var(--c-choc-brown);
 
-  --text-primary: var(--color-cream);
-  --text-secondary: var(--color-cream-muted);
-  --text-muted: var(--color-cream-subtle);
-  --text-inverse: var(--color-black);
-  --text-inverse-dark: var(--color-dark-brown);
+  --text-primary: var(--c-cream-ivory);
+  --text-secondary: var(--c-warm-cream);
+  --text-inverse: var(--c-dark-espresso);
+  --text-inverse-dark: var(--c-choc-brown);
 
-  --border-subtle: rgba(225, 220, 201, 0.18);
-  --border-medium: rgba(225, 220, 201, 0.35);
-  --border-prominent: var(--color-cream);
+  --border-subtle: rgba(223, 208, 184, 0.22);
+  --border-medium: rgba(223, 208, 184, 0.45);
+  --border-prominent: var(--c-sand-gold);
 
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
-  --shadow-card: 0 12px 32px rgba(0, 0, 0, 0.7);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.8);
+  --shadow-card: 0 12px 32px rgba(0, 0, 0, 0.9);
 
   color-scheme: dark;
-  scrollbar-color: var(--color-brown) var(--color-black);
+  scrollbar-color: var(--color-onyx-card) var(--c-dark-espresso);
 }
 
 /* Custom Scrollbars */
@@ -69,13 +92,13 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-brown);
+  background: var(--color-onyx-card);
   border-radius: 4px;
   border: 1px solid var(--border-subtle);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-cream);
+  background: var(--color-sand-gold);
 }
 
 ::-webkit-scrollbar-track {
@@ -103,9 +126,10 @@ body {
 
 /* Typography Utilities */
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
   font-weight: 700;
   letter-spacing: -0.025em;
-  color: var(--color-cream);
+  color: var(--color-white);
 }
 
 p {
@@ -113,7 +137,7 @@ p {
 }
 
 .text-gradient {
-  color: var(--color-cream);
+  color: var(--color-white);
   background: none;
 }
 
@@ -127,17 +151,18 @@ p {
 
 /* Glassmorphism / Clean Card Panel */
 .glass-panel {
-  background: var(--color-dark-brown);
-  border: 1px solid var(--border-subtle);
+  background: var(--color-dark-onyx);
+  border: 1.5px solid var(--border-medium);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
-  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .glass-panel-hover:hover {
-  border-color: var(--color-cream);
-  background: var(--color-brown);
+  border-color: var(--color-sand-gold);
+  background: var(--color-onyx-card);
   transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.95), 0 0 15px rgba(223, 208, 184, 0.12);
 }
 
 /* Button Component Styles */
@@ -158,44 +183,48 @@ p {
   white-space: nowrap;
 }
 
-/* Primary button: Cream background, Black text */
+/* Primary button: Warm Sand Gold background, Pitch Black text */
 .btn-primary {
-  background: var(--color-cream);
-  color: var(--color-black);
-  border: 1px solid var(--color-cream);
+  background: var(--color-sand-gold);
+  color: #000000;
+  font-weight: 700;
+  border: 1px solid var(--color-sand-gold);
 }
 
 .btn-primary:hover {
-  background: var(--color-brown);
-  color: var(--color-cream);
-  border-color: var(--color-cream);
+  background: #FFFFFF;
+  color: #000000;
+  border-color: #FFFFFF;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 14px rgba(223, 208, 184, 0.35);
 }
 
-/* Secondary button: Transparent background, Cream text, Cream border */
+/* Secondary button: Transparent background, White text, Sand Gold border */
 .btn-secondary {
   background: transparent;
-  color: var(--color-cream);
-  border: 1px solid rgba(225, 220, 201, 0.35);
+  color: #FFFFFF;
+  border: 1.5px solid var(--color-sand-gold);
+  font-weight: 600;
 }
 
 .btn-secondary:hover {
-  background: var(--color-brown);
-  color: var(--color-cream);
-  border-color: var(--color-cream);
+  background: var(--color-onyx-card);
+  color: var(--color-sand-gold);
+  border-color: var(--color-sand-gold);
+  transform: translateY(-1px);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--color-cream);
-  border: 1px solid rgba(225, 220, 201, 0.25);
+  color: #FFFFFF;
+  border: 1.5px solid rgba(223, 208, 184, 0.35);
+  font-weight: 600;
 }
 
 .btn-outline:hover {
-  background: var(--color-brown);
-  color: var(--color-cream);
-  border-color: var(--color-cream);
+  background: var(--color-onyx-card);
+  color: #FFFFFF;
+  border-color: var(--color-sand-gold);
 }
 
 .btn-sm {
@@ -210,7 +239,7 @@ p {
   pointer-events: none;
 }
 
-/* Badge Styles - Cream background, Dark brown text */
+/* Badge Styles - Warm Sand Gold background, Pitch Black text */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -221,9 +250,9 @@ p {
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  background: var(--color-cream);
-  color: var(--color-dark-brown);
-  border: 1px solid rgba(225, 220, 201, 0.4);
+  background: var(--color-sand-gold);
+  color: #000000;
+  border: 1px solid var(--color-sand-gold);
 }
 
 .badge-indigo,
@@ -232,9 +261,9 @@ p {
 .badge-purple,
 .badge-amber,
 .badge-rose {
-  background: var(--color-cream);
-  color: var(--color-dark-brown);
-  border: 1px solid rgba(225, 220, 201, 0.4);
+  background: var(--color-sand-gold);
+  color: #000000;
+  border: 1px solid var(--color-sand-gold);
 }
 
 /* Animations */
@@ -257,8 +286,9 @@ p {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(10px);
+  background: var(--modal-overlay-backdrop);
+  backdrop-filter: var(--modal-backdrop-filter);
+  -webkit-backdrop-filter: var(--modal-backdrop-filter);
   z-index: 100;
   display: flex;
   align-items: center;
@@ -271,8 +301,8 @@ p {
   max-width: 800px;
   max-height: 85vh;
   overflow-y: auto;
-  background: var(--color-dark-brown);
-  border: 1px solid var(--border-medium);
+  background: var(--color-dark-onyx);
+  border: 1.5px solid var(--color-sand-gold);
   border-radius: var(--radius-lg);
   padding: 2rem;
   box-shadow: var(--shadow-card);
@@ -290,8 +320,8 @@ code {
 }
 
 /* ==========================================================================
-   SyntaxX In-App PDF Preview Modal & Controlled PDF.js Canvas Viewer
-   Strict Theme: #000000 (Black), #1F150C (Dark Brown), #412D15 (Brown), #E1DCC9 (Cream)
+   TransformAI In-App PDF Preview Modal & Controlled PDF.js Canvas Viewer
+   Strict Theme: #000000 (Black), #121212 (Dark Onyx), #DFD0B8 (Sand Gold), #FFFFFF (White)
    ========================================================================== */
 
 .syntaxx-pdf-overlay {
@@ -302,9 +332,9 @@ code {
   bottom: 0 !important;
   width: 100vw !important;
   height: 100vh !important;
-  background-color: rgba(0, 0, 0, 0.75) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
+  background-color: var(--modal-overlay-backdrop) !important;
+  backdrop-filter: var(--modal-backdrop-filter) !important;
+  -webkit-backdrop-filter: var(--modal-backdrop-filter) !important;
   z-index: 9999 !important;
   display: flex !important;
   align-items: center !important;
@@ -330,10 +360,10 @@ code {
   max-width: 1400px !important;
   height: 90vh !important;
   max-height: 95vh !important;
-  background-color: #1F150C !important;
+  background-color: #121212 !important;
   border-radius: 16px !important;
-  border: 1px solid rgba(225, 220, 201, 0.25) !important;
-  box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(225, 220, 201, 0.12) !important;
+  border: 1.5px solid #DFD0B8 !important;
+  box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(223, 208, 184, 0.25) !important;
   overflow: hidden !important;
   position: relative !important;
   animation: syntaxxModalScaleIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -353,7 +383,7 @@ code {
 /* 1. Modal Header: #000000 */
 .syntaxx-pdf-header {
   background-color: #000000 !important;
-  border-bottom: 1px solid rgba(225, 220, 201, 0.15) !important;
+  border-bottom: 1.5px solid rgba(223, 208, 184, 0.25) !important;
   padding: 0.9rem 1.5rem !important;
   display: flex !important;
   align-items: center !important;
@@ -361,9 +391,9 @@ code {
   flex-shrink: 0 !important;
 }
 
-/* 2. PDF Workspace: #412D15 */
+/* 2. PDF Workspace: #000000 */
 .syntaxx-pdf-workspace {
-  background-color: #412D15 !important;
+  background-color: #000000 !important;
   flex: 1 1 0% !important;
   overflow: auto !important;
   position: relative !important;
@@ -386,14 +416,14 @@ code {
 .syntaxx-pdf-canvas {
   display: block !important;
   background-color: #FFFFFF !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 2px 8px rgba(0, 0, 0, 0.6) !important;
   border-radius: 4px !important;
 }
 
-/* 3. Controls Bar: #1F150C */
+/* 3. Controls Bar: #121212 */
 .syntaxx-pdf-controls {
-  background-color: #1F150C !important;
-  border-top: 1px solid rgba(225, 220, 201, 0.15) !important;
+  background-color: #121212 !important;
+  border-top: 1.5px solid rgba(223, 208, 184, 0.25) !important;
   padding: 0.85rem 1.5rem !important;
   display: flex !important;
   align-items: center !important;
@@ -403,18 +433,18 @@ code {
   flex-shrink: 0 !important;
 }
 
-/* SyntaxX Control Buttons */
+/* TransformAI Control Buttons */
 .syntaxx-btn-primary {
   display: inline-flex !important;
   align-items: center !important;
   gap: 0.5rem !important;
-  background-color: #E1DCC9 !important;
+  background-color: #DFD0B8 !important;
   color: #000000 !important;
   font-weight: 700 !important;
   font-size: 0.82rem !important;
   padding: 0.5rem 1.15rem !important;
   border-radius: 8px !important;
-  border: 1px solid #E1DCC9 !important;
+  border: 1px solid #DFD0B8 !important;
   cursor: pointer !important;
   transition: all 0.18s ease !important;
 }
@@ -423,7 +453,7 @@ code {
   background-color: #FFFFFF !important;
   border-color: #FFFFFF !important;
   transform: translateY(-1px) !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 4px 14px rgba(223, 208, 184, 0.35) !important;
 }
 
 .syntaxx-btn-secondary {
@@ -431,20 +461,20 @@ code {
   align-items: center !important;
   gap: 0.4rem !important;
   background-color: transparent !important;
-  color: #E1DCC9 !important;
+  color: #FFFFFF !important;
   font-weight: 600 !important;
   font-size: 0.8rem !important;
   padding: 0.45rem 0.85rem !important;
   border-radius: 8px !important;
-  border: 1px solid rgba(225, 220, 201, 0.35) !important;
+  border: 1.5px solid rgba(223, 208, 184, 0.4) !important;
   cursor: pointer !important;
   transition: all 0.18s ease !important;
 }
 
 .syntaxx-btn-secondary:hover:not(:disabled) {
-  background-color: #412D15 !important;
-  border-color: #E1DCC9 !important;
-  color: #FFFFFF !important;
+  background-color: #181818 !important;
+  border-color: #DFD0B8 !important;
+  color: #DFD0B8 !important;
 }
 
 .syntaxx-btn-secondary:disabled,
@@ -486,7 +516,7 @@ code {
 }
 
 /* ==========================================================================
-   SyntaxX Standardized Agent Card Header
+   TransformAI Standardized Agent Card Header
    Strict Grid & Flex Structure:
    HEADER
    ├── TOP ROW (.agent-header-top)
@@ -519,15 +549,15 @@ code {
   align-items: center !important;
   justify-content: flex-start !important;
   min-height: 32px !important;
-  padding: 0.32rem 0.65rem !important;
+  padding: 0.32rem 0.75rem !important;
   border-radius: 9999px !important;
   font-size: 0.68rem !important;
   font-weight: 700 !important;
   letter-spacing: 0.04em !important;
   text-transform: uppercase !important;
-  background-color: rgba(225, 220, 201, 0.72) !important;
+  background-color: #DFD0B8 !important;
   color: #000000 !important;
-  border: 1px solid #E1DCC9 !important;
+  border: 1px solid #DFD0B8 !important;
   line-height: 1.2 !important;
   white-space: nowrap !important;
   overflow: hidden !important;
@@ -541,13 +571,13 @@ code {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  min-height: 36px !important;
+  min-height: 34px !important;
   padding: 0.28rem 0.7rem !important;
   border-radius: 9999px !important;
-  background-color: #E1DCC9 !important;
-  color: #000000 !important;
-  border: 1px solid rgba(225, 220, 201, 0.72) !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35) !important;
+  background-color: #121212 !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #DFD0B8 !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45) !important;
   box-sizing: border-box !important;
 }
 
@@ -561,7 +591,7 @@ code {
 
 .badge-icon {
   flex-shrink: 0 !important;
-  color: #000000 !important;
+  color: #DFD0B8 !important;
 }
 
 .badge-text-stack {
@@ -574,6 +604,7 @@ code {
   font-weight: 800 !important;
   letter-spacing: 0.02em !important;
   text-transform: uppercase !important;
+  color: #FFFFFF !important;
 }
 
 .badge-text-single {
@@ -582,6 +613,7 @@ code {
   letter-spacing: 0.03em !important;
   text-transform: uppercase !important;
   white-space: nowrap !important;
+  color: #FFFFFF !important;
 }
 
 /* TITLE ROW: Starts at left edge of card content, strictly below top row */
@@ -593,7 +625,7 @@ code {
   align-items: flex-start !important;
   font-size: 1.12rem !important;
   font-weight: 700 !important;
-  color: #E1DCC9 !important;
+  color: #FFFFFF !important;
   line-height: 1.25 !important;
   text-align: left !important;
   letter-spacing: -0.01em !important;

@@ -156,7 +156,7 @@ def make_executive_canvas(advisory_id: str, tlp_str: str, title_str: str):
 def create_exec_section_header(title: str, subtitle: str = "") -> list:
     """Creates a visual executive summary section header bar."""
     flowables = []
-    title_html = f'<font color="#1F150C" size="9.5"><b>{title.upper()}</b></font>'
+    title_html = f'<font color="#121212" size="9.5"><b>{title.upper()}</b></font>'
     if subtitle:
         title_html += f'<br/><font color="#655442" size="7.0">{subtitle}</font>'
 
@@ -466,8 +466,8 @@ def build_executive_summary_pdf(intel: Dict[str, Any]) -> bytes:
 
     # Hero Box
     hero_html = (
-        f'<font color="#412D15" size="7.5"><b>CYBERSECURITY EXECUTIVE BRIEFING  |  DECISION-MAKER SUMMARY</b></font><br/>'
-        f'<font color="#1F150C" size="14.5"><b>{clean_text_for_pdf(title)}</b></font><br/>'
+        f'<font color="#121212" size="7.5"><b>CYBERSECURITY EXECUTIVE BRIEFING  |  DECISION-MAKER SUMMARY</b></font><br/>'
+        f'<font color="#121212" size="14.5"><b>{clean_text_for_pdf(title)}</b></font><br/>'
         f'<font color="#2E2217" size="8.5"><b>{clean_text_for_pdf(subtitle)}</b></font>'
     )
     p_hero = Paragraph(hero_html, ParagraphStyle(name="HeroTitle", leading=13.5))
@@ -475,10 +475,10 @@ def build_executive_summary_pdf(intel: Dict[str, Any]) -> bytes:
     meta_table_data = [
         [
             Paragraph(f'<b>SEVERITY</b><br/><font color="#8B1E1E" size="8"><b>{severity} (CVSS {cvss})</b></font>', body_style),
-            Paragraph(f'<b>CONFIDENCE</b><br/><font color="#412D15" size="8"><b>{confidence} CONFIDENCE</b></font>', body_style),
-            Paragraph(f'<b>CVE IDENTIFIER</b><br/><font color="#1F150C" size="8"><b>{cve_id}</b></font>', body_style),
-            Paragraph(f'<b>ADVISORY ID</b><br/><font color="#1F150C" size="8"><b>{advisory_id}</b></font>', body_style),
-            Paragraph(f'<b>DATE</b><br/><font color="#1F150C" size="8"><b>{issue_date}</b></font>', body_style),
+            Paragraph(f'<b>CONFIDENCE</b><br/><font color="#121212" size="8"><b>{confidence} CONFIDENCE</b></font>', body_style),
+            Paragraph(f'<b>CVE IDENTIFIER</b><br/><font color="#121212" size="8"><b>{cve_id}</b></font>', body_style),
+            Paragraph(f'<b>ADVISORY ID</b><br/><font color="#121212" size="8"><b>{advisory_id}</b></font>', body_style),
+            Paragraph(f'<b>DATE</b><br/><font color="#121212" size="8"><b>{issue_date}</b></font>', body_style),
             Paragraph(f'<b>CLASSIFICATION</b><br/><font color="#A66A1E" size="8"><b>{tlp}</b></font>', body_style)
         ]
     ]
@@ -535,7 +535,7 @@ def build_executive_summary_pdf(intel: Dict[str, Any]) -> bytes:
         [
             Paragraph(f'<b>THREAT / INCIDENT</b><br/>{clean_text_for_pdf(tag.get("threat_incident", ""))}', body_style),
             Paragraph(f'<b>SEVERITY</b><br/><font color="#8B1E1E"><b>{clean_text_for_pdf(tag.get("severity", ""))}</b></font>', body_style),
-            Paragraph(f'<b>CONFIDENCE</b><br/><font color="#412D15"><b>{clean_text_for_pdf(tag.get("confidence", ""))}</b></font>', body_style)
+            Paragraph(f'<b>CONFIDENCE</b><br/><font color="#121212"><b>{clean_text_for_pdf(tag.get("confidence", ""))}</b></font>', body_style)
         ],
         [
             Paragraph(f'<b>CVE IDENTIFIER</b><br/><font color="#8B1E1E"><b>{clean_text_for_pdf(tag.get("cve", ""))}</b></font>', body_style),
@@ -631,13 +631,13 @@ def build_executive_summary_pdf(intel: Dict[str, Any]) -> bytes:
     act = data.get('threat_actor', {})
     actor_table_data = [
         [
-            Paragraph(f'<b>THREAT ACTOR</b><br/><font color="#1F150C" size="7.5"><b>{clean_text_for_pdf(act.get("actor", "Not available in source material"))}</b></font>', body_compact),
+            Paragraph(f'<b>THREAT ACTOR</b><br/><font color="#121212" size="7.5"><b>{clean_text_for_pdf(act.get("actor", "Not available in source material"))}</b></font>', body_compact),
             Paragraph(f'<b>KNOWN ALIASES</b><br/>{clean_text_for_pdf(act.get("aliases", "Not available in source material"))}', body_compact),
             Paragraph(f'<b>CAMPAIGN TAG</b><br/>{clean_text_for_pdf(act.get("campaign", "Not available in source material"))}', body_compact)
         ],
         [
             Paragraph(f'<b>ESTIMATED MOTIVATION</b><br/>{clean_text_for_pdf(act.get("motivation", "Cyber Espionage"))}', body_compact),
-            Paragraph(f'<b>ATTRIBUTION CONFIDENCE</b><br/><font color="#412D15"><b>{clean_text_for_pdf(act.get("attribution_confidence", "High Confidence"))}</b></font>', body_compact),
+            Paragraph(f'<b>ATTRIBUTION CONFIDENCE</b><br/><font color="#121212"><b>{clean_text_for_pdf(act.get("attribution_confidence", "High Confidence"))}</b></font>', body_compact),
             Paragraph(f'<b>TARGET PROFILE</b><br/>{clean_text_for_pdf(act.get("target_profile", "Enterprise Perimeter Gateways"))}', body_compact)
         ]
     ]
@@ -739,7 +739,7 @@ def build_executive_summary_pdf(intel: Dict[str, Any]) -> bytes:
             Paragraph(med_html, body_style)
         ],
         [
-            Paragraph('<font color="#412D15"><b>STRATEGIC HARDENING<br/>(Long-Term Architecture)</b></font>', body_style),
+            Paragraph('<font color="#121212"><b>STRATEGIC HARDENING<br/>(Long-Term Architecture)</b></font>', body_style),
             Paragraph(lt_html, body_style)
         ]
     ]
@@ -830,7 +830,7 @@ def build_executive_summary_pdf(intel: Dict[str, Any]) -> bytes:
     gov_table = Table(
         [[
             Paragraph('<font color="#235E35"><b>HUMAN REVIEW &amp; OPERATIONAL APPROVAL MANDATE</b></font><br/>'
-                      f'<font color="#1F150C">Human review and approval required before operational dissemination. '
+                      f'<font color="#121212">Human review and approval required before operational dissemination. '
                       f'This Executive Summary synthesizes verified intelligence from Advisory {advisory_id}.</font>', body_style)
         ]],
         colWidths=[CONTENT_WIDTH],
