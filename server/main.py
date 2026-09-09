@@ -792,7 +792,22 @@ def extract_pdf_info(filename: str, content: bytes) -> tuple:
     except Exception as pdf_err:
         print(f"pypdf extraction warning for {filename}: {pdf_err}")
 
-    # 2. Fallback regex page count estimation if pypdf missed or failed
+    # 2. Fallback regex text stream extractor if pypdf returned empty text
+    if not pages_text:
+        try:
+            raw_str = content.decode('latin-1', errors='ignore')
+            str_matches = re.findall(r'\(([^()]{2,})\)\s*(?:Tj|TJ|\'|")', raw_str)
+            clean_chunks = []
+            for m in str_matches:
+                cleaned = re.sub(r'\\([0-7]{3}|\(|\)|\\)', r'\1', m).strip()
+                if len(cleaned) >= 2 and re.search(r'[a-zA-Z0-9]', cleaned):
+                    clean_chunks.append(cleaned)
+            if clean_chunks:
+                pages_text.append(" ".join(clean_chunks))
+        except Exception as e:
+            print(f"Regex stream PDF fallback error for {filename}: {e}")
+
+    # 3. Fallback regex page count estimation if pypdf missed or failed
     if actual_pages <= 1:
         try:
             raw_str = content.decode('latin-1', errors='ignore')
@@ -808,7 +823,7 @@ def extract_pdf_info(filename: str, content: bytes) -> tuple:
 
     text = "\n\n".join(pages_text) if pages_text else ""
     
-    # 3. If extracted text is empty (scanned PDF), provide clean structured preview string
+    # 4. If extracted text is empty (scanned PDF), provide clean structured preview string
     if not text or len(text.strip()) < 10:
         size_str = format_file_size(len(content))
         text = f"### Ingested PDF Document: {filename}\n\n**File Metadata:** {filename} ({size_str}, {actual_pages} Pages)\n\nOperational advisory and strategic data extracted from PDF source document. Fully ready for multi-agent transformation."

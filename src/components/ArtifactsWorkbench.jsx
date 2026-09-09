@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CheckCircle2, Copy, Download, RefreshCw, Eye, ShieldCheck, Sparkles, Check, ExternalLink, Play, FileText, BookOpen, MessageSquare } from 'lucide-react';
 import { OUTPUT_FORMATS, PRE_GENERATED_RESULTS } from '../data/mockData';
 import { exportToPptx, exportToPdf, exportToMarkdown, exportToText } from '../utils/exportUtils';
+import { formatContentForDisplay } from '../utils/documentUtils';
 import VideoPlayerModal from './VideoPlayerModal';
 import OutputPreviewModal from './OutputPreviewModal';
 
@@ -77,19 +78,26 @@ export default function ArtifactsWorkbench({
 
   // Initialize or retrieve result for an output format (Prioritizing Backend Real-Time API output)
   const getResultForFormat = (formatId) => {
+    let res = null;
     if (editedResults[formatId]) {
-      return editedResults[formatId];
-    }
-    if (backendResults && backendResults[formatId]) {
-      return backendResults[formatId];
-    }
-    if (selectedDoc?.id && PRE_GENERATED_RESULTS[selectedDoc.id]) {
+      res = editedResults[formatId];
+    } else if (backendResults && backendResults[formatId]) {
+      res = backendResults[formatId];
+    } else if (selectedDoc?.id && PRE_GENERATED_RESULTS[selectedDoc.id]) {
       const docData = PRE_GENERATED_RESULTS[selectedDoc.id];
       if (docData && docData[formatId]) {
-        return docData[formatId];
+        res = docData[formatId];
       }
     }
-    return generateDynamicClientResult(formatId, selectedDoc);
+
+    if (!res) {
+      res = generateDynamicClientResult(formatId, selectedDoc);
+    }
+
+    return {
+      ...res,
+      content: formatContentForDisplay(res?.content)
+    };
   };
 
   const handleTextChange = (formatId, newText) => {

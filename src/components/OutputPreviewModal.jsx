@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Download, Copy, Check, FileText, ShieldCheck, Printer, ChevronLeft, ChevronRight, Play, Eye, Share2, Sparkles, ExternalLink } from 'lucide-react';
 import { exportToPdf, exportToPptx } from '../utils/exportUtils';
+import { formatContentForDisplay } from '../utils/documentUtils';
 
 export default function OutputPreviewModal({ isOpen, onClose, modalData, selectedDoc }) {
   if (!isOpen || !modalData) return null;
@@ -9,7 +10,8 @@ export default function OutputPreviewModal({ isOpen, onClose, modalData, selecte
   const formatId = formatInfo?.id || 'exec_summary';
   const title = formatInfo?.title || 'Deliverable Output';
   const docTitle = selectedDoc?.title || 'Source Document';
-  const content = result?.content || 'No output content generated.';
+  const rawContent = result?.content || 'No output content generated.';
+  const content = formatContentForDisplay(rawContent);
 
   const [copied, setCopied] = useState(false);
   const [currentSlideIdx, setCurrentSlideIdx] = useState(0);
