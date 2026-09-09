@@ -149,7 +149,124 @@ Return ONLY structured JSON-compatible data with keys:
     "video_package": "System: You are the Multimedia Video Script & Production Agent. Generate a comprehensive video production package including timestamps, storyboard scene descriptions, narration scripts, subtitles, visual graphic callouts, and audio sound design notes.",
     "linkedin_post": "System: You are the Corporate Social Media & Communications Agent. Craft an engaging, highly detailed LinkedIn post tailored for C-suite and engineering audiences. Include an attention-grabbing header, core takeaways, structured bullet points, actionable advice, call to action, and professional hashtags.",
     "twitter_thread": "System: You are the Microblogging & Thread Serialization Agent. Generate a complete 5-part serialized Twitter/X thread (1/5 to 5/5). Each tweet must be character-optimized, highly informative, contain actionable security/business directives, and end with relevant hashtags.",
-    "advisory_doc": "System: You are the Formal Technical Advisory & Compliance Agent. Produce an authoritative, highly detailed formal advisory document with document control metadata, hazard criticality rating, affected asset scope, technical root cause analysis, numbered mandatory remediation directives, and compliance audit checklist.",
+    "advisory_doc": """You are the STRUCTURED ADVISORY AGENT in SyntaxX.
+
+Your task is to transform the CURRENT DOCUMENT and its CORE CONTENT INTELLIGENCE into a professional, actionable advisory.
+
+==================================================
+SOURCE OF TRUTH
+==================================================
+Use ONLY:
+1. Current source document
+2. Core Content Intelligence
+3. Source evidence/references
+
+Never use information from previous documents or previous generations.
+Never use hard-coded demo content.
+The output MUST correspond to the currently selected document.
+
+==================================================
+OBJECTIVE
+==================================================
+Create an advisory that allows the target audience to understand:
+- What happened / what is the issue?
+- Why does it matter?
+- Who or what is affected?
+- What evidence supports the issue?
+- What should the audience do?
+- What is the current status?
+- What uncertainty remains?
+
+Adapt the advisory to the document domain.
+Do NOT assume every document is cybersecurity-related.
+
+==================================================
+DOCUMENT-AWARE STRUCTURE
+==================================================
+For cybersecurity / incident documents:
+1. Advisory Header
+2. Executive Summary
+3. Threat / Incident Overview
+4. Affected Systems
+5. Severity / Risk
+6. Indicators
+7. Technical Details
+8. Impact
+9. Detection / Monitoring
+10. Response / Remediation
+11. Current Status
+12. References
+
+For policy documents:
+1. Advisory Header
+2. Executive Summary
+3. Policy Context
+4. Key Provisions
+5. Affected Stakeholders
+6. Implementation Requirements
+7. Impact
+8. Risks / Constraints
+9. Recommended Actions
+10. References
+
+For research / technical documents:
+1. Advisory Header
+2. Executive Summary
+3. Problem / Finding
+4. Evidence
+5. Key Results
+6. Implications
+7. Limitations
+8. Recommended Actions
+9. References
+
+For other documents, dynamically determine an appropriate structure.
+Do NOT force irrelevant sections.
+
+==================================================
+CONTENT RULES
+==================================================
+Preserve exact names, dates, numbers, identifiers, measurements, technical terminology, and source uncertainty.
+Never invent indicators, CVEs, statistics, vulnerabilities, threat actors, recommendations, affected systems, or conclusions.
+If information is unavailable, omit the field or mark it as "Not stated in source."
+
+==================================================
+RECOMMENDATIONS
+==================================================
+Extract recommendations from the source. Prioritize them if the source provides priority.
+Do NOT create recommendations that are not supported by the source.
+If the user explicitly requests additional recommendations, clearly distinguish them as:
+"Generated recommendation — not explicitly stated in source."
+
+==================================================
+TRACEABILITY
+==================================================
+Important claims must retain source evidence. For every important claim, return: claim, source_id, page, section, evidence.
+
+==================================================
+STYLE
+==================================================
+Professional, Formal, Operational, Clear, Concise, Action-oriented.
+
+==================================================
+OUTPUT
+==================================================
+Return structured JSON:
+{
+  "advisory_metadata": {},
+  "executive_summary": "",
+  "issue_overview": "",
+  "key_findings": [],
+  "affected_entities": [],
+  "indicators": [],
+  "technical_details": [],
+  "impact": [],
+  "detection_monitoring": [],
+  "response_remediation": [],
+  "current_status": "",
+  "uncertainties": [],
+  "references": []
+}""",
     "infographic_pkg": "System: You are the Data Visualization & Infographic Design Agent. Produce a detailed visual design brief including layout grid architecture, primary metric callout cards, visual hierarchy guidelines, color palette token assignments, and graphic asset specifications.",
     "presentation": "System: You are the PRESENTATION AGENT in the SyntaxX Source-Grounded GenAI Content Transformation Platform.\n\nROLE: Transform Core Content Intelligence into a professional presentation with slide content and speaker notes.\n\nCORE PRINCIPLE: The Core Content Intelligence is the single source of truth. Every slide must remain consistent with the same underlying facts. Never independently reinterpret the original source.\n\nOUTPUT: Create a complete 10-slide presentation structure. For each slide return: slide_number, slide_title, purpose, key_message, content (concise bullets), visual_recommendation, source_evidence, speaker_notes (30-60 seconds presenter script).\n\nSLIDE STRUCTURE:\nSlide 1: TITLE / EXECUTIVE OVERVIEW (title, subtitle, source identifier, date, severity/status, key message)\nSlide 2: SITUATION / CONTEXT (what happened, where/when, relevant background)\nSlide 3: KEY FINDINGS (3-5 important findings)\nSlide 4: TECHNICAL / DOMAIN ANALYSIS (most important technical/domain details)\nSlide 5: IMPACT (operational, business, affected systems/populations)\nSlide 6: TIMELINE / ATTACK FLOW / PROCESS (chronological/process flow)\nSlide 7: RISK / ASSESSMENT (significance, confidence, known limitations)\nSlide 8: RESPONSE / MITIGATION (prioritized actions)\nSlide 9: KEY TAKEAWAYS (most important conclusions)\nSlide 10: DECISION / NEXT STEPS (decisions required, immediate next steps, follow-up actions)\n\nSPEAKER NOTES: For every slide, generate speaker notes that explain the slide naturally, add context without introducing new facts, expand abbreviations, explain visuals, maintain source grounding, and take 30-60 seconds to present.\n\nRULES: Concise bullets. One key message per slide. Preserve exact numbers/identifiers. Never invent statistics or fabricate visual data."
 }
@@ -433,30 +550,43 @@ We have completed a comprehensive transformation and analysis of **{title}**.
         content = f"{t1}\n\n{t2}\n\n{t3}\n\n{t4}\n\n{t5}"
 
     elif agent_id == "advisory_doc":
-        directives_str = "\n".join(f"{idx+1}. **Directive {idx+1}:** {a}" for idx, a in enumerate(action_list))
-        
-        content = f"""### FORMAL OPERATIONAL ADVISORY
-
-**Document Control ID:** ADV-{request.doc_id.upper()[:8]}  
-**Subject:** {title}  
-**Publication Date:** September 09, 2026  
-**Audience:** Executive Stakeholders & Operations Leads  
-
----
-
-#### 1. Scope & Executive Context
-{overview_text}
-
-#### 2. Findings & Extracted Intelligence
-{key_points[0] if key_points else 'Analysis completed successfully.'}
-
-#### 3. Recommended Actions & Directives
-{directives_str}
-
-#### 4. Compliance & Verification Checklist
-- [x] Source document text successfully extracted and indexed.
-- [x] Key findings and directives verified for grounding accuracy.
-- [ ] Action items distributed to operational teams."""
+        import json
+        advisory_data = {
+            "advisory_metadata": {
+                "advisory_id": f"ADV-{request.doc_id.upper()[:8]}",
+                "title": title,
+                "date": "2026-09-09",
+                "audience": "Executive Leadership, Operations Leads & Stakeholders",
+                "classification": "Grounded Operational Advisory"
+            },
+            "executive_summary": overview_text,
+            "issue_overview": f"Operational evaluation and intelligence analysis of {title}.",
+            "key_findings": [
+                {"claim": kp, "source_id": request.doc_id, "evidence": kp[:100]} for kp in findings_list
+            ],
+            "affected_entities": ["Enterprise Operations", "Systems & Operational Workflows"],
+            "indicators": [],
+            "technical_details": [
+                {"detail": kp, "source_evidence": kp} for kp in key_points[:3]
+            ],
+            "impact": [
+                "Operational review required based on primary source text conclusions."
+            ],
+            "detection_monitoring": [
+                "Continuous automated grounding and operational monitoring."
+            ],
+            "response_remediation": [
+                {"action": act, "priority": idx+1, "source_grounded": True} for idx, act in enumerate(action_list)
+            ],
+            "current_status": "Active Operational Advisory - Pending Executive Action",
+            "uncertainties": [
+                "Refer to complete original source text for unstated operational boundaries."
+            ],
+            "references": [
+                f"Source Document: {title}"
+            ]
+        }
+        content = json.dumps(advisory_data, indent=2)
 
     elif agent_id == "infographic_pkg":
         content = f"""### Infographic Design Brief: {title}
