@@ -144,30 +144,30 @@ export default function GroundedQAChat({ selectedDoc, customText }) {
   };
 
   return (
-    <div className="glass-panel animate-fade-in" style={{ padding: '2rem', marginBottom: '2rem', background: '#272B40', borderColor: '#ACBAC4' }}>
+    <div className="glass-panel animate-fade-in" style={{ padding: '2rem', marginBottom: '2rem', background: '#121212', borderColor: '#DFD0B8' }}>
       
       {/* Header Banner */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem', borderBottom: '1.5px solid #ACBAC4', paddingBottom: '1rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '1rem', borderBottom: '1.5px solid #DFD0B8', paddingBottom: '1rem' }}>
         <div>
-          <span className="badge" style={{ background: '#E1D9BC', color: '#30364F', marginBottom: '0.5rem', fontWeight: '700' }}>
+          <span className="badge" style={{ background: '#DFD0B8', color: '#000000', marginBottom: '0.5rem', fontWeight: '700', borderColor: '#E1DCC9' }}>
             <Sparkles size={12} /> TransformAI Grounded Q&A Assistant
           </span>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#F0F0DB' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#FFFFFF' }}>
             Ask Questions About "{docTitle}"
           </h2>
-          <p style={{ fontSize: '0.85rem', color: '#ACBAC4', marginTop: '0.25rem' }}>
+          <p style={{ fontSize: '0.85rem', color: '#E1DCC9', marginTop: '0.25rem', opacity: 0.9 }}>
             Grounded Q&A engine — Ask anything about the PDF without reading the full document
           </p>
         </div>
 
-        <span className="badge" style={{ background: '#E1D9BC', color: '#30364F', fontSize: '0.8rem', padding: '0.4rem 0.8rem' }}>
+        <span className="badge" style={{ background: '#DFD0B8', color: '#000000', fontSize: '0.8rem', padding: '0.4rem 0.8rem', borderColor: '#E1DCC9' }}>
           <ShieldCheck size={14} /> 99.6% Source Grounding
         </span>
       </div>
 
       {/* Suggested Quick Questions */}
       <div style={{ marginBottom: '1.25rem' }}>
-        <span style={{ fontSize: '0.78rem', color: '#ACBAC4', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>
+        <span style={{ fontSize: '0.78rem', color: '#E1DCC9', fontWeight: '700', marginBottom: '0.5rem', display: 'block' }}>
           💡 Suggested Prompts:
         </span>
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
@@ -176,9 +176,9 @@ export default function GroundedQAChat({ selectedDoc, customText }) {
               key={idx}
               className="btn btn-secondary btn-sm"
               onClick={() => handleSendQuestion(sq)}
-              style={{ fontSize: '0.75rem', background: '#30364F', borderColor: '#ACBAC4', color: '#F0F0DB' }}
+              style={{ fontSize: '0.75rem', background: '#000000', borderColor: '#DFD0B8', color: '#FFFFFF' }}
             >
-              {sq} <ArrowRight size={12} color="#E1D9BC" />
+              {sq} <ArrowRight size={12} color="#DFD0B8" />
             </button>
           ))}
         </div>
@@ -186,10 +186,10 @@ export default function GroundedQAChat({ selectedDoc, customText }) {
 
       {/* Chat Thread Container */}
       <div style={{
-        background: '#30364F',
+        background: '#000000',
         borderRadius: 'var(--radius-md)',
         padding: '1.5rem',
-        border: '1.5px solid #ACBAC4',
+        border: '1.5px solid #DFD0B8',
         minHeight: '380px',
         maxHeight: '520px',
         overflowY: 'auto',
@@ -208,14 +208,14 @@ export default function GroundedQAChat({ selectedDoc, customText }) {
             }}
           >
             {/* Sender Label */}
-            <div style={{ fontSize: '0.75rem', color: '#ACBAC4', marginBottom: '0.3rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+            <div style={{ fontSize: '0.75rem', color: '#E1DCC9', marginBottom: '0.3rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               {msg.sender === 'user' ? (
-                <strong style={{ color: '#E1D9BC' }}>You (Operator)</strong>
+                <strong style={{ color: '#FFFFFF' }}>You (Operator)</strong>
               ) : (
                 <>
-                  <Sparkles size={12} color="#E1D9BC" />
-                  <strong style={{ color: '#F0F0DB' }}>TransformAI Grounded AI</strong>
-                  <span className="badge" style={{ fontSize: '0.65rem', background: '#E1D9BC', color: '#30364F', padding: '0.1rem 0.4rem' }}>
+                  <Sparkles size={12} color="#DFD0B8" />
+                  <strong style={{ color: '#FFFFFF' }}>TransformAI Grounded AI</strong>
+                  <span className="badge" style={{ fontSize: '0.65rem', background: '#DFD0B8', color: '#000000', padding: '0.1rem 0.4rem', borderColor: '#E1DCC9' }}>
                     {msg.groundingScore}% Grounded
                   </span>
                 </>
@@ -227,21 +227,21 @@ export default function GroundedQAChat({ selectedDoc, customText }) {
               maxWidth: '85%',
               padding: '1rem 1.25rem',
               borderRadius: 'var(--radius-md)',
-              background: msg.sender === 'user' ? '#E1D9BC' : '#272B40',
-              color: msg.sender === 'user' ? '#30364F' : '#F0F0DB',
-              border: `1.5px solid ${msg.sender === 'user' ? '#E1D9BC' : '#ACBAC4'}`,
+              background: msg.sender === 'user' ? '#DFD0B8' : '#121212',
+              color: msg.sender === 'user' ? '#000000' : '#FFFFFF',
+              border: `1.5px solid ${msg.sender === 'user' ? '#E1DCC9' : '#DFD0B8'}`,
               fontSize: '0.9rem',
               lineHeight: '1.55',
               whiteSpace: 'pre-wrap',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+              boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
             }}>
               {msg.text}
 
               {/* Citations Pill for AI Responses */}
               {msg.sender === 'ai' && msg.citations && (
-                <div style={{ marginTop: '0.75rem', paddingTop: '0.6rem', borderTop: '1px solid #ACBAC4', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  <span style={{ fontSize: '0.725rem', color: '#ACBAC4', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-                    <FileText size={11} color="#E1D9BC" /> Citation Source: <strong>{msg.citations[0]}</strong>
+                <div style={{ marginTop: '0.75rem', paddingTop: '0.6rem', borderTop: '1px solid #DFD0B8', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  <span style={{ fontSize: '0.725rem', color: '#E1DCC9', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                    <FileText size={11} color="#DFD0B8" /> Citation Source: <strong>{msg.citations[0]}</strong>
                   </span>
 
                   <button
@@ -249,7 +249,7 @@ export default function GroundedQAChat({ selectedDoc, customText }) {
                     onClick={() => handleCopyMessage(idx, msg.text)}
                     style={{ padding: '0.2rem 0.5rem', fontSize: '0.7rem' }}
                   >
-                    {copiedIdx === idx ? <Check size={11} color="#E1D9BC" /> : <Copy size={11} />}
+                    {copiedIdx === idx ? <Check size={11} color="#FFFFFF" /> : <Copy size={11} />}
                     {copiedIdx === idx ? 'Copied' : 'Copy'}
                   </button>
                 </div>
@@ -259,7 +259,7 @@ export default function GroundedQAChat({ selectedDoc, customText }) {
         ))}
 
         {loading && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#E1D9BC', fontSize: '0.85rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#FFFFFF', fontSize: '0.85rem' }}>
             <Loader2 size={16} className="spin" style={{ animation: 'spin 1s linear infinite' }} />
             <span>Grounded AI is analyzing source document context & synthesizing answer...</span>
           </div>
@@ -285,10 +285,10 @@ export default function GroundedQAChat({ selectedDoc, customText }) {
           style={{
             flex: 1,
             padding: '0.85rem 1.25rem',
-            background: '#30364F',
-            border: '1.5px solid #ACBAC4',
+            background: '#000000',
+            border: '1.5px solid #DFD0B8',
             borderRadius: 'var(--radius-sm)',
-            color: '#F0F0DB',
+            color: '#FFFFFF',
             fontSize: '0.9rem',
             outline: 'none'
           }}

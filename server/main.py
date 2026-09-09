@@ -387,16 +387,16 @@ A comprehensive evaluation of submitted source material highlights critical oper
 - **Lower Section:** Brand Footprint & Technical Resource Download QR Code
 
 #### 2. Visual Palette Token Assignments
-- **Background Primary:** Slate Navy (`#30364F`)
-- **Background Accent:** Dark Slate (`#272B40`)
-- **Typography & Details:** Steel Blue (`#ACBAC4`)
-- **Hero Accents & Highlights:** Muted Sand (`#E1D9BC`)
-- **Primary Text:** Cream White (`#F0F0DB`)
+- **Background Primary:** Pure Obsidian Black (`#000000`)
+- **Background Accent:** Dark Onyx Surface (`#121212`)
+- **Typography & Details:** Warm Sand Gold (`#DFD0B8`)
+- **Hero Accents & Highlights:** Warm Cream Sand (`#E1DCC9`)
+- **Primary Text:** Pure Crisp White (`#FFFFFF`)
 
 #### 3. Graphic Asset Breakdown
 - **Icons:** Shield, Server Topology, Lock, Patch Checkmark, Alert Triangle
 - **Typography:** Inter Bold for Headlines, JetBrains Mono for Technical Parameters
-- **Callout Cards:** High-contrast rounded cards with 1.5px sand borders (`#E1D9BC`)"""
+- **Callout Cards:** High-contrast rounded cards with 1.5px warm sand gold borders (`#DFD0B8`)"""
 
     elif agent_id == "presentation":
         content = f"""### Executive Presentation Slide Deck: {title}

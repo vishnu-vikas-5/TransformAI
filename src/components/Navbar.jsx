@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Zap, ShieldCheck, Cpu, Sparkles, BookOpen, MessageSquare, ChevronDown } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { Zap, ShieldCheck, Cpu, Sparkles, BookOpen, MessageSquare } from 'lucide-react';
+import GooeyNav from './GooeyNav';
 
 const GithubIcon = ({ size = 18 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -9,9 +10,6 @@ const GithubIcon = ({ size = 18 }) => (
 );
 
 export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHealth, apiProvider, onOpenAgentInspector }) {
-  const [openDropdown, setOpenDropdown] = useState(null); // 'tools' | 'architecture' | null
-  const navRef = useRef(null);
-
   const isOnline = serverHealth?.status === 'online';
   const aiModelName = serverHealth?.gemini_key_configured 
     ? 'Gemini 2.5' 
@@ -19,32 +17,40 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHe
     ? 'GPT-4o' 
     : 'Engine';
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (navRef.current && !navRef.current.contains(event.target)) {
-        setOpenDropdown(null);
-      }
+  const navItems = [
+    { label: 'Workbench', icon: <Cpu size={15} />, onClick: () => setActiveTab('workbench') },
+    { label: 'Summary', icon: <BookOpen size={15} />, onClick: () => setActiveTab('summary') },
+    { label: 'Grounded AI Q&A', icon: <MessageSquare size={15} />, onClick: () => setActiveTab('chat') },
+    { 
+      label: 'System Insights', 
+      icon: <Sparkles size={15} />, 
+      children: [
+        { id: 'architecture', label: 'Architecture', icon: <Zap size={14} />, onClick: () => setActiveTab('architecture') },
+        { id: 'comparative', label: 'Why Agentic AI?', icon: <ShieldCheck size={14} />, onClick: () => setActiveTab('comparative') },
+        { id: 'inspect', label: 'Inspect AI Models', icon: <Sparkles size={14} />, onClick: () => onOpenAgentInspector && onOpenAgentInspector() }
+      ]
     }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  ];
 
-  const toggleDropdown = (name) => {
-    setOpenDropdown(prev => prev === name ? null : name);
+  const getActiveIndex = () => {
+    switch (activeTab) {
+      case 'workbench': return 0;
+      case 'summary': return 1;
+      case 'chat': return 2;
+      case 'architecture':
+      case 'comparative': return 3;
+      default: return 0;
+    }
   };
-
-  const isToolsActive = activeTab === 'summary' || activeTab === 'chat';
-  const isSystemActive = activeTab === 'architecture' || activeTab === 'comparative';
 
   return (
     <header style={{
       position: 'sticky',
       top: 0,
       zIndex: 100,
-      backgroundColor: '#30364F',
-      borderBottom: '1.5px solid #ACBAC4',
-      boxShadow: '0 4px 20px rgba(0,0,0,0.3)'
+      backgroundColor: '#000000',
+      borderBottom: '1.5px solid #DFD0B8',
+      boxShadow: '0 4px 20px rgba(0,0,0,0.95)'
     }}>
       <div className="container" style={{
         display: 'flex',
@@ -53,46 +59,48 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHe
         height: '70px'
       }}>
         {/* Left: Brand Logo & Live Status Pill */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexShrink: 0 }}>
           <div 
-            style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', cursor: 'pointer' }}
-            onClick={() => { setActiveTab('workbench'); setOpenDropdown(null); }}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}
+            onClick={() => setActiveTab('workbench')}
           >
             <div style={{
-              width: '38px',
-              height: '38px',
-              borderRadius: '10px',
-              background: '#E1D9BC',
+              width: '36px',
+              height: '36px',
+              borderRadius: '9px',
+              background: '#DFD0B8',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 10px rgba(0, 0, 0, 0.3)'
+              boxShadow: '0 4px 10px rgba(223, 208, 184, 0.35)'
             }}>
-              <Zap size={20} color="#30364F" />
+              <Zap size={19} color="#000000" />
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <span style={{ fontSize: '1.2rem', fontWeight: '800', letterSpacing: '-0.02em', color: '#F0F0DB' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <span style={{ fontSize: '1.15rem', fontWeight: '800', letterSpacing: '-0.02em', color: '#FFFFFF' }}>
                 TransformAI
               </span>
-              <span className="badge" style={{ background: '#ACBAC4', color: '#30364F', fontSize: '0.6rem', padding: '0.1rem 0.4rem' }}>
+              <span className="badge" style={{ background: '#DFD0B8', color: '#000000', fontSize: '0.6rem', padding: '0.1rem 0.4rem', borderColor: '#E1DCC9' }}>
                 v2.5
               </span>
             </div>
           </div>
 
-          {/* Compact Live Status Badge Pill */}
+          {/* Single-Line Status Badge Pill */}
           <div 
             onClick={(e) => { e.stopPropagation(); onOpenAgentInspector && onOpenAgentInspector(); }}
             style={{
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              background: '#272B40',
-              border: '1px solid #ACBAC4',
+              background: '#121212',
+              border: '1px solid #DFD0B8',
               padding: '0.3rem 0.65rem',
               borderRadius: '20px',
               fontSize: '0.72rem',
               cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
               transition: 'all 0.2s ease'
             }}
             title="Click to inspect active AI model & system breakdown"
@@ -102,228 +110,53 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHe
               height: '7px',
               borderRadius: '50%',
               background: isOnline ? '#52c41a' : '#ff4d4f',
-              boxShadow: isOnline ? '0 0 6px #52c41a' : 'none'
+              boxShadow: isOnline ? '0 0 6px #52c41a' : 'none',
+              flexShrink: 0
             }} />
-            <span style={{ color: isOnline ? '#F0F0DB' : '#ACBAC4', fontWeight: '700' }}>
-              {isOnline ? 'Backend Online' : 'Backend Offline'}
+            <span style={{ color: '#FFFFFF', fontWeight: '700' }}>
+              {isOnline ? 'Online' : 'Offline'}
             </span>
-            <span style={{ color: '#ACBAC4' }}>•</span>
-            <span style={{ color: '#E1D9BC', fontWeight: '700' }}>
+            <span style={{ color: '#DFD0B8' }}>•</span>
+            <span style={{ color: '#E1DCC9', fontWeight: '600' }}>
               AI: {aiModelName} 🔍
             </span>
           </div>
         </div>
 
-        {/* Center: Organized Navigation Dropdown Menus */}
-        <nav ref={navRef} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', position: 'relative' }}>
-          
-          {/* 1. Workbench Button (Direct Main Link) */}
-          <button
-            className={`btn btn-sm ${activeTab === 'workbench' ? 'btn-primary' : 'btn-secondary'}`}
-            onClick={() => { setActiveTab('workbench'); setOpenDropdown(null); }}
-            style={{ padding: '0.5rem 0.85rem' }}
-          >
-            <Cpu size={15} /> Workbench
-          </button>
-
-          {/* 2. Intelligence Tools Dropdown */}
-          <div style={{ position: 'relative' }}>
-            <button
-              className={`btn btn-sm ${isToolsActive ? 'btn-primary' : 'btn-secondary'}`}
-              onClick={() => toggleDropdown('tools')}
-              style={{
-                padding: '0.5rem 0.85rem',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                borderColor: openDropdown === 'tools' ? '#E1D9BC' : undefined
-              }}
-            >
-              <BookOpen size={15} /> Intelligence Tools <ChevronDown size={14} style={{ transform: openDropdown === 'tools' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-            </button>
-
-            {openDropdown === 'tools' && (
-              <div style={{
-                position: 'absolute',
-                top: 'calc(100% + 8px)',
-                left: 0,
-                width: '250px',
-                background: '#272B40',
-                border: '1.5px solid #ACBAC4',
-                borderRadius: 'var(--radius-md)',
-                boxShadow: '0 12px 30px rgba(0,0,0,0.5)',
-                padding: '0.5rem',
-                zIndex: 110,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.35rem'
-              }}>
-                <button
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '0.75rem',
-                    padding: '0.65rem 0.75rem',
-                    background: activeTab === 'summary' ? '#30364F' : 'transparent',
-                    border: 'none',
-                    borderRadius: 'var(--radius-sm)',
-                    color: '#F0F0DB',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                    transition: 'background 0.2s'
-                  }}
-                  onClick={() => { setActiveTab('summary'); setOpenDropdown(null); }}
-                >
-                  <BookOpen size={18} color="#E1D9BC" style={{ marginTop: '2px', flexShrink: 0 }} />
-                  <div>
-                    <div style={{ fontWeight: '700', fontSize: '0.85rem', color: '#F0F0DB' }}>Full Document Summary</div>
-                    <div style={{ fontSize: '0.72rem', color: '#ACBAC4' }}>360° PDF Master Briefing & Search</div>
-                  </div>
-                </button>
-
-                <button
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '0.75rem',
-                    padding: '0.65rem 0.75rem',
-                    background: activeTab === 'chat' ? '#30364F' : 'transparent',
-                    border: 'none',
-                    borderRadius: 'var(--radius-sm)',
-                    color: '#F0F0DB',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                    transition: 'background 0.2s'
-                  }}
-                  onClick={() => { setActiveTab('chat'); setOpenDropdown(null); }}
-                >
-                  <MessageSquare size={18} color="#E1D9BC" style={{ marginTop: '2px', flexShrink: 0 }} />
-                  <div>
-                    <div style={{ fontWeight: '700', fontSize: '0.85rem', color: '#F0F0DB' }}>Ask Grounded AI</div>
-                    <div style={{ fontSize: '0.72rem', color: '#ACBAC4' }}>Grounded Interactive Q&A Assistant</div>
-                  </div>
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* 3. System & AI Architecture Dropdown */}
-          <div style={{ position: 'relative' }}>
-            <button
-              className={`btn btn-sm ${isSystemActive ? 'btn-primary' : 'btn-secondary'}`}
-              onClick={() => toggleDropdown('architecture')}
-              style={{
-                padding: '0.5rem 0.85rem',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.4rem',
-                borderColor: openDropdown === 'architecture' ? '#E1D9BC' : undefined
-              }}
-            >
-              <Zap size={15} /> System & AI <ChevronDown size={14} style={{ transform: openDropdown === 'architecture' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
-            </button>
-
-            {openDropdown === 'architecture' && (
-              <div style={{
-                position: 'absolute',
-                top: 'calc(100% + 8px)',
-                right: 0,
-                width: '260px',
-                background: '#272B40',
-                border: '1.5px solid #ACBAC4',
-                borderRadius: 'var(--radius-md)',
-                boxShadow: '0 12px 30px rgba(0,0,0,0.5)',
-                padding: '0.5rem',
-                zIndex: 110,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0.35rem'
-              }}>
-                <button
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '0.75rem',
-                    padding: '0.65rem 0.75rem',
-                    background: 'transparent',
-                    border: 'none',
-                    borderRadius: 'var(--radius-sm)',
-                    color: '#F0F0DB',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                    transition: 'background 0.2s'
-                  }}
-                  onClick={() => { onOpenAgentInspector && onOpenAgentInspector(); setOpenDropdown(null); }}
-                >
-                  <Sparkles size={18} color="#E1D9BC" style={{ marginTop: '2px', flexShrink: 0 }} />
-                  <div>
-                    <div style={{ fontWeight: '700', fontSize: '0.85rem', color: '#F0F0DB' }}>Inspect AI & 9-Agents</div>
-                    <div style={{ fontSize: '0.72rem', color: '#ACBAC4' }}>Prompts, Temperature & Models</div>
-                  </div>
-                </button>
-
-                <button
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '0.75rem',
-                    padding: '0.65rem 0.75rem',
-                    background: activeTab === 'architecture' ? '#30364F' : 'transparent',
-                    border: 'none',
-                    borderRadius: 'var(--radius-sm)',
-                    color: '#F0F0DB',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                    transition: 'background 0.2s'
-                  }}
-                  onClick={() => { setActiveTab('architecture'); setOpenDropdown(null); }}
-                >
-                  <Zap size={18} color="#E1D9BC" style={{ marginTop: '2px', flexShrink: 0 }} />
-                  <div>
-                    <div style={{ fontWeight: '700', fontSize: '0.85rem', color: '#F0F0DB' }}>Agent Architecture</div>
-                    <div style={{ fontSize: '0.72rem', color: '#ACBAC4' }}>DAG Parallel Pipeline Visualizer</div>
-                  </div>
-                </button>
-
-                <button
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '0.75rem',
-                    padding: '0.65rem 0.75rem',
-                    background: activeTab === 'comparative' ? '#30364F' : 'transparent',
-                    border: 'none',
-                    borderRadius: 'var(--radius-sm)',
-                    color: '#F0F0DB',
-                    textAlign: 'left',
-                    cursor: 'pointer',
-                    transition: 'background 0.2s'
-                  }}
-                  onClick={() => { setActiveTab('comparative'); setOpenDropdown(null); }}
-                >
-                  <ShieldCheck size={18} color="#E1D9BC" style={{ marginTop: '2px', flexShrink: 0 }} />
-                  <div>
-                    <div style={{ fontWeight: '700', fontSize: '0.85rem', color: '#F0F0DB' }}>Why Agentic AI?</div>
-                    <div style={{ fontSize: '0.72rem', color: '#ACBAC4' }}>Single Prompt vs Multi-Agent ROI</div>
-                  </div>
-                </button>
-              </div>
-            )}
-          </div>
-
-        </nav>
+        {/* Center: React Bits GooeyNav Interactive Component */}
+        <div 
+          className="navbar-center-nav" 
+          style={{ 
+            flex: 1, 
+            display: 'flex', 
+            justifyContent: 'center', 
+            overflow: 'visible',
+            padding: '0 0.5rem' 
+          }}
+        >
+          <GooeyNav 
+            items={navItems}
+            activeIndex={getActiveIndex()}
+            activeTab={activeTab}
+            particleCount={15}
+            particleDistances={[90, 10]}
+            particleR={100}
+            animationTime={600}
+            timeVariance={300}
+          />
+        </div>
 
         {/* Right: Action Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexShrink: 0 }}>
           <button className="btn btn-primary btn-sm" onClick={onLaunchDemo}>
-            <Sparkles size={15} /> Run Live Demo
+            <Sparkles size={14} /> Run Live Demo
           </button>
           <a
             href="https://github.com/vishnu-vikas-5/TransformAI"
             target="_blank"
             rel="noreferrer"
             className="btn btn-secondary btn-sm"
-            style={{ padding: '0.5rem' }}
+            style={{ padding: '0.45rem' }}
             title="GitHub Repository"
           >
             <GithubIcon size={18} />

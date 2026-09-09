@@ -2,47 +2,59 @@
   --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Strict 4-Color Palette: #30364F | #ACBAC4 | #E1D9BC | #F0F0DB */
-  --c-navy: #30364F;
-  /* Deep Slate Navy (Main BG & Dark Surfaces) */
-  --c-steel: #ACBAC4;
-  /* Cool Steel Blue (Borders & Primary Accents) */
-  --c-sand: #E1D9BC;
-  /* Soft Muted Sand (Highlights & Badges) */
-  --c-cream: #F0F0DB;
-  /* Off-White Cream (Primary Text & Light Surfaces) */
+  /* Luxury Obsidian, White & Warm Sand Gold Palette: #000000 | #121212 | #DFD0B8 | #E1DCC9 | #FFFFFF */
+  --c-dark-espresso: #000000;
+  /* Pure Obsidian Black (Main Page Background & Dark Surfaces) */
+  --c-choc-brown: #121212;
+  /* Dark Onyx Surface (Panels, Cards & Dropdowns) */
+  --c-sand-gold: #DFD0B8;
+  /* Warm Sand Gold (Borders, Active Indicators, Icons & Accents - Swatch #DFD0B8) */
+  --c-cream-ivory: #FFFFFF;
+  /* Pure Crisp White (Primary Text & Headlines) */
+  --c-warm-cream: #E1DCC9;
+  /* Warm Cream Sand (Secondary Text & Sub-accents - Swatch #E1DCC9) */
 
-  --bg-primary: var(--c-navy);
-  --bg-secondary: #272B40;
-  --bg-tertiary: var(--c-navy);
+  /* Legacy & Semantic Mapping */
+  --c-black: var(--c-dark-espresso);
+  --c-espresso: var(--c-choc-brown);
+  --c-bronze: var(--c-sand-gold);
+  --c-linen: var(--c-cream-ivory);
+  --c-navy: var(--c-dark-espresso);
+  --c-steel: var(--c-sand-gold);
+  --c-sand: var(--c-warm-cream);
+  --c-cream: var(--c-warm-cream);
 
-  --glass-bg: rgba(48, 54, 79, 0.85);
-  --glass-card: #272B40;
-  --glass-border: var(--c-steel);
-  --glass-border-glow: var(--c-sand);
+  --bg-primary: var(--c-dark-espresso);
+  --bg-secondary: var(--c-choc-brown);
+  --bg-tertiary: var(--c-dark-espresso);
 
-  --accent-primary: var(--c-sand);
-  --accent-secondary: var(--c-steel);
-  --accent-dark: var(--c-navy);
+  --glass-bg: rgba(18, 18, 18, 0.95);
+  --glass-card: var(--c-choc-brown);
+  --glass-border: var(--c-sand-gold);
+  --glass-border-glow: var(--c-sand-gold);
 
-  --text-primary: var(--c-cream);
-  --text-secondary: var(--c-sand);
-  --text-muted: var(--c-steel);
+  --accent-primary: var(--c-sand-gold);
+  --accent-secondary: var(--c-warm-cream);
+  --accent-dark: var(--c-dark-espresso);
 
-  --gradient-brand: linear-gradient(135deg, #ACBAC4 0%, #E1D9BC 100%);
-  --gradient-card: linear-gradient(135deg, #30364F 0%, #272B40 100%);
+  --text-primary: var(--c-cream-ivory);
+  --text-secondary: #E1DCC9;
+  --text-muted: #A0A0A0;
+
+  --gradient-brand: linear-gradient(135deg, #DFD0B8 0%, #E1DCC9 100%);
+  --gradient-card: linear-gradient(135deg, #000000 0%, #121212 100%);
 
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 18px;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 20px rgba(172, 186, 196, 0.3);
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.9);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.95);
+  --shadow-glow: 0 0 20px rgba(223, 208, 184, 0.3);
 
   color-scheme: dark;
-  scrollbar-color: var(--c-steel) var(--c-navy);
+  scrollbar-color: var(--c-sand-gold) var(--c-dark-espresso);
 }
 
 /* Fallback for webkit scrollbar */
@@ -53,12 +65,12 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: var(--c-steel);
+    background: var(--c-sand-gold);
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-track {
-    background: var(--c-navy);
+    background: var(--c-dark-espresso);
   }
 }
 
@@ -70,12 +82,12 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--c-navy);
-  color: var(--c-cream);
+  background-color: var(--c-dark-espresso);
+  color: var(--c-cream-ivory);
   min-height: 100vh;
   line-height: 1.6;
   overflow-x: hidden;
-  background-image: radial-gradient(rgba(172, 186, 196, 0.32) 1.5px, transparent 1.5px);
+  background-image: radial-gradient(rgba(223, 208, 184, 0.15) 1.5px, transparent 1.5px);
   background-size: 24px 24px;
   background-position: 0 0;
   background-attachment: fixed;
@@ -90,11 +102,11 @@ h5,
 h6 {
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--c-cream);
+  color: var(--c-cream-ivory);
 }
 
 .text-gradient {
-  color: var(--c-sand);
+  color: var(--c-cream-ivory);
   background: none;
 }
 
@@ -108,15 +120,15 @@ h6 {
 
 /* Glassmorphism / Clean Card Panel */
 .glass-panel {
-  background: #272B40;
-  border: 1.5px solid var(--c-steel);
+  background: var(--c-choc-brown);
+  border: 1.5px solid var(--c-sand-gold);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   transition: all 0.25s ease;
 }
 
 .glass-panel-hover:hover {
-  border-color: var(--c-sand);
+  border-color: var(--c-cream-ivory);
   box-shadow: var(--shadow-glow);
   transform: translateY(-2px);
 }
@@ -140,39 +152,39 @@ h6 {
 }
 
 .btn-primary {
-  background: var(--c-sand);
-  color: var(--c-navy);
-  border: 1.5px solid var(--c-sand);
+  background: var(--c-sand-gold);
+  color: #000000;
+  border: 1.5px solid var(--c-sand-gold);
 }
 
 .btn-primary:hover {
-  background: var(--c-steel);
-  color: var(--c-navy);
-  border-color: var(--c-steel);
+  background: var(--c-warm-cream);
+  color: #000000;
+  border-color: var(--c-warm-cream);
   transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background: var(--c-navy);
-  color: var(--c-cream);
-  border: 1.5px solid var(--c-steel);
+  background: var(--c-dark-espresso);
+  color: var(--c-cream-ivory);
+  border: 1.5px solid var(--c-sand-gold);
 }
 
 .btn-secondary:hover {
-  background: var(--c-steel);
-  color: var(--c-navy);
-  border-color: var(--c-sand);
+  background: var(--c-sand-gold);
+  color: #000000;
+  border-color: var(--c-sand-gold);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--c-cream);
-  border: 1.5px solid var(--c-steel);
+  color: var(--c-cream-ivory);
+  border: 1.5px solid var(--c-sand-gold);
 }
 
 .btn-outline:hover {
-  background: var(--c-steel);
-  color: var(--c-navy);
+  background: var(--c-sand-gold);
+  color: #000000;
 }
 
 .btn-sm {
@@ -187,7 +199,7 @@ h6 {
   pointer-events: none;
 }
 
-/* Badge Styles - 4-Color Strict Palette */
+/* Badge Styles - Black, White & Warm Sand Gold Palette */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -198,9 +210,9 @@ h6 {
   font-weight: 700;
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  background: var(--c-steel);
-  color: var(--c-navy);
-  border: 1px solid var(--c-sand);
+  background: var(--c-sand-gold);
+  color: #000000;
+  border: 1px solid var(--c-warm-cream);
 }
 
 .badge-indigo,
@@ -209,9 +221,9 @@ h6 {
 .badge-purple,
 .badge-amber,
 .badge-rose {
-  background: var(--c-steel);
-  color: var(--c-navy);
-  border: 1px solid var(--c-sand);
+  background: var(--c-sand-gold);
+  color: #000000;
+  border: 1px solid var(--c-warm-cream);
 }
 
 /* Animations */
@@ -235,7 +247,7 @@ h6 {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 18, 28, 0.8);
+  background: rgba(0, 0, 0, 0.94);
   backdrop-filter: blur(8px);
   z-index: 100;
   display: flex;
@@ -249,18 +261,18 @@ h6 {
   max-width: 800px;
   max-height: 85vh;
   overflow-y: auto;
-  background: var(--c-navy);
-  border: 2px solid var(--c-sand);
+  background: var(--c-dark-espresso);
+  border: 2px solid var(--c-sand-gold);
   border-radius: var(--radius-lg);
   padding: 2rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-  color: var(--c-cream);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.95);
+  color: var(--c-cream-ivory);
 }
 
 /* Code block styles */
 pre,
 code {
   font-family: var(--font-mono);
-  background: #272B40;
-  color: var(--c-cream);
+  background: var(--c-choc-brown);
+  color: var(--c-cream-ivory);
 }

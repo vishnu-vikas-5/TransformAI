@@ -142,7 +142,7 @@ export default function ArtifactsWorkbench({
   };
 
   return (
-    <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', background: '#272B40', borderColor: '#ACBAC4' }}>
+    <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', background: '#121212', borderColor: '#DFD0B8' }}>
 
       {/* Toast Notification */}
       {actionNotice && (
@@ -150,11 +150,11 @@ export default function ArtifactsWorkbench({
           position: 'fixed',
           bottom: '24px',
           right: '24px',
-          background: '#E1D9BC',
-          color: '#30364F',
+          background: '#DFD0B8',
+          color: '#000000',
           padding: '0.75rem 1.25rem',
           borderRadius: 'var(--radius-md)',
-          boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
+          boxShadow: '0 10px 25px rgba(0,0,0,0.95)',
           zIndex: 1000,
           fontWeight: '700',
           fontSize: '0.875rem',
@@ -173,8 +173,8 @@ export default function ArtifactsWorkbench({
             width: '32px',
             height: '32px',
             borderRadius: '50%',
-            background: '#E1D9BC',
-            color: '#30364F',
+            background: '#DFD0B8',
+            color: '#000000',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -182,12 +182,12 @@ export default function ArtifactsWorkbench({
             fontSize: '0.9rem'
           }}>4</div>
           <div>
-            <h2 style={{ fontSize: '1.35rem', color: '#F0F0DB' }}>Human-in-the-Loop Review & Deliverable Export</h2>
-            <p style={{ fontSize: '0.8rem', color: '#ACBAC4' }}>Real-time parallel multi-agent output deliverables (FastAPI Backend Engine)</p>
+            <h2 style={{ fontSize: '1.35rem', color: '#FFFFFF' }}>Human-in-the-Loop Review & Deliverable Export</h2>
+            <p style={{ fontSize: '0.8rem', color: '#E1DCC9', opacity: 0.9 }}>Real-time parallel multi-agent output deliverables (FastAPI Backend Engine)</p>
           </div>
         </div>
 
-        <span className="badge" style={{ background: '#E1D9BC', color: '#30364F', borderColor: '#ACBAC4' }}>
+        <span className="badge" style={{ background: '#DFD0B8', color: '#000000', borderColor: '#E1DCC9' }}>
           <ShieldCheck size={14} /> Validation Audit Passed
         </span>
       </div>
@@ -196,13 +196,13 @@ export default function ArtifactsWorkbench({
         <div style={{
           textAlign: 'center',
           padding: '3rem 1.5rem',
-          background: '#30364F',
+          background: '#000000',
           borderRadius: 'var(--radius-md)',
-          border: '1.5px solid #ACBAC4'
+          border: '1.5px solid #DFD0B8'
         }}>
-          <Sparkles size={36} color="#E1D9BC" style={{ marginBottom: '1rem' }} />
-          <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: '#F0F0DB' }}>No Generated Deliverables Yet</h3>
-          <p style={{ fontSize: '0.85rem', color: '#ACBAC4' }}>
+          <Sparkles size={36} color="#DFD0B8" style={{ marginBottom: '1rem' }} />
+          <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: '#FFFFFF' }}>No Generated Deliverables Yet</h3>
+          <p style={{ fontSize: '0.85rem', color: '#E1DCC9', opacity: 0.85 }}>
             Click "Run Agentic Orchestration" above to trigger parallel micro-agents and validation checks.
           </p>
         </div>
@@ -230,21 +230,21 @@ export default function ArtifactsWorkbench({
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '1rem',
-                  background: '#30364F',
-                  borderColor: '#ACBAC4'
+                  background: '#000000',
+                  borderColor: '#DFD0B8'
                 }}
               >
                 {/* Card Top Row */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div>
-                    <span className="badge" style={{ fontSize: '0.65rem', marginBottom: '0.35rem', background: '#ACBAC4', color: '#30364F', borderColor: '#E1D9BC' }}>
+                    <span className="badge" style={{ fontSize: '0.65rem', marginBottom: '0.35rem', background: '#DFD0B8', color: '#000000', borderColor: '#E1DCC9' }}>
                       {formatInfo.agent}
                     </span>
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#F0F0DB' }}>{formatInfo.title}</h3>
+                    <h3 style={{ fontSize: '1.1rem', fontWeight: '700', color: '#FFFFFF' }}>{formatInfo.title}</h3>
                   </div>
 
                   <div style={{ textAlign: 'right' }}>
-                    <span className="badge" style={{ fontSize: '0.7rem', background: '#E1D9BC', color: '#30364F', borderColor: '#ACBAC4' }}>
+                    <span className="badge" style={{ fontSize: '0.7rem', background: '#DFD0B8', color: '#000000', borderColor: '#E1DCC9' }}>
                       <CheckCircle2 size={11} /> {result.groundingScore}% Grounded
                     </span>
                   </div>
@@ -255,23 +255,23 @@ export default function ArtifactsWorkbench({
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  background: '#272B40',
+                  background: '#121212',
                   padding: '0.6rem 0.85rem',
                   borderRadius: 'var(--radius-sm)',
                   fontSize: '0.78rem',
-                  color: '#ACBAC4',
+                  color: '#FFFFFF',
                   gap: '0.75rem',
                   flexWrap: 'wrap',
-                  border: '1px solid #ACBAC4'
+                  border: '1px solid #DFD0B8'
                 }}>
                   <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                    <span>Hallucinations: <strong style={{ color: '#E1D9BC' }}>{result.hallucinations}</strong></span>
-                    <span>Tone Match: <strong style={{ color: '#F0F0DB' }}>{result.toneMatch}%</strong></span>
+                    <span>Hallucinations: <strong style={{ color: '#FFFFFF' }}>{result.hallucinations}</strong></span>
+                    <span>Tone Match: <strong style={{ color: '#FFFFFF' }}>{result.toneMatch}%</strong></span>
                   </div>
 
                   <button
                     className="btn btn-outline btn-sm"
-                    style={{ padding: '0.2rem 0.6rem', fontSize: '0.7rem', borderColor: '#E1D9BC', color: '#F0F0DB' }}
+                    style={{ padding: '0.2rem 0.6rem', fontSize: '0.7rem', borderColor: '#DFD0B8', color: '#FFFFFF' }}
                     onClick={() => onOpenGroundingModal(formatInfo, result)}
                   >
                     <Eye size={12} /> Inspect Citations
@@ -286,10 +286,10 @@ export default function ArtifactsWorkbench({
                   style={{
                     width: '100%',
                     padding: '0.85rem',
-                    background: '#272B40',
-                    border: '1.5px solid #ACBAC4',
+                    background: '#121212',
+                    border: '1.5px solid #DFD0B8',
                     borderRadius: 'var(--radius-sm)',
-                    color: '#F0F0DB',
+                    color: '#FFFFFF',
                     fontFamily: 'var(--font-sans)',
                     fontSize: '0.825rem',
                     lineHeight: '1.5',
@@ -315,7 +315,7 @@ export default function ArtifactsWorkbench({
                       onClick={() => handleCopy(formatId)}
                       title="Copy text to clipboard"
                     >
-                      {isCopied ? <Check size={13} color="#E1D9BC" /> : <Copy size={13} />}
+                      {isCopied ? <Check size={13} color="#EDEDED" /> : <Copy size={13} />}
                       {isCopied ? 'Copied!' : 'Copy'}
                     </button>
 

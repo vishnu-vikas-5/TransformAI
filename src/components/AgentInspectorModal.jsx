@@ -111,16 +111,16 @@ export default function AgentInspectorModal({ isOpen, onClose }) {
     <div className="modal-overlay" onClick={onClose}>
       <div 
         className="modal-content animate-fade-in" 
-        style={{ maxWidth: '960px', background: '#30364F', borderColor: '#E1D9BC', maxHeight: '90vh', overflowY: 'auto' }}
+        style={{ maxWidth: '960px', background: '#000000', borderColor: '#DFD0B8', maxHeight: '90vh', overflowY: 'auto' }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', borderBottom: '1.5px solid #ACBAC4', paddingBottom: '0.85rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', borderBottom: '1.5px solid #DFD0B8', paddingBottom: '0.85rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <Cpu size={24} color="#E1D9BC" />
+            <Cpu size={24} color="#DFD0B8" />
             <div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#F0F0DB' }}>AI Model & Agent Architecture Diagnostics Inspector</h3>
-              <p style={{ fontSize: '0.78rem', color: '#ACBAC4' }}>Comprehensive system registry of active LLMs, domain prompts, and execution parameters</p>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#FFFFFF' }}>AI Model & Agent Architecture Diagnostics Inspector</h3>
+              <p style={{ fontSize: '0.78rem', color: '#E1DCC9', opacity: 0.9 }}>Comprehensive system registry of active LLMs, domain prompts, and execution parameters</p>
             </div>
           </div>
 
@@ -131,19 +131,19 @@ export default function AgentInspectorModal({ isOpen, onClose }) {
 
         {/* AI Engine Telemetry Card */}
         <div style={{
-          background: '#272B40',
+          background: '#121212',
           borderRadius: 'var(--radius-md)',
           padding: '1.25rem',
-          border: '1.5px solid #E1D9BC',
+          border: '1.5px solid #DFD0B8',
           marginBottom: '1.5rem'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.5rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Zap size={18} color="#E1D9BC" />
-              <span style={{ fontSize: '1rem', fontWeight: '700', color: '#F0F0DB' }}>Primary Generative AI Model Engine</span>
+              <Zap size={18} color="#DFD0B8" />
+              <span style={{ fontSize: '1rem', fontWeight: '700', color: '#FFFFFF' }}>Primary Generative AI Model Engine</span>
             </div>
 
-            <span className="badge" style={{ background: '#E1D9BC', color: '#30364F', fontWeight: '700' }}>
+            <span className="badge" style={{ background: '#DFD0B8', color: '#000000', fontWeight: '700', borderColor: '#E1DCC9' }}>
               <CheckCircle2 size={13} /> {activeModel}
             </span>
           </div>
@@ -154,36 +154,36 @@ export default function AgentInspectorModal({ isOpen, onClose }) {
             gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
             gap: '1rem',
             fontSize: '0.825rem',
-            color: '#ACBAC4'
+            color: '#FFFFFF'
           }}>
-            <div style={{ background: '#30364F', padding: '0.75rem', borderRadius: '6px', border: '1px solid #ACBAC4' }}>
-              <div style={{ fontSize: '0.75rem', color: '#E1D9BC', fontWeight: '600' }}>Active LLM Model</div>
-              <div style={{ fontSize: '0.9rem', color: '#F0F0DB', fontWeight: '700', marginTop: '0.25rem' }}>Gemini 2.5 Flash / GPT-4o</div>
+            <div style={{ background: '#000000', padding: '0.75rem', borderRadius: '6px', border: '1px solid #DFD0B8' }}>
+              <div style={{ fontSize: '0.75rem', color: '#E1DCC9', fontWeight: '600', opacity: 0.9 }}>Active LLM Model</div>
+              <div style={{ fontSize: '0.9rem', color: '#FFFFFF', fontWeight: '700', marginTop: '0.25rem' }}>Gemini 2.5 Flash / GPT-4o</div>
             </div>
 
-            <div style={{ background: '#30364F', padding: '0.75rem', borderRadius: '6px', border: '1px solid #ACBAC4' }}>
-              <div style={{ fontSize: '0.75rem', color: '#E1D9BC', fontWeight: '600' }}>Factual Temperature</div>
-              <div style={{ fontSize: '0.9rem', color: '#F0F0DB', fontWeight: '700', marginTop: '0.25rem' }}>0.2 (Strict Grounding)</div>
+            <div style={{ background: '#000000', padding: '0.75rem', borderRadius: '6px', border: '1px solid #DFD0B8' }}>
+              <div style={{ fontSize: '0.75rem', color: '#E1DCC9', fontWeight: '600', opacity: 0.9 }}>Factual Temperature</div>
+              <div style={{ fontSize: '0.9rem', color: '#FFFFFF', fontWeight: '700', marginTop: '0.25rem' }}>0.2 (Strict Grounding)</div>
             </div>
 
-            <div style={{ background: '#30364F', padding: '0.75rem', borderRadius: '6px', border: '1px solid #ACBAC4' }}>
-              <div style={{ fontSize: '0.75rem', color: '#E1D9BC', fontWeight: '600' }}>Max Token Budget</div>
-              <div style={{ fontSize: '0.9rem', color: '#F0F0DB', fontWeight: '700', marginTop: '0.25rem' }}>4,096 Tokens / Task</div>
+            <div style={{ background: '#000000', padding: '0.75rem', borderRadius: '6px', border: '1px solid #DFD0B8' }}>
+              <div style={{ fontSize: '0.75rem', color: '#E1DCC9', fontWeight: '600', opacity: 0.9 }}>Max Token Budget</div>
+              <div style={{ fontSize: '0.9rem', color: '#FFFFFF', fontWeight: '700', marginTop: '0.25rem' }}>4,096 Tokens / Task</div>
             </div>
 
-            <div style={{ background: '#30364F', padding: '0.75rem', borderRadius: '6px', border: '1px solid #ACBAC4' }}>
-              <div style={{ fontSize: '0.75rem', color: '#E1D9BC', fontWeight: '600' }}>Streaming Protocol</div>
-              <div style={{ fontSize: '0.9rem', color: '#F0F0DB', fontWeight: '700', marginTop: '0.25rem' }}>SSE & WebSockets</div>
+            <div style={{ background: '#000000', padding: '0.75rem', borderRadius: '6px', border: '1px solid #DFD0B8' }}>
+              <div style={{ fontSize: '0.75rem', color: '#E1DCC9', fontWeight: '600', opacity: 0.9 }}>Streaming Protocol</div>
+              <div style={{ fontSize: '0.9rem', color: '#FFFFFF', fontWeight: '700', marginTop: '0.25rem' }}>SSE & WebSockets</div>
             </div>
           </div>
         </div>
 
         {/* Section Header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-          <h4 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#F0F0DB' }}>
+          <h4 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#FFFFFF' }}>
             Registered AI Multi-Agent System Nodes ({agents.length} Total Agents)
           </h4>
-          <span className="badge" style={{ background: '#ACBAC4', color: '#30364F' }}>
+          <span className="badge" style={{ background: '#DFD0B8', color: '#000000', borderColor: '#E1DCC9' }}>
             <Activity size={12} /> All Agents Operational
           </span>
         </div>
@@ -194,46 +194,46 @@ export default function AgentInspectorModal({ isOpen, onClose }) {
             <div
               key={agent.id || idx}
               style={{
-                background: '#272B40',
+                background: '#121212',
                 borderRadius: 'var(--radius-md)',
                 padding: '1.15rem',
-                border: '1.5px solid #ACBAC4'
+                border: '1.5px solid #DFD0B8'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span className="badge" style={{ background: '#E1D9BC', color: '#30364F', fontWeight: '700', fontSize: '0.7rem' }}>
+                  <span className="badge" style={{ background: '#DFD0B8', color: '#000000', fontWeight: '700', fontSize: '0.7rem', borderColor: '#E1DCC9' }}>
                     {agent.type || "Specialized Agent"}
                   </span>
-                  <h5 style={{ fontSize: '1rem', fontWeight: '700', color: '#F0F0DB' }}>{agent.name}</h5>
+                  <h5 style={{ fontSize: '1rem', fontWeight: '700', color: '#FFFFFF' }}>{agent.name}</h5>
                 </div>
 
-                <span style={{ fontSize: '0.75rem', color: '#E1D9BC', fontFamily: 'var(--font-mono)' }}>
+                <span style={{ fontSize: '0.75rem', color: '#E1DCC9', fontFamily: 'var(--font-mono)' }}>
                   ID: {agent.id}
                 </span>
               </div>
 
-              <div style={{ fontSize: '0.825rem', color: '#E1D9BC', fontWeight: '600', marginBottom: '0.4rem' }}>
+              <div style={{ fontSize: '0.825rem', color: '#DFD0B8', fontWeight: '600', marginBottom: '0.4rem' }}>
                 Role Function: {agent.role}
               </div>
 
-              <p style={{ fontSize: '0.8rem', color: '#ACBAC4', marginBottom: '0.75rem', lineHeight: '1.4' }}>
+              <p style={{ fontSize: '0.8rem', color: '#E1DCC9', marginBottom: '0.75rem', lineHeight: '1.4', opacity: 0.9 }}>
                 {agent.description}
               </p>
 
               {agent.system_prompt && (
                 <div style={{
-                  background: '#30364F',
+                  background: '#000000',
                   padding: '0.65rem 0.85rem',
                   borderRadius: '6px',
-                  border: '1px solid #ACBAC4',
+                  border: '1px solid #DFD0B8',
                   fontFamily: 'var(--font-mono)',
                   fontSize: '0.75rem',
-                  color: '#F0F0DB',
+                  color: '#FFFFFF',
                   whiteSpace: 'pre-wrap',
                   lineHeight: '1.4'
                 }}>
-                  <span style={{ color: '#E1D9BC', fontWeight: '700' }}>System Prompt Instruction: </span>
+                  <span style={{ color: '#DFD0B8', fontWeight: '700' }}>System Prompt Instruction: </span>
                   {agent.system_prompt}
                 </div>
               )}

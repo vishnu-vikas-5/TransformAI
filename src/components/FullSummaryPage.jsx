@@ -95,7 +95,7 @@ This Master Executive Briefing synthesizes every critical element, technical vul
     : rawSummary;
 
   return (
-    <div className="glass-panel animate-fade-in" style={{ padding: '2rem', marginBottom: '2rem', background: '#272B40', borderColor: '#ACBAC4' }}>
+    <div className="glass-panel animate-fade-in" style={{ padding: '2rem', marginBottom: '2rem', background: '#121212', borderColor: '#DFD0B8' }}>
       
       {/* Toast Notification */}
       {actionNotice && (
@@ -103,11 +103,11 @@ This Master Executive Briefing synthesizes every critical element, technical vul
           position: 'fixed',
           bottom: '24px',
           right: '24px',
-          background: '#E1D9BC',
-          color: '#30364F',
+          background: '#DFD0B8',
+          color: '#000000',
           padding: '0.75rem 1.25rem',
           borderRadius: 'var(--radius-md)',
-          boxShadow: '0 10px 25px rgba(0,0,0,0.5)',
+          boxShadow: '0 10px 25px rgba(0,0,0,0.95)',
           zIndex: 1000,
           fontWeight: '700',
           fontSize: '0.875rem'
@@ -117,15 +117,15 @@ This Master Executive Briefing synthesizes every critical element, technical vul
       )}
 
       {/* Header Banner */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem', borderBottom: '1.5px solid #ACBAC4', paddingBottom: '1rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem', borderBottom: '1.5px solid #DFD0B8', paddingBottom: '1rem' }}>
         <div>
-          <span className="badge" style={{ background: '#E1D9BC', color: '#30364F', marginBottom: '0.5rem', fontWeight: '700' }}>
+          <span className="badge" style={{ background: '#DFD0B8', color: '#000000', marginBottom: '0.5rem', fontWeight: '700', borderColor: '#E1DCC9' }}>
             <BookOpen size={12} /> Exhaustive Master Summary Page
           </span>
-          <h1 style={{ fontSize: '1.6rem', fontWeight: '800', color: '#F0F0DB', lineHeight: '1.3' }}>
+          <h1 style={{ fontSize: '1.6rem', fontWeight: '800', color: '#FFFFFF', lineHeight: '1.3' }}>
             {selectedDoc?.title || 'Ingested Document Master Briefing'}
           </h1>
-          <p style={{ fontSize: '0.85rem', color: '#ACBAC4', marginTop: '0.25rem' }}>
+          <p style={{ fontSize: '0.85rem', color: '#E1DCC9', marginTop: '0.25rem', opacity: 0.9 }}>
             Complete 360° summary of source material (Zero original PDF reading required)
           </p>
         </div>
@@ -146,14 +146,15 @@ This Master Executive Briefing synthesizes every critical element, technical vul
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        background: '#30364F',
+        background: '#000000',
         padding: '0.85rem 1.25rem',
         borderRadius: 'var(--radius-md)',
         marginBottom: '1.5rem',
-        border: '1.5px solid #ACBAC4',
+        border: '1.5px solid #DFD0B8',
         flexWrap: 'wrap',
         gap: '1rem',
-        fontSize: '0.85rem'
+        fontSize: '0.85rem',
+        color: '#FFFFFF'
       }}>
         <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
           <span>📄 <strong>Pages:</strong> {selectedDoc?.pages || 10}</span>
@@ -162,7 +163,7 @@ This Master Executive Briefing synthesizes every critical element, technical vul
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <span className="badge" style={{ background: '#E1D9BC', color: '#30364F' }}>
+          <span className="badge" style={{ background: '#DFD0B8', color: '#000000', borderColor: '#E1DCC9' }}>
             <ShieldCheck size={13} /> {execSummaryData.groundingScore}% Factual Grounding
           </span>
         </div>
@@ -179,7 +180,7 @@ This Master Executive Briefing synthesizes every critical element, technical vul
       }}>
         {/* Search Input */}
         <div style={{ position: 'relative', flex: '1', minWidth: '260px' }}>
-          <Search size={16} color="#ACBAC4" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
+          <Search size={16} color="#DFD0B8" style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)' }} />
           <input
             type="text"
             placeholder="Search keywords in full summary (e.g., CVE, directive, patch, MFA)..."
@@ -188,10 +189,10 @@ This Master Executive Briefing synthesizes every critical element, technical vul
             style={{
               width: '100%',
               padding: '0.55rem 0.85rem 0.55rem 2.25rem',
-              background: '#30364F',
-              border: '1.5px solid #ACBAC4',
+              background: '#000000',
+              border: '1.5px solid #DFD0B8',
               borderRadius: 'var(--radius-sm)',
-              color: '#F0F0DB',
+              color: '#FFFFFF',
               fontSize: '0.85rem',
               outline: 'none'
             }}
@@ -201,7 +202,7 @@ This Master Executive Briefing synthesizes every critical element, technical vul
         {/* Action Buttons */}
         <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
           <button className="btn btn-secondary btn-sm" onClick={handleCopy}>
-            {copied ? <Check size={14} color="#E1D9BC" /> : <Copy size={14} />}
+            {copied ? <Check size={14} color="#FFFFFF" /> : <Copy size={14} />}
             {copied ? 'Copied Full Summary!' : 'Copy Summary'}
           </button>
 
@@ -225,14 +226,14 @@ This Master Executive Briefing synthesizes every critical element, technical vul
 
       {/* Main Full Master Summary Reader Area */}
       <div style={{
-        background: '#30364F',
+        background: '#000000',
         borderRadius: 'var(--radius-md)',
         padding: '2rem',
-        border: '1.5px solid #E1D9BC',
-        boxShadow: '0 10px 25px rgba(0,0,0,0.3)',
+        border: '1.5px solid #DFD0B8',
+        boxShadow: '0 10px 25px rgba(0,0,0,0.9)',
         fontSize: '0.925rem',
         lineHeight: '1.65',
-        color: '#F0F0DB',
+        color: '#FFFFFF',
         whiteSpace: 'pre-wrap',
         fontFamily: 'var(--font-sans)',
         minHeight: '400px'
@@ -242,7 +243,7 @@ This Master Executive Briefing synthesizes every critical element, technical vul
 
       {/* Footer Banner */}
       <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-        <p style={{ fontSize: '0.8rem', color: '#ACBAC4' }}>
+        <p style={{ fontSize: '0.8rem', color: '#E1DCC9', opacity: 0.85 }}>
           Grounded by TransformAI Validation Agent • Zero unverified tokens detected
         </p>
 

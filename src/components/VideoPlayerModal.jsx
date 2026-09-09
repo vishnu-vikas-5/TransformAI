@@ -142,15 +142,15 @@ export default function VideoPlayerModal({ isOpen, onClose, videoData, docId, do
       tick += 0.04;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Background Slate Gradient
+      // Background Gradient
       const grad = ctx.createRadialGradient(canvas.width/2, canvas.height/2, 50, canvas.width/2, canvas.height/2, canvas.width);
-      grad.addColorStop(0, '#30364F');
-      grad.addColorStop(1, '#272B40');
+      grad.addColorStop(0, '#121212');
+      grad.addColorStop(1, '#000000');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Animated Dot Grid Pattern
-      ctx.fillStyle = 'rgba(172, 186, 196, 0.15)';
+      ctx.fillStyle = 'rgba(223, 208, 184, 0.25)';
       for (let x = 20; x < canvas.width; x += 40) {
         for (let y = 20; y < canvas.height; y += 40) {
           const radius = 1.5 + Math.sin(tick + (x + y) * 0.01) * 0.5;
@@ -161,21 +161,21 @@ export default function VideoPlayerModal({ isOpen, onClose, videoData, docId, do
       }
 
       // Top Header Pill
-      ctx.fillStyle = '#E1D9BC';
+      ctx.fillStyle = '#DFD0B8';
       ctx.fillRect(40, 30, canvas.width - 80, 4);
 
       // Scene Title & Badge
-      ctx.fillStyle = '#ACBAC4';
+      ctx.fillStyle = '#FFFFFF';
       ctx.font = 'bold 18px sans-serif';
       ctx.fillText(`SCENE ${scene.id} OF ${scenes.length}: ${scene.time}`, 40, 70);
 
-      ctx.fillStyle = '#F0F0DB';
+      ctx.fillStyle = '#FFFFFF';
       ctx.font = 'bold 28px sans-serif';
       ctx.fillText(scene.title, 40, 110);
 
       // Central Graphic Card Box
-      ctx.fillStyle = 'rgba(48, 54, 79, 0.85)';
-      ctx.strokeStyle = '#E1D9BC';
+      ctx.fillStyle = '#121212';
+      ctx.strokeStyle = '#DFD0B8';
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.roundRect(40, 140, canvas.width - 80, 300, 16);
@@ -184,20 +184,20 @@ export default function VideoPlayerModal({ isOpen, onClose, videoData, docId, do
 
       // Pulsing Motion Text
       const textY = 240 + Math.sin(tick * 2) * 6;
-      ctx.fillStyle = '#E1D9BC';
+      ctx.fillStyle = '#FFFFFF';
       ctx.font = '800 42px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText(scene.graphic, canvas.width / 2, textY);
 
       // Visual Cue Subtext
-      ctx.fillStyle = '#ACBAC4';
+      ctx.fillStyle = '#E1DCC9';
       ctx.font = '600 20px sans-serif';
       ctx.fillText(`Visual Cue: ${scene.visual.slice(0, 70)}`, canvas.width / 2, textY + 50);
       ctx.textAlign = 'left';
 
       // Live Audio Waveform Visualizer
       if (isPlaying) {
-        ctx.fillStyle = '#E1D9BC';
+        ctx.fillStyle = '#DFD0B8';
         const bars = 24;
         const startX = canvas.width / 2 - (bars * 12) / 2;
         for (let i = 0; i < bars; i++) {
@@ -207,15 +207,15 @@ export default function VideoPlayerModal({ isOpen, onClose, videoData, docId, do
       }
 
       // Bottom Subtitles Bar Box
-      ctx.fillStyle = '#272B40';
-      ctx.strokeStyle = '#ACBAC4';
+      ctx.fillStyle = '#000000';
+      ctx.strokeStyle = '#DFD0B8';
       ctx.lineWidth = 1.5;
       ctx.beginPath();
       ctx.roundRect(40, 470, canvas.width - 80, 80, 12);
       ctx.fill();
       ctx.stroke();
 
-      ctx.fillStyle = '#F0F0DB';
+      ctx.fillStyle = '#FFFFFF';
       ctx.font = '600 20px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText(scene.subtitle, canvas.width / 2, 518);
@@ -318,15 +318,15 @@ export default function VideoPlayerModal({ isOpen, onClose, videoData, docId, do
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content animate-fade-in" style={{ maxWidth: '920px', background: '#30364F', borderColor: '#E1D9BC' }} onClick={(e) => e.stopPropagation()}>
+      <div className="modal-content animate-fade-in" style={{ maxWidth: '920px', background: '#000000', borderColor: '#DFD0B8' }} onClick={(e) => e.stopPropagation()}>
 
         {/* Modal Header */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', borderBottom: '1.5px solid #ACBAC4', paddingBottom: '0.75rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', borderBottom: '1.5px solid #DFD0B8', paddingBottom: '0.75rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <Film size={22} color="#E1D9BC" />
+            <Film size={22} color="#DFD0B8" />
             <div>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#F0F0DB' }}>Video Package Production Studio</h3>
-              <p style={{ fontSize: '0.75rem', color: '#ACBAC4' }}>Dynamic canvas video renderer with real voiceover synthesis & downloadable video file</p>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#FFFFFF' }}>Video Package Production Studio</h3>
+              <p style={{ fontSize: '0.75rem', color: '#E1DCC9', opacity: 0.9 }}>Dynamic canvas video renderer with real voiceover synthesis & downloadable video file</p>
             </div>
           </div>
 
@@ -345,9 +345,9 @@ export default function VideoPlayerModal({ isOpen, onClose, videoData, docId, do
               width: '100%',
               height: 'auto',
               borderRadius: 'var(--radius-md)',
-              border: '2px solid #E1D9BC',
-              boxShadow: '0 10px 25px rgba(0, 0, 0, 0.4)',
-              background: '#272B40'
+              border: '2px solid #DFD0B8',
+              boxShadow: '0 10px 25px rgba(0, 0, 0, 0.8)',
+              background: '#000000'
             }}
           />
 
@@ -356,8 +356,8 @@ export default function VideoPlayerModal({ isOpen, onClose, videoData, docId, do
               position: 'absolute',
               top: '16px',
               right: '16px',
-              background: '#E1D9BC',
-              color: '#30364F',
+              background: '#DFD0B8',
+              color: '#000000',
               padding: '0.4rem 0.8rem',
               borderRadius: '6px',
               fontSize: '0.8rem',
@@ -373,11 +373,11 @@ export default function VideoPlayerModal({ isOpen, onClose, videoData, docId, do
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          background: '#272B40',
+          background: '#121212',
           padding: '0.85rem 1.25rem',
           borderRadius: 'var(--radius-md)',
           marginBottom: '1.25rem',
-          border: '1.5px solid #ACBAC4'
+          border: '1.5px solid #DFD0B8'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
             <button className="btn btn-primary btn-sm" onClick={togglePlay}>
@@ -404,9 +404,9 @@ export default function VideoPlayerModal({ isOpen, onClose, videoData, docId, do
                   padding: '0.3rem 0.6rem',
                   fontSize: '0.75rem',
                   borderRadius: '4px',
-                  border: '1px solid #E1D9BC',
-                  background: currentScene === idx ? '#E1D9BC' : '#30364F',
-                  color: currentScene === idx ? '#30364F' : '#F0F0DB',
+                  border: '1px solid #DFD0B8',
+                  background: currentScene === idx ? '#DFD0B8' : '#000000',
+                  color: currentScene === idx ? '#000000' : '#FFFFFF',
                   cursor: 'pointer',
                   fontWeight: '700'
                 }}
@@ -419,7 +419,7 @@ export default function VideoPlayerModal({ isOpen, onClose, videoData, docId, do
 
         {/* Download Deliverables Action Bar */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem', flexWrap: 'wrap' }}>
-          <span style={{ fontSize: '0.85rem', color: '#ACBAC4', fontWeight: '700' }}>
+          <span style={{ fontSize: '0.85rem', color: '#FFFFFF', fontWeight: '700' }}>
             Download Real Deliverables:
           </span>
 

@@ -21,7 +21,7 @@ export default function OrchestratorVisualizer({
     : apiProvider || 'TransformAI Engine';
 
   return (
-    <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', background: '#272B40', borderColor: '#ACBAC4' }}>
+    <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', background: '#121212', borderColor: '#DFD0B8' }}>
 
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
@@ -30,8 +30,8 @@ export default function OrchestratorVisualizer({
             width: '32px',
             height: '32px',
             borderRadius: '50%',
-            background: '#E1D9BC',
-            color: '#30364F',
+            background: '#DFD0B8',
+            color: '#000000',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -39,8 +39,8 @@ export default function OrchestratorVisualizer({
             fontSize: '0.9rem'
           }}>3</div>
           <div>
-            <h2 style={{ fontSize: '1.35rem', color: '#F0F0DB' }}>AI Orchestrator & Task Decomposition Engine</h2>
-            <p style={{ fontSize: '0.8rem', color: '#ACBAC4' }}>Master Agent creates task DAG & executes domain agents in parallel</p>
+            <h2 style={{ fontSize: '1.35rem', color: '#FFFFFF' }}>AI Orchestrator & Task Decomposition Engine</h2>
+            <p style={{ fontSize: '0.8rem', color: '#E1DCC9', opacity: 0.9 }}>Master Agent creates task DAG & executes domain agents in parallel</p>
           </div>
         </div>
 
@@ -67,18 +67,18 @@ export default function OrchestratorVisualizer({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        background: '#30364F',
-        border: '1.5px solid #ACBAC4',
+        background: '#000000',
+        border: '1.5px solid #DFD0B8',
         borderRadius: 'var(--radius-md)',
         padding: '0.85rem 1.25rem',
         marginBottom: '1.5rem',
         fontSize: '0.85rem',
-        color: '#F0F0DB',
+        color: '#FFFFFF',
         flexWrap: 'wrap',
         gap: '0.75rem'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-          <Server size={18} color="#E1D9BC" />
+          <Server size={18} color="#DFD0B8" />
           <span>
             <strong>Python FastAPI Backend:</strong>{' '}
             <span style={{ color: isOnline ? '#52c41a' : '#ff4d4f', fontWeight: '800' }}>
@@ -89,10 +89,10 @@ export default function OrchestratorVisualizer({
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Sparkles size={18} color="#E1D9BC" />
+            <Sparkles size={18} color="#DFD0B8" />
             <span>
               <strong>Active Model:</strong>{' '}
-              <span className="badge" style={{ background: '#E1D9BC', color: '#30364F', fontWeight: '800' }}>
+              <span className="badge" style={{ background: '#DFD0B8', color: '#000000', fontWeight: '800', borderColor: '#E1DCC9' }}>
                 {activeAiName}
               </span>
             </span>
@@ -101,7 +101,7 @@ export default function OrchestratorVisualizer({
           <button
             className="btn btn-secondary btn-sm"
             onClick={onOpenAgentInspector}
-            style={{ padding: '0.35rem 0.75rem', fontSize: '0.75rem', borderColor: '#E1D9BC' }}
+            style={{ padding: '0.35rem 0.75rem', fontSize: '0.75rem' }}
           >
             Inspect AI System 🔍
           </button>
@@ -110,20 +110,20 @@ export default function OrchestratorVisualizer({
 
       {/* Orchestration DAG Visualizer */}
       <div style={{
-        background: '#30364F',
+        background: '#000000',
         borderRadius: 'var(--radius-md)',
         padding: '1.5rem',
-        border: '1.5px solid #ACBAC4',
+        border: '1.5px solid #DFD0B8',
         marginBottom: '1.5rem'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <GitBranch size={18} color="#E1D9BC" />
-            <span style={{ fontSize: '0.9rem', fontWeight: '700', color: '#F0F0DB' }}>
+            <GitBranch size={18} color="#DFD0B8" />
+            <span style={{ fontSize: '0.9rem', fontWeight: '700', color: '#FFFFFF' }}>
               Execution Graph (Directed Acyclic Graph)
             </span>
           </div>
-          <span className="badge" style={{ background: '#ACBAC4', color: '#30364F', borderColor: '#E1D9BC' }}>
+          <span className="badge" style={{ background: '#DFD0B8', color: '#000000', borderColor: '#E1DCC9' }}>
             {isExecuting ? 'Parallel Processing Active' : completedOutputs.length > 0 ? 'Workflow Completed' : 'Ready'}
           </span>
         </div>
@@ -139,19 +139,19 @@ export default function OrchestratorVisualizer({
         }}>
           {/* Node 1: Master Orchestrator */}
           <div style={{
-            background: '#272B40',
-            border: '2px solid #E1D9BC',
+            background: '#121212',
+            border: '2px solid #DFD0B8',
             borderRadius: 'var(--radius-md)',
             padding: '1rem 1.25rem',
             textAlign: 'center',
             minWidth: '170px'
           }}>
-            <Cpu size={24} color="#E1D9BC" style={{ marginBottom: '0.35rem' }} />
-            <h4 style={{ fontSize: '0.85rem', fontWeight: '700', color: '#F0F0DB' }}>Master Orchestrator</h4>
-            <span style={{ fontSize: '0.7rem', color: '#ACBAC4' }}>Decomposing Intent</span>
+            <Cpu size={24} color="#DFD0B8" style={{ marginBottom: '0.35rem' }} />
+            <h4 style={{ fontSize: '0.85rem', fontWeight: '700', color: '#FFFFFF' }}>Master Orchestrator</h4>
+            <span style={{ fontSize: '0.7rem', color: '#E1DCC9', opacity: 0.85 }}>Decomposing Intent</span>
           </div>
 
-          <ArrowRight size={20} color="#ACBAC4" />
+          <ArrowRight size={20} color="#DFD0B8" />
 
           {/* Node 2: Specialized Parallel Agents */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', flex: 1, minWidth: '260px' }}>
@@ -168,31 +168,31 @@ export default function OrchestratorVisualizer({
                     justifyContent: 'space-between',
                     padding: '0.65rem 1rem',
                     borderRadius: 'var(--radius-sm)',
-                    background: isDone ? '#272B40' : isExecuting ? '#30364F' : '#272B40',
-                    border: `1.5px solid ${isDone ? '#E1D9BC' : '#ACBAC4'}`,
+                    background: '#121212',
+                    border: `1.5px solid ${isDone ? '#DFD0B8' : '#222222'}`,
                     transition: 'all 0.3s ease'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <span style={{ fontSize: '0.725rem', color: '#ACBAC4', fontFamily: 'var(--font-mono)', fontWeight: '700' }}>
+                    <span style={{ fontSize: '0.725rem', color: '#DFD0B8', fontFamily: 'var(--font-mono)', fontWeight: '700' }}>
                       Task 0{index + 1}
                     </span>
-                    <span style={{ fontSize: '0.825rem', fontWeight: '700', color: '#F0F0DB' }}>
+                    <span style={{ fontSize: '0.825rem', fontWeight: '700', color: '#FFFFFF' }}>
                       {formatInfo?.agent}
                     </span>
                   </div>
 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                     {isDone ? (
-                      <span className="badge" style={{ fontSize: '0.65rem', background: '#E1D9BC', color: '#30364F' }}>
+                      <span className="badge" style={{ fontSize: '0.65rem', background: '#DFD0B8', color: '#000000', borderColor: '#E1DCC9' }}>
                         <CheckCircle2 size={11} /> Done
                       </span>
                     ) : isExecuting ? (
-                      <span className="badge" style={{ fontSize: '0.65rem', background: '#ACBAC4', color: '#30364F' }}>
+                      <span className="badge" style={{ fontSize: '0.65rem', background: '#000000', color: '#FFFFFF', borderColor: '#DFD0B8' }}>
                         <Loader2 size={11} className="spin" style={{ animation: 'spin 1s linear infinite' }} /> Executing
                       </span>
                     ) : (
-                      <span className="badge" style={{ fontSize: '0.65rem', background: '#30364F', color: '#F0F0DB' }}>
+                      <span className="badge" style={{ fontSize: '0.65rem', background: '#000000', color: '#E1DCC9', borderColor: '#333333' }}>
                         Queued
                       </span>
                     )}
@@ -202,20 +202,20 @@ export default function OrchestratorVisualizer({
             })}
           </div>
 
-          <ArrowRight size={20} color="#ACBAC4" />
+          <ArrowRight size={20} color="#DFD0B8" />
 
           {/* Node 3: Validation Agent */}
           <div style={{
-            background: '#272B40',
-            border: '2px solid #E1D9BC',
+            background: '#121212',
+            border: '2px solid #DFD0B8',
             borderRadius: 'var(--radius-md)',
             padding: '1rem 1.25rem',
             textAlign: 'center',
             minWidth: '170px'
           }}>
-            <ShieldCheck size={24} color="#E1D9BC" style={{ marginBottom: '0.35rem' }} />
-            <h4 style={{ fontSize: '0.85rem', fontWeight: '700', color: '#F0F0DB' }}>Validation Agent</h4>
-            <span style={{ fontSize: '0.7rem', color: '#ACBAC4' }}>Factual Grounding Check</span>
+            <ShieldCheck size={24} color="#DFD0B8" style={{ marginBottom: '0.35rem' }} />
+            <h4 style={{ fontSize: '0.85rem', fontWeight: '700', color: '#FFFFFF' }}>Validation Agent</h4>
+            <span style={{ fontSize: '0.7rem', color: '#E1DCC9', opacity: 0.85 }}>Factual Grounding Check</span>
           </div>
         </div>
 
@@ -223,15 +223,15 @@ export default function OrchestratorVisualizer({
 
       {/* Live Log */}
       <div style={{
-        background: '#30364F',
+        background: '#000000',
         borderRadius: 'var(--radius-sm)',
         padding: '0.85rem 1rem',
-        border: '1.5px solid #ACBAC4',
+        border: '1.5px solid #DFD0B8',
         fontFamily: 'var(--font-mono)',
         fontSize: '0.785rem',
-        color: '#F0F0DB'
+        color: '#FFFFFF'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#E1D9BC', fontWeight: '700', marginBottom: '0.35rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#DFD0B8', fontWeight: '700', marginBottom: '0.35rem' }}>
           <Terminal size={13} /> Live Orchestration Output Stream:
         </div>
         <div>

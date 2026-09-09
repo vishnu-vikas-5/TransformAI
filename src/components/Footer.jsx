@@ -11,12 +11,12 @@ const GithubIcon = ({ size = 16 }) => (
 export default function Footer() {
   return (
     <footer style={{
-      background: '#272B40',
-      borderTop: '1.5px solid #ACBAC4',
+      background: '#000000',
+      borderTop: '1.5px solid #DFD0B8',
       padding: '2.5rem 0',
       marginTop: '3rem',
       fontSize: '0.85rem',
-      color: '#ACBAC4'
+      color: '#FFFFFF'
     }}>
       <div className="container" style={{
         display: 'flex',
@@ -30,25 +30,25 @@ export default function Footer() {
             width: '32px',
             height: '32px',
             borderRadius: '8px',
-            background: '#E1D9BC',
+            background: '#DFD0B8',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <Zap size={18} color="#30364F" />
+            <Zap size={18} color="#000000" />
           </div>
           <div>
-            <span style={{ fontWeight: '700', color: '#F0F0DB' }}>TransformAI</span> — An Agentic Multi-Format Content Transformation Engine
+            <span style={{ fontWeight: '700', color: '#FFFFFF' }}>TransformAI</span> — An Agentic Multi-Format Content Transformation Engine
           </div>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-          <span className="badge" style={{ background: '#ACBAC4', color: '#30364F', borderColor: '#E1D9BC' }}>SIH / College Project Solution</span>
+          <span className="badge" style={{ background: '#121212', color: '#FFFFFF', borderColor: '#DFD0B8' }}>SIH / College Project Solution</span>
           <a
             href="https://github.com/vishnu-vikas-5/TransformAI"
             target="_blank"
             rel="noreferrer"
-            style={{ color: '#F0F0DB', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: '700' }}
+            style={{ color: '#FFFFFF', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: '700' }}
           >
             <GithubIcon size={16} /> GitHub Repository
           </a>

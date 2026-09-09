@@ -149,7 +149,7 @@ export default function App() {
   };
 
   return (
-    <div className="app-container" style={{ minHeight: '100vh', background: 'transparent', color: '#F0F0DB' }}>
+    <div className="app-container" style={{ minHeight: '100vh', background: 'transparent', color: '#FFFFFF' }}>
       <Navbar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 

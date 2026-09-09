@@ -12,10 +12,10 @@ export default function Hero({ onStartTransformation }) {
 
         {/* Top Tagline Badge */}
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}>
-          <span className="badge" style={{ padding: '0.4rem 1rem', fontSize: '0.8rem', background: '#ACBAC4', color: '#30364F', borderColor: '#E1D9BC' }}>
+          <span className="badge" style={{ padding: '0.4rem 1rem', fontSize: '0.8rem', background: '#DFD0B8', color: '#000000', borderColor: '#E1DCC9' }}>
             <Sparkles size={14} /> Human-in-the-Loop Agentic AI Engine
           </span>
-          <span className="badge" style={{ padding: '0.4rem 1rem', fontSize: '0.8rem', background: '#E1D9BC', color: '#30364F', borderColor: '#ACBAC4' }}>
+          <span className="badge" style={{ padding: '0.4rem 1rem', fontSize: '0.8rem', background: '#121212', color: '#FFFFFF', borderColor: '#DFD0B8' }}>
             <ShieldCheck size={14} /> Factual Validation Audit
           </span>
         </div>
@@ -27,16 +27,16 @@ export default function Hero({ onStartTransformation }) {
           fontWeight: '800',
           letterSpacing: '-0.03em',
           marginBottom: '1.25rem',
-          color: '#F0F0DB'
+          color: '#FFFFFF'
         }}>
           Transform Complex Documents into <br />
-          <span style={{ color: '#E1D9BC', borderBottom: '3px solid #ACBAC4' }}>Audience-Tailored Communications</span>
+          <span style={{ color: '#FFFFFF', borderBottom: '3px solid #DFD0B8' }}>Audience-Tailored Communications</span>
         </h1>
 
         {/* Subtitle */}
         <p style={{
           fontSize: '1.15rem',
-          color: '#ACBAC4',
+          color: '#E1DCC9',
           maxWidth: '780px',
           margin: '0 auto 2rem auto',
           lineHeight: '1.7'
@@ -62,24 +62,24 @@ export default function Hero({ onStartTransformation }) {
           gap: '1rem',
           marginTop: '1rem'
         }}>
-          <div className="glass-panel" style={{ padding: '1.25rem', textAlign: 'center', background: '#272B40', borderColor: '#ACBAC4' }}>
-            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#E1D9BC' }}>4.2x</div>
-            <p style={{ fontSize: '0.825rem', color: '#ACBAC4', fontWeight: '600' }}>Parallel Latency Reduction</p>
+          <div className="glass-panel" style={{ padding: '1.25rem', textAlign: 'center', background: '#121212', borderColor: '#DFD0B8' }}>
+            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#FFFFFF' }}>4.2x</div>
+            <p style={{ fontSize: '0.825rem', color: '#E1DCC9', fontWeight: '600' }}>Parallel Latency Reduction</p>
           </div>
 
-          <div className="glass-panel" style={{ padding: '1.25rem', textAlign: 'center', background: '#272B40', borderColor: '#ACBAC4' }}>
-            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#E1D9BC' }}>99.1%</div>
-            <p style={{ fontSize: '0.825rem', color: '#ACBAC4', fontWeight: '600' }}>Factual Grounding Score</p>
+          <div className="glass-panel" style={{ padding: '1.25rem', textAlign: 'center', background: '#121212', borderColor: '#DFD0B8' }}>
+            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#FFFFFF' }}>99.1%</div>
+            <p style={{ fontSize: '0.825rem', color: '#E1DCC9', fontWeight: '600' }}>Factual Grounding Score</p>
           </div>
 
-          <div className="glass-panel" style={{ padding: '1.25rem', textAlign: 'center', background: '#272B40', borderColor: '#ACBAC4' }}>
-            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#E1D9BC' }}>9+</div>
-            <p style={{ fontSize: '0.825rem', color: '#ACBAC4', fontWeight: '600' }}>Specialized Domain Agents</p>
+          <div className="glass-panel" style={{ padding: '1.25rem', textAlign: 'center', background: '#121212', borderColor: '#DFD0B8' }}>
+            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#FFFFFF' }}>9+</div>
+            <p style={{ fontSize: '0.825rem', color: '#E1DCC9', fontWeight: '600' }}>Specialized Domain Agents</p>
           </div>
 
-          <div className="glass-panel" style={{ padding: '1.25rem', textAlign: 'center', background: '#272B40', borderColor: '#ACBAC4' }}>
-            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#E1D9BC' }}>100%</div>
-            <p style={{ fontSize: '0.825rem', color: '#ACBAC4', fontWeight: '600' }}>Human-in-the-Loop Control</p>
+          <div className="glass-panel" style={{ padding: '1.25rem', textAlign: 'center', background: '#121212', borderColor: '#DFD0B8' }}>
+            <div style={{ fontSize: '1.8rem', fontWeight: '800', color: '#FFFFFF' }}>100%</div>
+            <p style={{ fontSize: '0.825rem', color: '#E1DCC9', fontWeight: '600' }}>Human-in-the-Loop Control</p>
           </div>
         </div>
 
@@ -87,3 +87,4 @@ export default function Hero({ onStartTransformation }) {
     </div>
   );
 }
+
