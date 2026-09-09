@@ -164,14 +164,25 @@ export default function App() {
       />
 
       <main>
-        <Hero onGetStarted={() => {
-          setActiveTab('workbench');
-          handleRunOrchestration();
-        }} />
+        <Hero 
+          onStartTransformation={() => {
+            setActiveTab('workbench');
+            setTimeout(() => {
+              const el = document.getElementById('workbench-section');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }, 50);
+          }} 
+          onExploreArchitecture={() => {
+            setActiveTab('architecture');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        />
 
         <div className="container">
           {activeTab === 'workbench' && (
-            <div className="animate-fade-in">
+            <div id="workbench-section" className="animate-fade-in">
               <InputSection 
                 selectedDoc={selectedDoc}
                 setSelectedDoc={setSelectedDoc}

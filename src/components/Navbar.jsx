@@ -62,7 +62,10 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHe
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexShrink: 0 }}>
           <div 
             style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}
-            onClick={() => setActiveTab('workbench')}
+            onClick={() => {
+              setActiveTab('workbench');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
           >
             <div style={{
               width: '36px',

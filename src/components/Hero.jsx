@@ -2,7 +2,7 @@ import React from 'react';
 import { Sparkles, ArrowRight, ShieldCheck, Zap } from 'lucide-react';
 import TextType from './TextType';
 
-export default function Hero({ onStartTransformation }) {
+export default function Hero({ onStartTransformation, onExploreArchitecture }) {
   return (
     <div style={{
       padding: '3rem 0 2rem 0',
@@ -64,12 +64,20 @@ export default function Hero({ onStartTransformation }) {
 
         {/* Call to Action Buttons */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap', marginBottom: '3rem' }}>
-          <button className="btn btn-primary" style={{ padding: '0.9rem 2rem', fontSize: '1rem' }} onClick={onStartTransformation}>
+          <button 
+            className="btn btn-primary" 
+            style={{ padding: '0.9rem 2rem', fontSize: '1rem', cursor: 'pointer' }} 
+            onClick={onStartTransformation}
+          >
             Launch Transformation Workbench <ArrowRight size={18} />
           </button>
-          <a href="#architecture" className="btn btn-secondary" style={{ padding: '0.9rem 1.75rem', fontSize: '1rem' }}>
+          <button 
+            className="btn btn-secondary" 
+            style={{ padding: '0.9rem 1.75rem', fontSize: '1rem', cursor: 'pointer' }} 
+            onClick={onExploreArchitecture}
+          >
             <Zap size={18} /> Explore Architecture
-          </a>
+          </button>
         </div>
 
         {/* Key Metrics Dashboard */}
