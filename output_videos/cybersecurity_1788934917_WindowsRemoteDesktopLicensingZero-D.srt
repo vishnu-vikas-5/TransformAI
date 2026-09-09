@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:12,990
+Critical security alert for Windows Remote Desktop Licensing services. Active exploits weaponize zero-day vulnerability CVE-2024-38077.
+
+2
+00:00:12,990 --> 00:00:25,800
+Unauthenticated attackers trigger a heap buffer overflow in termsrv.dll over network port 135, gaining complete SYSTEM privileges.
+
+3
+00:00:25,800 --> 00:00:37,100
+Ransomware affiliates are utilizing automated scanners to locate internet-exposed RPC ports and execute rapid domain compromise.
+
+4
+00:00:37,100 --> 00:00:49,770
+Security operations must immediately monitor for abnormal inbound traffic on TCP Port 135 and block known adversary command infrastructure.
+
+5
+00:00:49,770 --> 00:01:00,490
+All enterprise servers with Remote Desktop Licensing roles enabled are subject to immediate pre-auth compromise without user interaction.
+
+6
+00:01:00,490 --> 00:01:12,100
+Immediately block TCP Port 135 at perimeter firewalls and disable public exposure of Remote Desktop Licensing services.
+
+7
+00:01:12,100 --> 00:01:24,140
+Emergency update KB5040442 resolves the heap overflow. Prioritize deployment to all external-facing Windows servers tonight.
+
+8
+00:01:24,140 --> 00:01:36,260
+Deploy endpoint detection rules to inspect svchost process integrity and flag suspicious child process creation from termsrv.dll.
+
+9
+00:01:36,260 --> 00:01:48,260
+If anomalous traffic on Port 135 is detected, immediately isolate affected hosts and initiate full enterprise forensic collection.
+
+10
+00:01:48,260 --> 00:01:59,750
+Executive mandate: all systems must complete mitigation within twenty-four hours. Report status to the CISO emergency operations desk.

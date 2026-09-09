@@ -1,65 +1,85 @@
 :root {
-  --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Strict 4-Color Palette: #30364F | #ACBAC4 | #E1D9BC | #F0F0DB */
-  --c-navy: #30364F;
-  /* Deep Slate Navy (Main BG & Dark Surfaces) */
-  --c-steel: #ACBAC4;
-  /* Cool Steel Blue (Borders & Primary Accents) */
-  --c-sand: #E1D9BC;
-  /* Soft Muted Sand (Highlights & Badges) */
-  --c-cream: #F0F0DB;
-  /* Off-White Cream (Primary Text & Light Surfaces) */
+  /* Strict Reference Color Palette */
+  --color-black: #000000;
+  --color-dark-brown: #1F150C;
+  --color-brown: #412D15;
+  --color-cream: #E1DCC9;
 
-  --bg-primary: var(--c-navy);
-  --bg-secondary: #272B40;
-  --bg-tertiary: var(--c-navy);
+  /* Editorial Variations & Semantic Tokens */
+  --color-cream-muted: rgba(225, 220, 201, 0.75);
+  --color-cream-subtle: rgba(225, 220, 201, 0.45);
+  --color-cream-light: #F5F2E9;
 
-  --glass-bg: rgba(48, 54, 79, 0.85);
-  --glass-card: #272B40;
-  --glass-border: var(--c-steel);
-  --glass-border-glow: var(--c-sand);
+  /* Surfaces */
+  --background-primary: var(--color-black);
+  --background-secondary: var(--color-dark-brown);
+  --surface-primary: var(--color-dark-brown);
+  --surface-secondary: var(--color-brown);
+  --surface-accent: var(--color-cream);
 
-  --accent-primary: var(--c-sand);
-  --accent-secondary: var(--c-steel);
-  --accent-dark: var(--c-navy);
+  /* Legacy variable bridges mapped to exact SyntaxX design system */
+  --bg-primary: var(--color-black);
+  --bg-secondary: var(--color-dark-brown);
+  --bg-tertiary: var(--color-brown);
 
-  --text-primary: var(--c-cream);
-  --text-secondary: var(--c-sand);
-  --text-muted: var(--c-steel);
+  --c-navy: var(--color-dark-brown);
+  --c-steel: var(--color-cream-muted);
+  --c-sand: var(--color-cream);
+  --c-cream: var(--color-cream);
 
-  --gradient-brand: linear-gradient(135deg, #ACBAC4 0%, #E1D9BC 100%);
-  --gradient-card: linear-gradient(135deg, #30364F 0%, #272B40 100%);
+  --glass-bg: rgba(31, 21, 12, 0.95);
+  --glass-card: var(--color-dark-brown);
+  --glass-border: rgba(225, 220, 201, 0.2);
+  --glass-border-glow: var(--color-cream);
+
+  --accent-primary: var(--color-cream);
+  --accent-secondary: var(--color-brown);
+  --accent-dark: var(--color-dark-brown);
+
+  --text-primary: var(--color-cream);
+  --text-secondary: var(--color-cream-muted);
+  --text-muted: var(--color-cream-subtle);
+  --text-inverse: var(--color-black);
+  --text-inverse-dark: var(--color-dark-brown);
+
+  --border-subtle: rgba(225, 220, 201, 0.18);
+  --border-medium: rgba(225, 220, 201, 0.35);
+  --border-prominent: var(--color-cream);
 
   --radius-sm: 8px;
   --radius-md: 12px;
-  --radius-lg: 18px;
+  --radius-lg: 16px;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 20px rgba(172, 186, 196, 0.3);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-card: 0 12px 32px rgba(0, 0, 0, 0.7);
 
   color-scheme: dark;
-  scrollbar-color: var(--c-steel) var(--c-navy);
+  scrollbar-color: var(--color-brown) var(--color-black);
 }
 
-/* Fallback for webkit scrollbar */
-@supports not (scrollbar-color: auto) {
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
 
-  ::-webkit-scrollbar-thumb {
-    background: var(--c-steel);
-    border-radius: 4px;
-  }
+::-webkit-scrollbar-thumb {
+  background: var(--color-brown);
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+}
 
-  ::-webkit-scrollbar-track {
-    background: var(--c-navy);
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-cream);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-black);
 }
 
 * {
@@ -70,30 +90,31 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--c-navy);
-  color: var(--c-cream);
+  background-color: var(--color-black);
+  color: var(--color-cream);
   min-height: 100vh;
   line-height: 1.6;
   overflow-x: hidden;
-  background-image: radial-gradient(rgba(172, 186, 196, 0.22) 1.5px, transparent 1.5px);
-  background-size: 24px 24px;
-  background-position: 0 0;
+  background-image: 
+    linear-gradient(rgba(225, 220, 201, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(225, 220, 201, 0.03) 1px, transparent 1px);
+  background-size: 36px 36px;
+  background-position: center center;
 }
 
 /* Typography Utilities */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--c-cream);
+  letter-spacing: -0.025em;
+  color: var(--color-cream);
+}
+
+p {
+  color: var(--text-secondary);
 }
 
 .text-gradient {
-  color: var(--c-sand);
+  color: var(--color-cream);
   background: none;
 }
 
@@ -107,16 +128,16 @@ h6 {
 
 /* Glassmorphism / Clean Card Panel */
 .glass-panel {
-  background: #272B40;
-  border: 1.5px solid var(--c-steel);
+  background: var(--color-dark-brown);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-md);
-  transition: all 0.25s ease;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
 }
 
 .glass-panel-hover:hover {
-  border-color: var(--c-sand);
-  box-shadow: var(--shadow-glow);
+  border-color: var(--color-cream);
+  background: var(--color-brown);
   transform: translateY(-2px);
 }
 
@@ -127,79 +148,83 @@ h6 {
   justify-content: center;
   gap: 0.5rem;
   font-family: var(--font-sans);
-  font-weight: 700;
-  font-size: 0.925rem;
-  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.7rem 1.4rem;
   border-radius: var(--radius-md);
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
   transition: all 0.2s ease;
   text-decoration: none;
   white-space: nowrap;
 }
 
+/* Primary button: Cream background, Black text */
 .btn-primary {
-  background: var(--c-sand);
-  color: var(--c-navy);
-  border: 1.5px solid var(--c-sand);
+  background: var(--color-cream);
+  color: var(--color-black);
+  border: 1px solid var(--color-cream);
 }
 
 .btn-primary:hover {
-  background: var(--c-steel);
-  color: var(--c-navy);
-  border-color: var(--c-steel);
+  background: var(--color-brown);
+  color: var(--color-cream);
+  border-color: var(--color-cream);
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
+/* Secondary button: Transparent background, Cream text, Cream border */
 .btn-secondary {
-  background: var(--c-navy);
-  color: var(--c-cream);
-  border: 1.5px solid var(--c-steel);
+  background: transparent;
+  color: var(--color-cream);
+  border: 1px solid rgba(225, 220, 201, 0.35);
 }
 
 .btn-secondary:hover {
-  background: var(--c-steel);
-  color: var(--c-navy);
-  border-color: var(--c-sand);
+  background: var(--color-brown);
+  color: var(--color-cream);
+  border-color: var(--color-cream);
 }
 
 .btn-outline {
   background: transparent;
-  color: var(--c-cream);
-  border: 1.5px solid var(--c-steel);
+  color: var(--color-cream);
+  border: 1px solid rgba(225, 220, 201, 0.25);
 }
 
 .btn-outline:hover {
-  background: var(--c-steel);
-  color: var(--c-navy);
+  background: var(--color-brown);
+  color: var(--color-cream);
+  border-color: var(--color-cream);
 }
 
 .btn-sm {
-  padding: 0.4rem 0.85rem;
-  font-size: 0.825rem;
+  padding: 0.45rem 0.9rem;
+  font-size: 0.8rem;
   border-radius: var(--radius-sm);
 }
 
 .btn-disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-/* Badge Styles - 4-Color Strict Palette */
+/* Badge Styles - Cream background, Dark brown text */
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   padding: 0.25rem 0.75rem;
   border-radius: var(--radius-full);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  background: var(--c-steel);
-  color: var(--c-navy);
-  border: 1px solid var(--c-sand);
+  background: var(--color-cream);
+  color: var(--color-dark-brown);
+  border: 1px solid rgba(225, 220, 201, 0.4);
 }
 
 .badge-indigo,
@@ -208,9 +233,9 @@ h6 {
 .badge-purple,
 .badge-amber,
 .badge-rose {
-  background: var(--c-steel);
-  color: var(--c-navy);
-  border: 1px solid var(--c-sand);
+  background: var(--color-cream);
+  color: var(--color-dark-brown);
+  border: 1px solid rgba(225, 220, 201, 0.4);
 }
 
 /* Animations */
@@ -219,7 +244,6 @@ h6 {
     opacity: 0;
     transform: translateY(8px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -234,8 +258,8 @@ h6 {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 18, 28, 0.8);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
   z-index: 100;
   display: flex;
   align-items: center;
@@ -248,18 +272,332 @@ h6 {
   max-width: 800px;
   max-height: 85vh;
   overflow-y: auto;
-  background: var(--c-navy);
-  border: 2px solid var(--c-sand);
+  background: var(--color-dark-brown);
+  border: 1px solid var(--border-medium);
   border-radius: var(--radius-lg);
   padding: 2rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-  color: var(--c-cream);
+  box-shadow: var(--shadow-card);
+  color: var(--color-cream);
 }
 
-/* Code block styles */
+/* Code & Pre block styles */
 pre,
 code {
   font-family: var(--font-mono);
-  background: #272B40;
-  color: var(--c-cream);
+  background: var(--color-black);
+  color: var(--color-cream);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+}
+
+/* ==========================================================================
+   SyntaxX In-App PDF Preview Modal & Controlled PDF.js Canvas Viewer
+   Strict Theme: #000000 (Black), #1F150C (Dark Brown), #412D15 (Brown), #E1DCC9 (Cream)
+   ========================================================================== */
+
+.syntaxx-pdf-overlay {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  z-index: 9999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1.5rem !important;
+  box-sizing: border-box !important;
+  animation: syntaxxModalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes syntaxxModalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.syntaxx-pdf-container {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 90vw !important;
+  max-width: 1400px !important;
+  height: 90vh !important;
+  max-height: 95vh !important;
+  background-color: #1F150C !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(225, 220, 201, 0.25) !important;
+  box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(225, 220, 201, 0.12) !important;
+  overflow: hidden !important;
+  position: relative !important;
+  animation: syntaxxModalScaleIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes syntaxxModalScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* 1. Modal Header: #000000 */
+.syntaxx-pdf-header {
+  background-color: #000000 !important;
+  border-bottom: 1px solid rgba(225, 220, 201, 0.15) !important;
+  padding: 0.9rem 1.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-shrink: 0 !important;
+}
+
+/* 2. PDF Workspace: #412D15 */
+.syntaxx-pdf-workspace {
+  background-color: #412D15 !important;
+  flex: 1 1 0% !important;
+  overflow: auto !important;
+  position: relative !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  padding: 2rem 1.5rem !important;
+}
+
+/* Canvas Wrapper with clean neutral shadow */
+.syntaxx-pdf-canvas-wrapper {
+  margin: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  max-width: 100% !important;
+}
+
+.syntaxx-pdf-canvas {
+  display: block !important;
+  background-color: #FFFFFF !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+  border-radius: 4px !important;
+}
+
+/* 3. Controls Bar: #1F150C */
+.syntaxx-pdf-controls {
+  background-color: #1F150C !important;
+  border-top: 1px solid rgba(225, 220, 201, 0.15) !important;
+  padding: 0.85rem 1.5rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+  gap: 0.85rem !important;
+  flex-shrink: 0 !important;
+}
+
+/* SyntaxX Control Buttons */
+.syntaxx-btn-primary {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  background-color: #E1DCC9 !important;
+  color: #000000 !important;
+  font-weight: 700 !important;
+  font-size: 0.82rem !important;
+  padding: 0.5rem 1.15rem !important;
+  border-radius: 8px !important;
+  border: 1px solid #E1DCC9 !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+}
+
+.syntaxx-btn-primary:hover:not(:disabled) {
+  background-color: #FFFFFF !important;
+  border-color: #FFFFFF !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+}
+
+.syntaxx-btn-secondary {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  background-color: transparent !important;
+  color: #E1DCC9 !important;
+  font-weight: 600 !important;
+  font-size: 0.8rem !important;
+  padding: 0.45rem 0.85rem !important;
+  border-radius: 8px !important;
+  border: 1px solid rgba(225, 220, 201, 0.35) !important;
+  cursor: pointer !important;
+  transition: all 0.18s ease !important;
+}
+
+.syntaxx-btn-secondary:hover:not(:disabled) {
+  background-color: #412D15 !important;
+  border-color: #E1DCC9 !important;
+  color: #FFFFFF !important;
+}
+
+.syntaxx-btn-secondary:disabled,
+.syntaxx-btn-primary:disabled {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+/* Responsive Modal Behavior */
+@media (max-width: 1024px) {
+  .syntaxx-pdf-container {
+    width: 95vw !important;
+    height: 92vh !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .syntaxx-pdf-overlay {
+    padding: 0.25rem !important;
+  }
+  .syntaxx-pdf-container {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+    border: none !important;
+  }
+  .syntaxx-pdf-header {
+    padding: 0.75rem 1rem !important;
+  }
+  .syntaxx-pdf-workspace {
+    padding: 1rem 0.5rem !important;
+  }
+  .syntaxx-pdf-controls {
+    padding: 0.65rem 0.85rem !important;
+    justify-content: center !important;
+  }
+}
+
+/* ==========================================================================
+   SyntaxX Standardized Agent Card Header
+   Strict Grid & Flex Structure:
+   HEADER
+   ├── TOP ROW (.agent-header-top)
+   │   ├── Agent Tag (.agent-tag)
+   │   └── Grounding Badge (.grounding-badge)
+   │
+   └── Title (.agent-title)
+   ========================================================================== */
+
+.agent-card-header {
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
+}
+
+/* TOP ROW: CSS Grid locking Tag (Left) and Badge (Right) on the exact same row */
+.agent-header-top {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.agent-tag {
+  min-width: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  min-height: 32px !important;
+  padding: 0.32rem 0.65rem !important;
+  border-radius: 9999px !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  background-color: rgba(225, 220, 201, 0.72) !important;
+  color: #000000 !important;
+  border: 1px solid #E1DCC9 !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  box-sizing: border-box !important;
+}
+
+.grounding-badge {
+  min-width: 0 !important;
+  flex-shrink: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 36px !important;
+  padding: 0.28rem 0.7rem !important;
+  border-radius: 9999px !important;
+  background-color: #E1DCC9 !important;
+  color: #000000 !important;
+  border: 1px solid rgba(225, 220, 201, 0.72) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35) !important;
+  box-sizing: border-box !important;
+}
+
+.badge-content {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  gap: 0.35rem !important;
+}
+
+.badge-icon {
+  flex-shrink: 0 !important;
+  color: #000000 !important;
+}
+
+.badge-text-stack {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1.1 !important;
+  font-size: 0.62rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase !important;
+}
+
+.badge-text-single {
+  font-size: 0.67rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+}
+
+/* TITLE ROW: Starts at left edge of card content, strictly below top row */
+.agent-title {
+  margin: 0 !important;
+  margin-top: 12px !important;
+  min-height: 54px !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  font-size: 1.12rem !important;
+  font-weight: 700 !important;
+  color: #E1DCC9 !important;
+  line-height: 1.25 !important;
+  text-align: left !important;
+  letter-spacing: -0.01em !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }

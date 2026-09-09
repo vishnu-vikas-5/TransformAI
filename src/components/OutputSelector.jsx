@@ -37,7 +37,7 @@ export default function OutputSelector({
   };
 
   return (
-    <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', background: '#272B40', borderColor: '#ACBAC4' }}>
+    <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', background: '#1F150C', borderColor: 'rgba(225, 220, 201, 0.18)' }}>
 
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
@@ -46,23 +46,23 @@ export default function OutputSelector({
             width: '32px',
             height: '32px',
             borderRadius: '50%',
-            background: '#E1D9BC',
-            color: '#30364F',
+            background: '#E1DCC9',
+            color: '#1F150C',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontWeight: '700',
+            fontWeight: '800',
             fontSize: '0.9rem'
           }}>2</div>
           <div>
-            <h2 style={{ fontSize: '1.35rem', color: '#F0F0DB' }}>Requirement & Target Output Selection</h2>
-            <p style={{ fontSize: '0.8rem', color: '#ACBAC4' }}>Select one or multiple desired output deliverables to generate from the source content</p>
+            <h2 style={{ fontSize: '1.35rem', color: '#E1DCC9', letterSpacing: '-0.02em' }}>Target Output & Artefact Selection</h2>
+            <p style={{ fontSize: '0.8rem', color: 'rgba(225, 220, 201, 0.72)' }}>Select target communication artefacts to synthesize in parallel from the core intelligence layer</p>
           </div>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <button className="btn btn-secondary btn-sm" onClick={selectAll}>Select All Deliverables</button>
-          <span className="badge" style={{ background: '#ACBAC4', color: '#30364F', borderColor: '#E1D9BC' }}>Step 2 of 4</span>
+          <button className="btn btn-secondary btn-sm" onClick={selectAll}>Select All Artefacts</button>
+          <span className="badge">Step 2 of 4</span>
         </div>
       </div>
 
@@ -84,8 +84,8 @@ export default function OutputSelector({
               style={{
                 padding: '1.25rem',
                 borderRadius: 'var(--radius-md)',
-                background: isSelected ? '#30364F' : 'rgba(48, 54, 79, 0.4)',
-                border: `2px solid ${isSelected ? '#E1D9BC' : '#ACBAC4'}`,
+                background: isSelected ? '#412D15' : '#1F150C',
+                border: `1.5px solid ${isSelected ? '#E1DCC9' : 'rgba(225, 220, 201, 0.18)'}`,
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 display: 'flex',
@@ -93,26 +93,26 @@ export default function OutputSelector({
                 alignItems: 'flex-start'
               }}
             >
-              <div style={{ marginTop: '2px', color: isSelected ? '#E1D9BC' : '#ACBAC4' }}>
+              <div style={{ marginTop: '2px', color: '#E1DCC9' }}>
                 {isSelected ? <CheckSquare size={20} /> : <Square size={20} />}
               </div>
 
               <div style={{ flex: 1 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                    <IconComp size={16} color="#E1D9BC" />
-                    <h3 style={{ fontSize: '0.975rem', fontWeight: '700', color: '#F0F0DB' }}>{format.title}</h3>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                    <IconComp size={16} color="#E1DCC9" />
+                    <h3 style={{ fontSize: '0.975rem', fontWeight: '700', color: '#E1DCC9' }}>{format.title}</h3>
                   </div>
-                  <span className="badge" style={{ fontSize: '0.65rem', background: '#ACBAC4', color: '#30364F', borderColor: '#E1D9BC' }}>
+                  <span className="badge" style={{ fontSize: '0.62rem', padding: '0.12rem 0.45rem' }}>
                     {format.agent.replace(' Agent', '')}
                   </span>
                 </div>
 
-                <p style={{ fontSize: '0.785rem', color: '#ACBAC4', lineHeight: '1.35', marginBottom: '0.5rem' }}>
+                <p style={{ fontSize: '0.785rem', color: 'rgba(225, 220, 201, 0.72)', lineHeight: '1.4', marginBottom: '0.5rem' }}>
                   {format.description}
                 </p>
 
-                <span style={{ fontSize: '0.725rem', color: '#E1D9BC', fontWeight: '600' }}>
+                <span style={{ fontSize: '0.725rem', color: '#E1DCC9', fontWeight: '600' }}>
                   Target Audience: {format.audience}
                 </span>
               </div>
@@ -123,14 +123,14 @@ export default function OutputSelector({
 
       {/* Configurable Parameters Section */}
       <div style={{
-        background: '#30364F',
+        background: '#1F150C',
         borderRadius: 'var(--radius-md)',
         padding: '1.25rem',
-        border: '1.5px solid #ACBAC4'
+        border: '1px solid rgba(225, 220, 201, 0.2)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: '#F0F0DB' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: '#E1DCC9' }}>
           <Settings2 size={16} />
-          <h4 style={{ fontSize: '0.9rem', fontWeight: '700' }}>Dashboard Configurable Parameters</h4>
+          <h4 style={{ fontSize: '0.9rem', fontWeight: '700' }}>Synthesis Configuration Parameters</h4>
         </div>
 
         <div style={{
@@ -140,7 +140,7 @@ export default function OutputSelector({
         }}>
           {/* Parameter 1: Communication Tone */}
           <div>
-            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.4rem', color: '#ACBAC4' }}>
+            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.4rem', color: 'rgba(225, 220, 201, 0.72)' }}>
               Target Tone
             </label>
             <select
@@ -149,10 +149,10 @@ export default function OutputSelector({
               style={{
                 width: '100%',
                 padding: '0.6rem 0.75rem',
-                background: '#272B40',
-                border: '1.5px solid #ACBAC4',
+                background: '#000000',
+                border: '1px solid rgba(225, 220, 201, 0.25)',
                 borderRadius: 'var(--radius-sm)',
-                color: '#F0F0DB',
+                color: '#E1DCC9',
                 fontFamily: 'var(--font-sans)',
                 fontSize: '0.825rem',
                 outline: 'none'
@@ -167,7 +167,7 @@ export default function OutputSelector({
 
           {/* Parameter 2: Level of Detail */}
           <div>
-            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.4rem', color: '#ACBAC4' }}>
+            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.4rem', color: 'rgba(225, 220, 201, 0.72)' }}>
               Level of Detail
             </label>
             <select
@@ -176,10 +176,10 @@ export default function OutputSelector({
               style={{
                 width: '100%',
                 padding: '0.6rem 0.75rem',
-                background: '#272B40',
-                border: '1.5px solid #ACBAC4',
+                background: '#000000',
+                border: '1px solid rgba(225, 220, 201, 0.25)',
                 borderRadius: 'var(--radius-sm)',
-                color: '#F0F0DB',
+                color: '#E1DCC9',
                 fontFamily: 'var(--font-sans)',
                 fontSize: '0.825rem',
                 outline: 'none'
@@ -193,7 +193,7 @@ export default function OutputSelector({
 
           {/* Parameter 3: Content Style */}
           <div>
-            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.4rem', color: '#ACBAC4' }}>
+            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.4rem', color: 'rgba(225, 220, 201, 0.72)' }}>
               Communication Style
             </label>
             <select
@@ -202,10 +202,10 @@ export default function OutputSelector({
               style={{
                 width: '100%',
                 padding: '0.6rem 0.75rem',
-                background: '#272B40',
-                border: '1.5px solid #ACBAC4',
+                background: '#000000',
+                border: '1px solid rgba(225, 220, 201, 0.25)',
                 borderRadius: 'var(--radius-sm)',
-                color: '#F0F0DB',
+                color: '#E1DCC9',
                 fontFamily: 'var(--font-sans)',
                 fontSize: '0.825rem',
                 outline: 'none'

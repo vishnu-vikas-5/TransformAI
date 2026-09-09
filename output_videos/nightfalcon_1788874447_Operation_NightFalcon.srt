@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:14,180
+Operation NightFalcon critical security alert targeting OrionGate servers.
+
+2
+00:00:14,180 --> 00:00:29,390
+A critical zero-day vulnerability allows unauthenticated remote attackers to bypass access controls.
+
+3
+00:00:29,390 --> 00:00:51,230
+Designated CVE-2026-88421, remote code execution flaw in endpoint /api/v1/auth/gateway.
+
+4
+00:00:51,230 --> 00:01:10,910
+Intrusion follows an eight-stage attack chain from initial access to command and control.
+
+5
+00:01:10,910 --> 00:01:27,250
+Attributed to state-sponsored threat group Obsidian Kite, tracked as OK-17 and KiteGroup.
+
+6
+00:01:27,250 --> 00:02:03,150
+Block C2 IPs 185.71.44.19, 91.203.18.77, 45.133.201.42, threat domains, and binary nfsvc.exe.
+
+7
+00:02:03,150 --> 00:02:24,940
+Intrusion timeline progression from September 4 scanning to September 8 emergency advisory.
+
+8
+00:02:24,940 --> 00:02:49,990
+Enable detection across Network, Endpoint, DNS, and Web Logs.
+
+9
+00:02:49,990 --> 00:03:11,150
+Execute mandatory response protocols: CONTAIN, INVESTIGATE, BLOCK, PATCH, and MONITOR.
+
+10
+00:03:11,150 --> 00:03:27,870
+Critical threat: CVE-2026-88421 requires immediate action. Human review required before dissemination.

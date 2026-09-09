@@ -63,17 +63,32 @@ export default function App() {
       .catch(() => setServerHealth(null));
   }, []);
 
+  // Clear/invalidate backend results whenever selected source document changes
+  useEffect(() => {
+    setBackendResults(null);
+  }, [selectedDoc?.id]);
+
   const handleRunOrchestration = async () => {
+    // Development Logging as required by Specification Section 5
+    console.log("SELECTED SOURCE:", selectedDoc);
+    console.log("SELECTED SOURCE ID:", selectedDoc?.id);
+    console.log("SELECTED SOURCE TITLE:", selectedDoc?.title);
+
     setIsExecuting(true);
     setExecutionProgress(10);
     setCompletedOutputs([]);
     setBackendResults({});
 
     try {
+      const sourceContent = inputMode === 'paste' ? customText : (selectedDoc?.rawText || '');
       const payload = {
+        source_id: selectedDoc?.id || 'custom_doc',
         doc_id: selectedDoc?.id || 'custom_doc',
+        source_title: selectedDoc?.title || 'Custom Ingested Content',
         doc_title: selectedDoc?.title || 'Custom Ingested Content',
-        source_text: inputMode === 'paste' ? customText : (selectedDoc?.rawText || ''),
+        source_content: sourceContent,
+        source_text: sourceContent,
+        output_types: selectedOutputs,
         selected_outputs: selectedOutputs,
         selected_tone: selectedTone,
         detail_level: detailLevel,
@@ -220,6 +235,7 @@ export default function App() {
                 completedOutputs={completedOutputs}
                 backendResults={backendResults}
                 onOpenGroundingModal={handleOpenGroundingModal}
+                onRunOrchestration={handleRunOrchestration}
               />
             </div>
           )}

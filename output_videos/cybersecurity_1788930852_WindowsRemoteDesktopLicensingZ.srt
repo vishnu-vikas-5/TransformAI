@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:17,040
+Critical security alert for Windows Remote Desktop Licensing services. Security teams must immediately address active in-the-wild exploitation of zero-day CVE-2024-38077 over Port 135.
+
+2
+00:00:17,040 --> 00:00:33,640
+A critical heap buffer overflow in termsrv.dll and lsvcs.dll allows unauthenticated remote attackers to execute arbitrary code with NT AUTHORITY\SYSTEM privileges.
+
+3
+00:00:33,640 --> 00:00:51,920
+Designated CVE-2024-38077 with a CVSS score of 9.8, this flaw impacts Windows Server 2016, 2019, and 2022 running Remote Desktop Licensing roles.
+
+4
+00:00:51,920 --> 00:01:12,320
+The attack progression moves rapidly: initial RPC probe on Port 135, heap overflow exploitation, SYSTEM code execution, Cobalt Strike beaconing, and LockBit 4.0 ransomware staging within 45 minutes.
+
+5
+00:01:12,320 --> 00:01:24,720
+Observed intrusions show opportunistic threat actors rapidly transitioning from initial access to ransomware deployment across vulnerable domain controllers.
+
+6
+00:01:24,720 --> 00:01:46,200
+Prioritize network indicators immediately: filter TCP Port 135 and dynamic RPC port range 49152 to 65535. Fourteen internal database nodes have been quarantined, with zero confirmed external data exfiltration.
+
+7
+00:01:46,200 --> 00:02:03,670
+The incident timeline confirms rapid containment: September 2 initial exploitation identified, September 3 fourteen database nodes quarantined, and September 4 emergency advisory and patch directives published.
+
+8
+00:02:03,670 --> 00:02:19,030
+SOC teams should monitor svchost.exe network activity, inspect RPC endpoint mapper requests on Port 135, and alert on TermServLicensing service crashes.
+
+9
+00:02:19,030 --> 00:02:39,500
+Execute immediate remediation: block TCP Port 135 at perimeter firewalls, disable TermServLicensing on non-essential nodes, deploy emergency update KB5040442, and enforce hardware MFA.
+
+10
+00:02:39,500 --> 00:02:52,240
+Mandatory security directive: Patch KB5040442 must be deployed across all Windows Server domain nodes to eliminate this zero-day risk.

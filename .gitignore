@@ -35,3 +35,7 @@ __pycache__/
 *.pyd
 .pytest_cache/
 
+# Scratch directory
+scratch/
+
+

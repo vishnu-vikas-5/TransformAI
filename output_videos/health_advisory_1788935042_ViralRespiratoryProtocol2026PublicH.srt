@@ -1,0 +1,11 @@
+1
+00:00:00,000 --> 00:00:10,220
+Official public health notification regarding emerging viral respiratory pathogen H5-V2. Rapid containment protocols are active.
+
+2
+00:00:10,220 --> 00:00:19,180
+Transmission occurs via fine aerosol droplets with an estimated basic reproduction rate exceeding 3.2 in indoor environments.
+
+3
+00:00:19,180 --> 00:00:26,470
+All presenting patients showing severe hypoxemia must be placed in negative pressure isolation immediately.

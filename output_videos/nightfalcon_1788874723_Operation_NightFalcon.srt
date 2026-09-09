@@ -1,0 +1,39 @@
+1
+00:00:00,000 --> 00:00:15,310
+Operation NightFalcon critical security alert. Security teams must immediately address active in-the-wild exploitation targeting OrionGate Secure Access Server & OrionGate Web Gateway appliances across the enterprise perimeter.
+
+2
+00:00:15,310 --> 00:00:32,270
+A critical zero-day vulnerability allows unauthenticated remote attackers to bypass edge access controls on OrionGate servers and execute arbitrary code with full root and NT AUTHORITY\SYSTEM privileges.
+
+3
+00:00:32,270 --> 00:00:56,990
+Designated CVE-2026-88421, this remote code execution vulnerability resides in the gateway authentication handler endpoint at slash api slash v1 slash auth slash gateway, caused by unsafe object deserialization of untrusted multipart requests.
+
+4
+00:00:56,990 --> 00:01:21,830
+The intrusion follows an eight-stage attack chain: Initial Access, Exploitation of CVE-2026-88421, Remote Code Execution, NightFalcon Backdoor Deployment, Rogue Service Persistence, System Discovery, Command and Control, and Potential Data Collection.
+
+5
+00:01:21,830 --> 00:01:38,670
+Intelligence telemetries attribute this campaign to state-sponsored threat group Obsidian Kite, also tracked under aliases OK-17 and KiteGroup, conducting Operation NightFalcon for long-term strategic access.
+
+6
+00:01:38,670 --> 00:02:14,570
+Block C2 infrastructure immediately: IP addresses 185.71.44.19, 91.203.18.77, and 45.133.201.42, along with domains nightfalcon-control[.]example and og-update[.]example. Terminate binary nfsvc.exe, unregister ogupdate.dll, and remove service OGUpdateService.
+
+7
+00:02:14,570 --> 00:02:36,360
+The intrusion timeline demonstrates rapid progression: September 4 scanning, September 5 server discovery, September 6 vulnerability exploitation, September 7 payload deployment and C2 establishment, culminating in September 8 emergency advisory issuance.
+
+8
+00:02:36,360 --> 00:03:01,410
+Enable detection across four tiers: inspect network traffic for persistent outbound TLS sessions on Port 443, monitor endpoint EDR for service creation in System32, block DNS queries for threat domains, and query web logs for HTTP 500 errors on the gateway endpoint.
+
+9
+00:03:01,410 --> 00:03:22,570
+Execute mandatory response protocols: CONTAIN perimeter appliances immediately, INVESTIGATE host memory and active connections, BLOCK all C2 indicators, PATCH systems to OrionGate release v4.5.3, and MONITOR egress traffic.
+
+10
+00:03:22,570 --> 00:03:39,940
+Critical threat: CVE-2026-88421 requires immediate leadership action. Contain, investigate, patch, and monitor. Human review is required before operational dissemination.
