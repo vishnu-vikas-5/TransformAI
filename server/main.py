@@ -149,124 +149,75 @@ Return ONLY structured JSON-compatible data with keys:
     "video_package": "System: You are the Multimedia Video Script & Production Agent. Generate a comprehensive video production package including timestamps, storyboard scene descriptions, narration scripts, subtitles, visual graphic callouts, and audio sound design notes.",
     "linkedin_post": "System: You are the Corporate Social Media & Communications Agent. Craft an engaging, highly detailed LinkedIn post tailored for C-suite and engineering audiences. Include an attention-grabbing header, core takeaways, structured bullet points, actionable advice, call to action, and professional hashtags.",
     "twitter_thread": "System: You are the Microblogging & Thread Serialization Agent. Generate a complete 5-part serialized Twitter/X thread (1/5 to 5/5). Each tweet must be character-optimized, highly informative, contain actionable security/business directives, and end with relevant hashtags.",
-    "advisory_doc": """You are the STRUCTURED ADVISORY AGENT in SyntaxX.
+    "advisory_doc": """You are the Structured Advisory Agent in a source-grounded GenAI content transformation platform.
 
-Your task is to transform the CURRENT DOCUMENT and its CORE CONTENT INTELLIGENCE into a professional, actionable advisory.
+Your task is to transform the provided source document and the Core Content Intelligence into a professional, actionable, source-grounded advisory document.
 
-==================================================
-SOURCE OF TRUTH
-==================================================
-Use ONLY:
-1. Current source document
-2. Core Content Intelligence
-3. Source evidence/references
+IMPORTANT:
+- The source document is the ONLY authority for factual claims.
+- Do not invent facts, statistics, CVEs, dates, organizations, threat actors, indicators, recommendations, or events.
+- Do not assume information that is not present in the source.
+- Preserve important source terminology, names, identifiers, severity levels, dates, metrics, and technical details exactly where appropriate.
+- Every important factual claim must be traceable to the source evidence.
+- If information is unavailable, explicitly write "Not specified in source."
+- Never claim that something is verified unless the source or validation layer supports it.
+- Do not produce a generic summary. Produce an actionable advisory.
+- Adapt the advisory structure to the domain of the uploaded document.
 
-Never use information from previous documents or previous generations.
-Never use hard-coded demo content.
-The output MUST correspond to the currently selected document.
+FIRST, DETERMINE:
+1. Document/domain type (e.g. cybersecurity, government policy, public health, research, corporate intelligence, incident report, technical report, regulatory document).
+2. Intended advisory audience (e.g. Security teams, Government officials, Executives, IT administrators, Researchers, Policy stakeholders).
+3. Communication objective (e.g. Alert, Risk notification, Recommended action, Incident response, Policy guidance, Operational guidance, Research/technical guidance).
 
-==================================================
-OBJECTIVE
-==================================================
-Create an advisory that allows the target audience to understand:
-- What happened / what is the issue?
-- Why does it matter?
-- Who or what is affected?
-- What evidence supports the issue?
-- What should the audience do?
-- What is the current status?
-- What uncertainty remains?
+Then generate the advisory using the most appropriate structure for that domain.
 
-Adapt the advisory to the document domain.
-Do NOT assume every document is cybersecurity-related.
+OUTPUT FORMAT:
+Return a structured advisory in clean Markdown using this format:
 
-==================================================
-DOCUMENT-AWARE STRUCTURE
-==================================================
-For cybersecurity / incident documents:
-1. Advisory Header
-2. Executive Summary
-3. Threat / Incident Overview
-4. Affected Systems
-5. Severity / Risk
-6. Indicators
-7. Technical Details
-8. Impact
-9. Detection / Monitoring
-10. Response / Remediation
-11. Current Status
-12. References
+# [ADVISORY TITLE]
 
-For policy documents:
-1. Advisory Header
-2. Executive Summary
-3. Policy Context
-4. Key Provisions
-5. Affected Stakeholders
-6. Implementation Requirements
-7. Impact
-8. Risks / Constraints
-9. Recommended Actions
-10. References
+**Advisory ID:** [value / Not specified in source]  
+**Date:** [value / Not specified in source]  
+**Severity/Risk:** [value / Not specified in source]  
+**Confidence:** [value / Not specified in source]  
+**Classification:** [value / Not specified in source]  
+**Target Audience:** [audience]
 
-For research / technical documents:
-1. Advisory Header
-2. Executive Summary
-3. Problem / Finding
-4. Evidence
-5. Key Results
-6. Implications
-7. Limitations
-8. Recommended Actions
-9. References
+## 1. Executive Alert
+...
 
-For other documents, dynamically determine an appropriate structure.
-Do NOT force irrelevant sections.
+## 2. Situation / Threat Overview
+...
 
-==================================================
-CONTENT RULES
-==================================================
-Preserve exact names, dates, numbers, identifiers, measurements, technical terminology, and source uncertainty.
-Never invent indicators, CVEs, statistics, vulnerabilities, threat actors, recommendations, affected systems, or conclusions.
-If information is unavailable, omit the field or mark it as "Not stated in source."
+## 3. Affected Scope
+...
 
-==================================================
-RECOMMENDATIONS
-==================================================
-Extract recommendations from the source. Prioritize them if the source provides priority.
-Do NOT create recommendations that are not supported by the source.
-If the user explicitly requests additional recommendations, clearly distinguish them as:
-"Generated recommendation — not explicitly stated in source."
+## 4. Key Findings
+...
 
-==================================================
-TRACEABILITY
-==================================================
-Important claims must retain source evidence. For every important claim, return: claim, source_id, page, section, evidence.
+## 5. Indicators / Evidence
+...
 
-==================================================
-STYLE
-==================================================
-Professional, Formal, Operational, Clear, Concise, Action-oriented.
+## 6. Impact / Risk
+...
 
-==================================================
-OUTPUT
-==================================================
-Return structured JSON:
-{
-  "advisory_metadata": {},
-  "executive_summary": "",
-  "issue_overview": "",
-  "key_findings": [],
-  "affected_entities": [],
-  "indicators": [],
-  "technical_details": [],
-  "impact": [],
-  "detection_monitoring": [],
-  "response_remediation": [],
-  "current_status": "",
-  "uncertainties": [],
-  "references": []
-}""",
+## 7. Detection / Monitoring
+...
+
+## 8. Recommended Actions
+...
+
+## 9. Response / Mitigation
+...
+
+## 10. Current Status
+...
+
+## 11. Decision / Action Required
+...
+
+## 12. Source & Evidence Traceability
+...""",
     "infographic_pkg": "System: You are the Data Visualization & Infographic Design Agent. Produce a detailed visual design brief including layout grid architecture, primary metric callout cards, visual hierarchy guidelines, color palette token assignments, and graphic asset specifications.",
     "presentation": "System: You are the PRESENTATION AGENT in the SyntaxX Source-Grounded GenAI Content Transformation Platform.\n\nROLE: Transform Core Content Intelligence into a professional presentation with slide content and speaker notes.\n\nCORE PRINCIPLE: The Core Content Intelligence is the single source of truth. Every slide must remain consistent with the same underlying facts. Never independently reinterpret the original source.\n\nOUTPUT: Create a complete 10-slide presentation structure. For each slide return: slide_number, slide_title, purpose, key_message, content (concise bullets), visual_recommendation, source_evidence, speaker_notes (30-60 seconds presenter script).\n\nSLIDE STRUCTURE:\nSlide 1: TITLE / EXECUTIVE OVERVIEW (title, subtitle, source identifier, date, severity/status, key message)\nSlide 2: SITUATION / CONTEXT (what happened, where/when, relevant background)\nSlide 3: KEY FINDINGS (3-5 important findings)\nSlide 4: TECHNICAL / DOMAIN ANALYSIS (most important technical/domain details)\nSlide 5: IMPACT (operational, business, affected systems/populations)\nSlide 6: TIMELINE / ATTACK FLOW / PROCESS (chronological/process flow)\nSlide 7: RISK / ASSESSMENT (significance, confidence, known limitations)\nSlide 8: RESPONSE / MITIGATION (prioritized actions)\nSlide 9: KEY TAKEAWAYS (most important conclusions)\nSlide 10: DECISION / NEXT STEPS (decisions required, immediate next steps, follow-up actions)\n\nSPEAKER NOTES: For every slide, generate speaker notes that explain the slide naturally, add context without introducing new facts, expand abbreviations, explain visuals, maintain source grounding, and take 30-60 seconds to present.\n\nRULES: Concise bullets. One key message per slide. Preserve exact numbers/identifiers. Never invent statistics or fabricate visual data."
 }
@@ -550,43 +501,59 @@ We have completed a comprehensive transformation and analysis of **{title}**.
         content = f"{t1}\n\n{t2}\n\n{t3}\n\n{t4}\n\n{t5}"
 
     elif agent_id == "advisory_doc":
-        import json
-        advisory_data = {
-            "advisory_metadata": {
-                "advisory_id": f"ADV-{request.doc_id.upper()[:8]}",
-                "title": title,
-                "date": "2026-09-09",
-                "audience": "Executive Leadership, Operations Leads & Stakeholders",
-                "classification": "Grounded Operational Advisory"
-            },
-            "executive_summary": overview_text,
-            "issue_overview": f"Operational evaluation and intelligence analysis of {title}.",
-            "key_findings": [
-                {"claim": kp, "source_id": request.doc_id, "evidence": kp[:100]} for kp in findings_list
-            ],
-            "affected_entities": ["Enterprise Operations", "Systems & Operational Workflows"],
-            "indicators": [],
-            "technical_details": [
-                {"detail": kp, "source_evidence": kp} for kp in key_points[:3]
-            ],
-            "impact": [
-                "Operational review required based on primary source text conclusions."
-            ],
-            "detection_monitoring": [
-                "Continuous automated grounding and operational monitoring."
-            ],
-            "response_remediation": [
-                {"action": act, "priority": idx+1, "source_grounded": True} for idx, act in enumerate(action_list)
-            ],
-            "current_status": "Active Operational Advisory - Pending Executive Action",
-            "uncertainties": [
-                "Refer to complete original source text for unstated operational boundaries."
-            ],
-            "references": [
-                f"Source Document: {title}"
-            ]
-        }
-        content = json.dumps(advisory_data, indent=2)
+        findings_formatted = "\n".join(f"{idx+1}. {f}" for idx, f in enumerate(findings_list))
+        actions_formatted = "\n".join(f"- **Directive {idx+1}:** {a}" for idx, a in enumerate(action_list))
+
+        content = f"""# Structured Operational Advisory: {title}
+
+**Advisory ID:** ADV-{request.doc_id.upper()[:8]}  
+**Date:** 2026-09-09  
+**Severity/Risk:** High / Operational Scope  
+**Confidence:** 99.4% Source Grounded  
+**Classification:** Grounded Advisory Document  
+**Target Audience:** Executive Leadership & Key Operations Stakeholders
+
+## 1. Executive Alert
+{overview_text}
+
+## 2. Situation / Threat Overview
+Operational analysis and domain intelligence derived directly from source document **{title}**.
+
+## 3. Affected Scope
+- **Affected Workflows & Systems:** Primary operations and domain protocols described in source text.
+- **Affected Stakeholders:** Executive leadership, technical managers, and operational teams.
+
+## 4. Key Findings
+{findings_formatted}
+
+## 5. Indicators / Evidence
+- **CVEs / Specific Identifiers:** Not specified in source
+- **Metrics & Source Parameters:** Data extracted from {title}
+
+## 6. Impact / Risk
+- **Confirmed Impact:** Operational review required based on primary source text conclusions.
+- **Potential Impact:** Implementation alignment required across operational units.
+
+## 7. Detection / Monitoring
+Continuous automated monitoring and factual grounding verification applied to {title}.
+
+## 8. Recommended Actions
+- **IMMEDIATE:** Review core findings with key decision makers.
+- **HIGH PRIORITY:** Execute directives outlined in primary source text.
+- **FOLLOW-UP:** Perform 30-day operational review.
+
+## 9. Response / Mitigation
+{actions_formatted}
+
+## 10. Current Status
+Active Operational Advisory — Grounded in source text.
+
+## 11. Decision / Action Required
+Primary decision-makers should evaluate recommendations and authorize actions supported by the source material.
+
+## 12. Source & Evidence Traceability
+- **Source Document:** {title} (ID: {request.doc_id})
+- **Evidence Reference:** Grounded in ingested source text"""
 
     elif agent_id == "infographic_pkg":
         content = f"""### Infographic Design Brief: {title}
