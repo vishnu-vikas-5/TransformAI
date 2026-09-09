@@ -926,16 +926,6 @@ def build_video_package_pdf(intel: Dict[str, Any]) -> bytes:
                           '&bull; Mandate human review and authorization prior to final deliverable distribution.', body_style)
             ]
         ]
-                      '&bull; Perform forensic disk and memory triage on quarantined appliances to confirm zero lateral movement.<br/>'
-                      '&bull; Invalidate all gateway session tokens, administrator passwords, and SSL VPN certificates.', body_style)
-        ],
-        [
-            Paragraph('<font color="#412D15"><b>STRATEGIC HARDENING<br/>(Long-Term Architecture)</b></font>', body_style),
-            Paragraph('&bull; Re-architect edge topology to enforce microsegmentation between ingress gateways and internal LANs.<br/>'
-                      '&bull; Mandate hardware-backed FIDO2 Multi-Factor Authentication (MFA) across all administrative sessions.<br/>'
-                      '&bull; Deploy continuous attack surface management to audit internet-facing asset configurations.', body_style)
-        ]
-    ]
     story.append(Table(recs_rows, colWidths=[CONTENT_WIDTH * 0.30, CONTENT_WIDTH * 0.70], style=[
         ('BACKGROUND', (0, 0), (0, 0), C_RED_100),
         ('BACKGROUND', (0, 1), (0, 1), C_AMBER_100),

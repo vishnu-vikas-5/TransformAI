@@ -7,9 +7,13 @@ import OrchestratorVisualizer from './components/OrchestratorVisualizer';
 import ArtifactsWorkbench from './components/ArtifactsWorkbench';
 import ArchitectureSection from './components/ArchitectureSection';
 import ComparativeSection from './components/ComparativeSection';
+import FullSummaryPage from './components/FullSummaryPage';
+import GroundedQAChat from './components/GroundedQAChat';
+import AgentInspectorModal from './components/AgentInspectorModal';
 import GroundingModal from './components/GroundingModal';
 import Footer from './components/Footer';
 import { SAMPLE_DOCUMENTS } from './data/mockData';
+import { API_BASE_URL } from './utils/apiConfig';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('workbench');
@@ -46,6 +50,7 @@ export default function App() {
   const [backendResults, setBackendResults] = useState(null);
   const [apiProvider, setApiProvider] = useState('TransformAI Agentic Engine');
   const [serverHealth, setServerHealth] = useState(null);
+  const [isAgentInspectorOpen, setIsAgentInspectorOpen] = useState(false);
 
   const [modalState, setModalState] = useState({
     isOpen: false,
@@ -55,7 +60,7 @@ export default function App() {
 
   // Check health status of Python backend on mount
   useEffect(() => {
-    fetch('http://localhost:8000/api/health')
+    fetch(`${API_BASE_URL}/api/health`)
       .then(res => res.json())
       .then(data => {
         setServerHealth(data);
@@ -95,7 +100,7 @@ export default function App() {
         communication_style: communicationStyle
       };
 
-      const response = await fetch('http://localhost:8000/api/transform/stream', {
+      const response = await fetch(`${API_BASE_URL}/api/transform/stream`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -140,7 +145,7 @@ export default function App() {
         }
       } else {
         // Fallback to standard POST endpoint
-        const fallbackRes = await fetch('http://localhost:8000/api/transform', {
+        const fallbackRes = await fetch(`${API_BASE_URL}/api/transform`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -185,20 +190,35 @@ export default function App() {
       <Navbar 
         activeTab={activeTab} 
         setActiveTab={setActiveTab} 
-        onLaunchDemo={handleRunOrchestration} 
+        onLaunchDemo={() => {
+          setActiveTab('workbench');
+          handleRunOrchestration();
+        }} 
         serverHealth={serverHealth}
         apiProvider={apiProvider}
+        onOpenAgentInspector={() => setIsAgentInspectorOpen(true)}
       />
 
       <main style={{ flex: 1 }}>
-        <Hero onStartTransformation={() => {
-          setActiveTab('workbench');
-          handleRunOrchestration();
-        }} />
+        <Hero 
+          onStartTransformation={() => {
+            setActiveTab('workbench');
+            setTimeout(() => {
+              const el = document.getElementById('workbench-section');
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }, 50);
+          }} 
+          onExploreArchitecture={() => {
+            setActiveTab('architecture');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+        />
 
         <div className="container">
           {activeTab === 'workbench' && (
-            <div className="animate-fade-in">
+            <div id="workbench-section" className="animate-fade-in">
               <InputSection 
                 selectedDoc={selectedDoc}
                 setSelectedDoc={setSelectedDoc}
@@ -227,6 +247,7 @@ export default function App() {
                 completedOutputs={completedOutputs}
                 apiProvider={apiProvider}
                 serverHealth={serverHealth}
+                onOpenAgentInspector={() => setIsAgentInspectorOpen(true)}
               />
 
               <ArtifactsWorkbench 
@@ -236,6 +257,26 @@ export default function App() {
                 backendResults={backendResults}
                 onOpenGroundingModal={handleOpenGroundingModal}
                 onRunOrchestration={handleRunOrchestration}
+                onNavigateTab={(tab) => setActiveTab(tab)}
+              />
+            </div>
+          )}
+
+          {activeTab === 'summary' && (
+            <div className="animate-fade-in">
+              <FullSummaryPage 
+                selectedDoc={selectedDoc}
+                backendResults={backendResults}
+                onNavigateToChat={() => setActiveTab('chat')}
+              />
+            </div>
+          )}
+
+          {activeTab === 'chat' && (
+            <div className="animate-fade-in">
+              <GroundedQAChat 
+                selectedDoc={selectedDoc}
+                customText={customText}
               />
             </div>
           )}
@@ -258,6 +299,11 @@ export default function App() {
         isOpen={modalState.isOpen}
         onClose={handleCloseGroundingModal}
         modalData={modalState}
+      />
+
+      <AgentInspectorModal
+        isOpen={isAgentInspectorOpen}
+        onClose={() => setIsAgentInspectorOpen(false)}
       />
 
       <Footer />

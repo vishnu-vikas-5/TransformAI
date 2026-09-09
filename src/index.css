@@ -95,11 +95,10 @@ body {
   min-height: 100vh;
   line-height: 1.6;
   overflow-x: hidden;
-  background-image: 
-    linear-gradient(rgba(225, 220, 201, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(225, 220, 201, 0.03) 1px, transparent 1px);
-  background-size: 36px 36px;
-  background-position: center center;
+  background-image: radial-gradient(rgba(223, 208, 184, 0.15) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  background-position: 0 0;
+  background-attachment: fixed;
 }
 
 /* Typography Utilities */

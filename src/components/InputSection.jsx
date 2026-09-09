@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { FileText, Upload, Link as LinkIcon, Edit3, CheckCircle2, Eye, Sparkles, File, Loader2, Check } from 'lucide-react';
 import { SAMPLE_DOCUMENTS } from '../data/mockData';
+import { API_BASE_URL } from '../utils/apiConfig';
 
 export default function InputSection({ selectedDoc, setSelectedDoc, customText, setCustomText, inputMode, setInputMode }) {
   const [showFullText, setShowFullText] = useState(false);
@@ -19,34 +20,25 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('http://localhost:8000/api/upload', {
+      const response = await fetch(`${API_BASE_URL}/api/upload`, {
         method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
         const data = await response.json();
-        const wordCount = Number.isFinite(data.word_count) ? data.word_count : 0;
-        const pages = Number.isFinite(data.pages)
-          ? data.pages
-          : Math.max(1, Math.ceil(wordCount / 400));
+        const wordCount = data.word_count || 100;
+        const pages = Math.max(1, Math.ceil(wordCount / 400));
         
-        const textContent = data.extracted_text || "";
-        const isSecurityDoc = textContent.includes("CVE-") || textContent.includes("Threat") || textContent.includes("Advisory") || textContent.includes("Incident") || textContent.includes("NightFalcon") || textContent.includes("OrionGate");
-        const detectedCves = [...new Set(textContent.match(/CVE-\d{4}-\d{4,7}/gi) || [])];
-        const smartCategory = isSecurityDoc ? 'Threat Intelligence & Incident Response' : 'Operational Policy & Intelligence';
-
         const newDoc = {
           id: `uploaded_${Date.now()}`,
           title: data.filename || file.name,
-          category: smartCategory,
-          summaryPreview: isSecurityDoc 
-            ? `Cybersecurity intelligence report (${wordCount.toLocaleString()} words). Ready for multi-agent transformation and structured advisory generation.`
-            : `Ingested source document (${wordCount.toLocaleString()} words). Parsed & verified by FastAPI engine.`,
+          category: 'Uploaded Document (Backend Ingested)',
+          summaryPreview: `Custom uploaded file (${(file.size / 1024).toFixed(1)} KB, ${wordCount.toLocaleString()} words). Parsed & extracted cleanly by FastAPI engine.`,
           wordCount: wordCount,
           pages: pages,
-          rawText: textContent,
-          entities: detectedCves.length > 0 ? detectedCves : [file.name.split('.')[0], smartCategory]
+          rawText: data.extracted_text,
+          entities: ['Uploaded Document', file.name.split('.')[0], `${(file.size / 1024).toFixed(0)} KB`]
         };
 
         setSelectedDoc(newDoc);
@@ -74,21 +66,15 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
       const wordCount = text.split(/\s+/).filter(Boolean).length || 100;
       const pages = Math.max(1, Math.ceil(wordCount / 400));
 
-      const isSecurityDoc = text.includes("CVE-") || text.includes("Threat") || text.includes("Advisory") || text.includes("Incident") || text.includes("NightFalcon") || text.includes("OrionGate");
-      const detectedCves = [...new Set(text.match(/CVE-\d{4}-\d{4,7}/gi) || [])];
-      const smartCategory = isSecurityDoc ? 'Threat Intelligence & Incident Response' : 'Operational Policy & Intelligence';
-
       const newDoc = {
         id: `uploaded_${Date.now()}`,
         title: file.name,
-        category: smartCategory,
-        summaryPreview: isSecurityDoc
-          ? `Cybersecurity intelligence document (${wordCount.toLocaleString()} words). Ready for multi-agent transformation.`
-          : `Ingested source document (${wordCount.toLocaleString()} words). Ready for multi-agent transformation.`,
+        category: 'Uploaded File',
+        summaryPreview: `Custom uploaded file (${(file.size / 1024).toFixed(1)} KB, ${wordCount.toLocaleString()} words). Ready for multi-agent transformation.`,
         wordCount: wordCount,
         pages: pages,
         rawText: text,
-        entities: detectedCves.length > 0 ? detectedCves : [file.name.split('.')[0], smartCategory]
+        entities: ['Uploaded File', file.name.split('.')[0], `${(file.size / 1024).toFixed(0)} KB`]
       };
 
       setSelectedDoc(newDoc);
@@ -143,7 +129,7 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
   };
 
   return (
-    <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', background: '#1F150C', borderColor: 'rgba(225, 220, 201, 0.18)' }}>
+    <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', background: '#121212', borderColor: '#DFD0B8' }}>
       
       {/* Hidden File Input */}
       <input 
@@ -155,23 +141,23 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
       />
 
       {/* Section Header */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <div style={{
             width: '32px',
             height: '32px',
             borderRadius: '50%',
-            background: '#E1DCC9',
-            color: '#1F150C',
+            background: '#DFD0B8',
+            color: '#000000',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontWeight: '800',
+            fontWeight: '700',
             fontSize: '0.9rem'
           }}>1</div>
-          <h2 style={{ fontSize: '1.35rem', color: '#E1DCC9', letterSpacing: '-0.02em' }}>Source Ingestion & Document Selection</h2>
+          <h2 style={{ fontSize: '1.35rem', color: '#FFFFFF' }}>Input Processing & Source Selection</h2>
         </div>
-        <span className="badge">Step 1 of 4</span>
+        <span className="badge" style={{ background: '#DFD0B8', color: '#000000', borderColor: '#E1DCC9' }}>Step 1 of 4</span>
       </div>
 
       {/* Input Mode Tabs */}
@@ -179,7 +165,7 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
         display: 'flex',
         gap: '0.5rem',
         marginBottom: '1.5rem',
-        borderBottom: '1px solid rgba(225, 220, 201, 0.18)',
+        borderBottom: '1.5px solid #DFD0B8',
         paddingBottom: '0.75rem',
         overflowX: 'auto'
       }}>
@@ -187,7 +173,7 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
           className={`btn btn-sm ${inputMode === 'sample' ? 'btn-primary' : 'btn-secondary'}`}
           onClick={() => setInputMode('sample')}
         >
-          <FileText size={15} /> Preset Scenario Documents
+          <FileText size={15} /> Preset Sample Documents
         </button>
 
         <button
@@ -215,8 +201,8 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
       {/* Mode 1: Preset Sample Documents */}
       {inputMode === 'sample' && (
         <div>
-          <p style={{ fontSize: '0.875rem', color: 'rgba(225, 220, 201, 0.72)', marginBottom: '1rem' }}>
-            Select a verified source report to run end-to-end multi-agent decomposition and parallel synthesis:
+          <p style={{ fontSize: '0.875rem', color: '#E1DCC9', marginBottom: '1rem' }}>
+            Select a pre-loaded real-world document scenario to simulate end-to-end multi-agent transformation:
           </p>
 
           <div style={{
@@ -234,32 +220,32 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
                   style={{
                     padding: '1.25rem',
                     borderRadius: 'var(--radius-md)',
-                    background: isSelected ? '#412D15' : '#1F150C',
-                    border: `1.5px solid ${isSelected ? '#E1DCC9' : 'rgba(225, 220, 201, 0.18)'}`,
+                    background: isSelected ? '#000000' : 'rgba(0, 0, 0, 0.6)',
+                    border: `2px solid ${isSelected ? '#DFD0B8' : '#222222'}`,
                     cursor: 'pointer',
                     transition: 'all 0.2s ease',
                     position: 'relative'
                   }}
                 >
                   {isSelected && (
-                    <div style={{ position: 'absolute', top: '12px', right: '12px', color: '#E1DCC9' }}>
+                    <div style={{ position: 'absolute', top: '12px', right: '12px', color: '#DFD0B8' }}>
                       <CheckCircle2 size={18} />
                     </div>
                   )}
 
-                  <span className="badge" style={{ fontSize: '0.675rem', marginBottom: '0.5rem' }}>
+                  <span className="badge" style={{ fontSize: '0.675rem', marginBottom: '0.5rem', background: '#DFD0B8', color: '#000000', borderColor: '#E1DCC9' }}>
                     {doc.category}
                   </span>
 
-                  <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem', paddingRight: '1.5rem', lineHeight: '1.35', color: '#E1DCC9' }}>
+                  <h3 style={{ fontSize: '1rem', marginBottom: '0.5rem', paddingRight: '1.5rem', lineHeight: '1.3', color: '#FFFFFF' }}>
                     {doc.title}
                   </h3>
 
-                  <p style={{ fontSize: '0.8rem', color: 'rgba(225, 220, 201, 0.72)', lineHeight: '1.45', marginBottom: '0.75rem' }}>
+                  <p style={{ fontSize: '0.8rem', color: '#E1DCC9', lineHeight: '1.4', marginBottom: '0.75rem', opacity: 0.9 }}>
                     {doc.summaryPreview}
                   </p>
 
-                  <div style={{ display: 'flex', gap: '1rem', fontSize: '0.75rem', color: '#E1DCC9', fontWeight: '600' }}>
+                  <div style={{ display: 'flex', gap: '1rem', fontSize: '0.75rem', color: '#FFFFFF', fontWeight: '600' }}>
                     <span>📄 {doc.pages} Pages</span>
                     <span>📝 {doc.wordCount.toLocaleString()} Words</span>
                   </div>
@@ -271,15 +257,15 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
           {/* Active Selected Document Inspector */}
           {selectedDoc && !selectedDoc.id.startsWith('uploaded_') && !selectedDoc.id.startsWith('url_') && selectedDoc.id !== 'custom_paste' && (
             <div style={{
-              background: '#1F150C',
+              background: '#000000',
               borderRadius: 'var(--radius-md)',
               padding: '1.25rem',
-              border: '1px solid rgba(225, 220, 201, 0.25)'
+              border: '1.5px solid #DFD0B8'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span className="badge"><Sparkles size={12} /> Ingested Source</span>
-                  <span style={{ fontSize: '0.85rem', color: '#E1DCC9', fontWeight: '700' }}>
+                  <span className="badge" style={{ background: '#DFD0B8', color: '#000000', borderColor: '#E1DCC9' }}><Sparkles size={12} /> Parsed Document Ingested</span>
+                  <span style={{ fontSize: '0.85rem', color: '#FFFFFF', fontWeight: '700' }}>
                     {selectedDoc.title}
                   </span>
                 </div>
@@ -287,22 +273,15 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
                   className="btn btn-secondary btn-sm"
                   onClick={() => setShowFullText(!showFullText)}
                 >
-                  <Eye size={14} /> {showFullText ? 'Hide Source Text' : 'View Source Text'}
+                  <Eye size={14} /> {showFullText ? 'Hide Source Text' : 'View Extracted Text'}
                 </button>
               </div>
 
               {/* Extracted Key Entities Badges */}
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
-                <span style={{ fontSize: '0.75rem', color: 'rgba(225, 220, 201, 0.65)', fontWeight: '600' }}>Identified Entities:</span>
+                <span style={{ fontSize: '0.75rem', color: '#E1DCC9', fontWeight: '600' }}>Identified Entities:</span>
                 {selectedDoc.entities.map((entity, idx) => (
-                  <span key={idx} style={{ 
-                    fontSize: '0.7rem', 
-                    background: '#412D15', 
-                    color: '#E1DCC9', 
-                    padding: '0.15rem 0.5rem', 
-                    borderRadius: '4px',
-                    border: '1px solid rgba(225, 220, 201, 0.2)' 
-                  }}>
+                  <span key={idx} className="badge" style={{ fontSize: '0.68rem', background: '#121212', color: '#FFFFFF', borderColor: '#DFD0B8' }}>
                     {entity}
                   </span>
                 ))}
@@ -311,15 +290,15 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
               {/* Source Text Preview Container */}
               {showFullText && (
                 <div style={{
-                  background: '#000000',
+                  background: '#121212',
                   padding: '1rem',
                   borderRadius: 'var(--radius-sm)',
-                  border: '1px solid rgba(225, 220, 201, 0.18)',
+                  border: '1.5px solid #DFD0B8',
                   maxHeight: '260px',
                   overflowY: 'auto',
                   fontFamily: 'var(--font-mono)',
                   fontSize: '0.8rem',
-                  color: '#E1DCC9',
+                  color: '#FFFFFF',
                   whiteSpace: 'pre-wrap',
                   lineHeight: '1.5'
                 }}>
@@ -331,7 +310,7 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
         </div>
       )}
 
-      {/* Mode 2: Upload File (Drag & Drop) */}
+      {/* Mode 2: Upload File (Drag & Drop & File Picker) */}
       {inputMode === 'upload' && (
         <div>
           <div 
@@ -340,28 +319,28 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             style={{
-              border: '2px dashed #E1DCC9',
+              border: `2px dashed ${isDragging ? '#FFFFFF' : '#DFD0B8'}`,
               borderRadius: 'var(--radius-md)',
               padding: '3rem 1.5rem',
               textAlign: 'center',
-              background: isDragging ? '#412D15' : '#1F150C',
+              background: isDragging ? 'rgba(223, 208, 184, 0.15)' : '#000000',
               cursor: 'pointer',
-              transition: 'background 0.2s ease, border-color 0.2s ease',
+              transition: 'all 0.2s ease',
               marginBottom: '1.25rem'
             }}
           >
             {isReading ? (
               <div>
-                <Loader2 size={36} color="#E1DCC9" className="spin" style={{ animation: 'spin 1s linear infinite', marginBottom: '1rem' }} />
-                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: '#E1DCC9' }}>Reading & Ingesting Document...</h3>
+                <Loader2 size={36} color="#DFD0B8" className="spin" style={{ animation: 'spin 1s linear infinite', marginBottom: '1rem' }} />
+                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: '#FFFFFF' }}>Reading & Ingesting File Contents...</h3>
               </div>
             ) : (
               <div>
-                <Upload size={36} color="#E1DCC9" style={{ marginBottom: '1rem' }} />
-                <h3 style={{ fontSize: '1.15rem', marginBottom: '0.5rem', color: '#E1DCC9', fontWeight: '700' }}>
+                <Upload size={36} color="#DFD0B8" style={{ marginBottom: '1rem' }} />
+                <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: '#FFFFFF' }}>
                   {isDragging ? 'Drop File to Ingest' : 'Click or Drag & Drop Source Document Here'}
                 </h3>
-                <p style={{ fontSize: '0.85rem', color: 'rgba(225, 220, 201, 0.72)', marginBottom: '1.25rem' }}>
+                <p style={{ fontSize: '0.85rem', color: '#E1DCC9', marginBottom: '1.25rem', opacity: 0.85 }}>
                   Supports PDF, DOCX, TXT, Markdown (.md), and JSON files up to 50MB
                 </p>
                 <button className="btn btn-primary btn-sm">
@@ -374,17 +353,17 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
           {/* Active Ingested Upload Info Box */}
           {selectedDoc && selectedDoc.id.startsWith('uploaded_') && (
             <div style={{
-              background: '#1F150C',
+              background: '#000000',
               borderRadius: 'var(--radius-md)',
               padding: '1.25rem',
-              border: '1px solid #E1DCC9'
+              border: '1.5px solid #DFD0B8'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span className="badge">
+                  <span className="badge" style={{ background: '#DFD0B8', color: '#000000', borderColor: '#E1DCC9' }}>
                     <Check size={12} /> Custom File Ingested
                   </span>
-                  <span style={{ fontSize: '0.9rem', color: '#E1DCC9', fontWeight: '700' }}>
+                  <span style={{ fontSize: '0.9rem', color: '#FFFFFF', fontWeight: '700' }}>
                     {selectedDoc.title}
                   </span>
                 </div>
@@ -396,22 +375,22 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
                 </button>
               </div>
 
-              <div style={{ display: 'flex', gap: '1rem', fontSize: '0.8rem', color: 'rgba(225, 220, 201, 0.72)', marginBottom: '0.5rem' }}>
+              <div style={{ display: 'flex', gap: '1rem', fontSize: '0.8rem', color: '#FFFFFF', marginBottom: '0.5rem' }}>
                 <span>📝 {selectedDoc.wordCount.toLocaleString()} Words</span>
                 <span>📄 ~{selectedDoc.pages} Pages</span>
               </div>
 
               {showFullText && (
                 <div style={{
-                  background: '#000000',
+                  background: '#121212',
                   padding: '1rem',
                   borderRadius: 'var(--radius-sm)',
-                  border: '1px solid rgba(225, 220, 201, 0.18)',
+                  border: '1.5px solid #DFD0B8',
                   maxHeight: '260px',
                   overflowY: 'auto',
                   fontFamily: 'var(--font-mono)',
                   fontSize: '0.8rem',
-                  color: '#E1DCC9',
+                  color: '#FFFFFF',
                   whiteSpace: 'pre-wrap',
                   lineHeight: '1.5'
                 }}>
@@ -450,9 +429,9 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
               width: '100%',
               padding: '1rem',
               background: '#000000',
-              border: '1px solid rgba(225, 220, 201, 0.3)',
+              border: '1.5px solid #DFD0B8',
               borderRadius: 'var(--radius-md)',
-              color: '#E1DCC9',
+              color: '#FFFFFF',
               fontFamily: 'var(--font-sans)',
               fontSize: '0.9rem',
               resize: 'vertical',
@@ -475,9 +454,9 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
                 flex: 1,
                 padding: '0.75rem 1rem',
                 background: '#000000',
-                border: '1px solid rgba(225, 220, 201, 0.3)',
+                border: '1.5px solid #DFD0B8',
                 borderRadius: 'var(--radius-md)',
-                color: '#E1DCC9',
+                color: '#FFFFFF',
                 outline: 'none'
               }}
             />
@@ -488,16 +467,16 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
 
           {selectedDoc && selectedDoc.id.startsWith('url_') && (
             <div style={{
-              background: '#1F150C',
+              background: '#000000',
               borderRadius: 'var(--radius-md)',
               padding: '1.25rem',
-              border: '1px solid #E1DCC9'
+              border: '1.5px solid #DFD0B8'
             }}>
-              <span className="badge" style={{ marginBottom: '0.5rem' }}>
+              <span className="badge" style={{ background: '#DFD0B8', color: '#000000', marginBottom: '0.5rem', borderColor: '#E1DCC9' }}>
                 <Check size={12} /> URL Ingested
               </span>
-              <h4 style={{ fontSize: '0.95rem', color: '#E1DCC9', fontWeight: '700' }}>{selectedDoc.title}</h4>
-              <p style={{ fontSize: '0.8rem', color: 'rgba(225, 220, 201, 0.72)' }}>{selectedDoc.summaryPreview}</p>
+              <h4 style={{ fontSize: '0.95rem', color: '#FFFFFF', fontWeight: '700' }}>{selectedDoc.title}</h4>
+              <p style={{ fontSize: '0.8rem', color: '#E1DCC9' }}>{selectedDoc.summaryPreview}</p>
             </div>
           )}
         </div>

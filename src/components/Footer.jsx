@@ -12,11 +12,11 @@ export default function Footer() {
   return (
     <footer style={{
       background: '#000000',
-      borderTop: '1px solid rgba(225, 220, 201, 0.18)',
+      borderTop: '1.5px solid #DFD0B8',
       padding: '2.5rem 0',
-      marginTop: '3.5rem',
+      marginTop: '3rem',
       fontSize: '0.85rem',
-      color: 'rgba(225, 220, 201, 0.72)'
+      color: '#FFFFFF'
     }}>
       <div className="container" style={{
         display: 'flex',
@@ -30,25 +30,25 @@ export default function Footer() {
             width: '32px',
             height: '32px',
             borderRadius: '8px',
-            background: '#E1DCC9',
+            background: '#DFD0B8',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <Zap size={18} color="#1F150C" strokeWidth={2.5} />
+            <Zap size={18} color="#000000" />
           </div>
           <div>
-            <span style={{ fontWeight: '800', color: '#E1DCC9', letterSpacing: '-0.02em' }}>SYNTAXX</span> — Source-Grounded GenAI Content Transformation Engine
+            <span style={{ fontWeight: '700', color: '#FFFFFF' }}>TransformAI</span> — An Agentic Multi-Format Content Transformation Engine
           </div>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-          <span className="badge">Source-Grounded GenAI</span>
+          <span className="badge" style={{ background: '#121212', color: '#FFFFFF', borderColor: '#DFD0B8' }}>SIH / College Project Solution</span>
           <a
             href="https://github.com/vishnu-vikas-5/TransformAI"
             target="_blank"
             rel="noreferrer"
-            style={{ color: '#E1DCC9', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: '600' }}
+            style={{ color: '#FFFFFF', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: '700' }}
           >
             <GithubIcon size={16} /> GitHub Repository
           </a>

@@ -1,5 +1,6 @@
-import React from 'react';
-import { Zap, ShieldCheck, Cpu, Sparkles } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { Zap, ShieldCheck, Cpu, Sparkles, BookOpen, MessageSquare } from 'lucide-react';
+import GooeyNav from './GooeyNav';
 
 const GithubIcon = ({ size = 18 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -8,22 +9,48 @@ const GithubIcon = ({ size = 18 }) => (
   </svg>
 );
 
-export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHealth, apiProvider }) {
+export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHealth, apiProvider, onOpenAgentInspector }) {
   const isOnline = serverHealth?.status === 'online';
   const aiModelName = serverHealth?.gemini_key_configured 
-    ? 'Gemini 2.5 Flash' 
+    ? 'Gemini 2.5' 
     : serverHealth?.openai_key_configured 
-    ? 'OpenAI GPT-4o' 
-    : apiProvider || 'SyntaxX Engine';
+    ? 'GPT-4o' 
+    : 'Engine';
+
+  const navItems = [
+    { label: 'Workbench', icon: <Cpu size={15} />, onClick: () => setActiveTab('workbench') },
+    { label: 'Summary', icon: <BookOpen size={15} />, onClick: () => setActiveTab('summary') },
+    { label: 'Grounded AI Q&A', icon: <MessageSquare size={15} />, onClick: () => setActiveTab('chat') },
+    { 
+      label: 'System Insights', 
+      icon: <Sparkles size={15} />, 
+      children: [
+        { id: 'architecture', label: 'Architecture', icon: <Zap size={14} />, onClick: () => setActiveTab('architecture') },
+        { id: 'comparative', label: 'Why Agentic AI?', icon: <ShieldCheck size={14} />, onClick: () => setActiveTab('comparative') },
+        { id: 'inspect', label: 'Inspect AI Models', icon: <Sparkles size={14} />, onClick: () => onOpenAgentInspector && onOpenAgentInspector() }
+      ]
+    }
+  ];
+
+  const getActiveIndex = () => {
+    switch (activeTab) {
+      case 'workbench': return 0;
+      case 'summary': return 1;
+      case 'chat': return 2;
+      case 'architecture':
+      case 'comparative': return 3;
+      default: return 0;
+    }
+  };
 
   return (
     <header style={{
       position: 'sticky',
       top: 0,
-      zIndex: 50,
+      zIndex: 100,
       backgroundColor: '#000000',
-      borderBottom: '1px solid rgba(225, 220, 201, 0.18)',
-      backdropFilter: 'blur(12px)'
+      borderBottom: '1.5px solid #DFD0B8',
+      boxShadow: '0 4px 20px rgba(0,0,0,0.95)'
     }}>
       <div className="container" style={{
         display: 'flex',
@@ -31,76 +58,99 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHe
         justifyContent: 'space-between',
         height: '70px'
       }}>
-        {/* Brand Logo & Live Status */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }} onClick={() => setActiveTab('workbench')}>
-          <div style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '10px',
-            background: '#E1DCC9',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)'
-          }}>
-            <Zap size={22} color="#1F150C" strokeWidth={2.5} />
+        {/* Left: Brand Logo & Live Status Pill */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', flexShrink: 0 }}>
+          <div 
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}
+            onClick={() => {
+              setActiveTab('workbench');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
+            <div style={{
+              width: '36px',
+              height: '36px',
+              borderRadius: '9px',
+              background: '#DFD0B8',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 4px 10px rgba(223, 208, 184, 0.35)'
+            }}>
+              <Zap size={19} color="#000000" />
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <span style={{ fontSize: '1.15rem', fontWeight: '800', letterSpacing: '-0.02em', color: '#FFFFFF' }}>
+                TransformAI
+              </span>
+              <span className="badge" style={{ background: '#DFD0B8', color: '#000000', fontSize: '0.6rem', padding: '0.1rem 0.4rem', borderColor: '#E1DCC9' }}>
+                v2.5
+              </span>
+            </div>
           </div>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <span style={{ fontSize: '1.25rem', fontWeight: '800', letterSpacing: '-0.03em', color: '#E1DCC9' }}>
-                SYNTAXX
-              </span>
-              <span className="badge" style={{ fontSize: '0.62rem', padding: '0.12rem 0.5rem' }}>
-                Intelligence Engine
-              </span>
-            </div>
-            
-            {/* Live Backend & AI Provider Status */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginTop: '2px', fontSize: '0.7rem' }}>
-              <span style={{
-                width: '6px',
-                height: '6px',
-                borderRadius: '50%',
-                background: isOnline ? '#235E35' : '#8B1E1E',
-                boxShadow: isOnline ? '0 0 6px rgba(35, 94, 53, 0.8)' : 'none'
-              }} />
-              <span style={{ color: isOnline ? '#E1DCC9' : 'rgba(225, 220, 201, 0.55)', fontWeight: '600' }}>
-                {isOnline ? 'Backend Online' : 'Connecting Engine...'}
-              </span>
-              <span style={{ color: 'rgba(225, 220, 201, 0.35)' }}>•</span>
-              <span style={{ color: 'rgba(225, 220, 201, 0.85)', fontWeight: '600' }}>
-                AI: {aiModelName}
-              </span>
-            </div>
+
+          {/* Single-Line Status Badge Pill */}
+          <div 
+            onClick={(e) => { e.stopPropagation(); onOpenAgentInspector && onOpenAgentInspector(); }}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              background: '#121212',
+              border: '1px solid #DFD0B8',
+              padding: '0.3rem 0.65rem',
+              borderRadius: '20px',
+              fontSize: '0.72rem',
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              transition: 'all 0.2s ease'
+            }}
+            title="Click to inspect active AI model & system breakdown"
+          >
+            <span style={{
+              width: '7px',
+              height: '7px',
+              borderRadius: '50%',
+              background: isOnline ? '#52c41a' : '#ff4d4f',
+              boxShadow: isOnline ? '0 0 6px #52c41a' : 'none',
+              flexShrink: 0
+            }} />
+            <span style={{ color: '#FFFFFF', fontWeight: '700' }}>
+              {isOnline ? 'Online' : 'Offline'}
+            </span>
+            <span style={{ color: '#DFD0B8' }}>•</span>
+            <span style={{ color: '#E1DCC9', fontWeight: '600' }}>
+              AI: {aiModelName} 🔍
+            </span>
           </div>
         </div>
 
-        {/* Navigation Links */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <button
-            className={`btn btn-sm ${activeTab === 'workbench' ? 'btn-primary' : 'btn-secondary'}`}
-            onClick={() => setActiveTab('workbench')}
-          >
-            <Cpu size={15} /> Workbench
-          </button>
+        {/* Center: React Bits GooeyNav Interactive Component */}
+        <div 
+          className="navbar-center-nav" 
+          style={{ 
+            flex: 1, 
+            display: 'flex', 
+            justifyContent: 'center', 
+            overflow: 'visible',
+            padding: '0 0.5rem' 
+          }}
+        >
+          <GooeyNav 
+            items={navItems}
+            activeIndex={getActiveIndex()}
+            activeTab={activeTab}
+            particleCount={15}
+            particleDistances={[90, 10]}
+            particleR={100}
+            animationTime={600}
+            timeVariance={300}
+          />
+        </div>
 
-          <button
-            className={`btn btn-sm ${activeTab === 'architecture' ? 'btn-primary' : 'btn-secondary'}`}
-            onClick={() => setActiveTab('architecture')}
-          >
-            <Zap size={15} /> Architecture
-          </button>
-
-          <button
-            className={`btn btn-sm ${activeTab === 'comparative' ? 'btn-primary' : 'btn-secondary'}`}
-            onClick={() => setActiveTab('comparative')}
-          >
-            <ShieldCheck size={15} /> Why Agentic AI?
-          </button>
-        </nav>
-
-        {/* Action Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+        {/* Right: Action Controls */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexShrink: 0 }}>
           <button className="btn btn-primary btn-sm" onClick={onLaunchDemo}>
             <Sparkles size={14} /> Run Live Demo
           </button>
@@ -112,10 +162,11 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHe
             style={{ padding: '0.45rem' }}
             title="GitHub Repository"
           >
-            <GithubIcon size={17} />
+            <GithubIcon size={18} />
           </a>
         </div>
       </div>
     </header>
   );
 }
+

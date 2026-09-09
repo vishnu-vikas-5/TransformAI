@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle2, Copy, Download, RefreshCw, Eye, ShieldCheck, Sparkles, Check, ExternalLink, Play, FileText, Loader2 } from 'lucide-react';
+import { CheckCircle2, Copy, Download, RefreshCw, Eye, ShieldCheck, Sparkles, Check, ExternalLink, Play, FileText, Loader2, BookOpen, MessageSquare } from 'lucide-react';
 import { OUTPUT_FORMATS, PRE_GENERATED_RESULTS } from '../data/mockData';
 import { 
   exportToPptx, 
@@ -613,7 +613,8 @@ export default function ArtifactsWorkbench({
   completedOutputs,
   backendResults,
   onOpenGroundingModal,
-  onRunOrchestration
+  onRunOrchestration,
+  onNavigateTab
 }) {
   const [editedResults, setEditedResults] = useState({});
   const [copiedId, setCopiedId] = useState(null);
@@ -1699,6 +1700,26 @@ export default function ArtifactsWorkbench({
                       >
                         <Play size={13} fill="#000000" /> Generate Video
                       </button>
+                    )}
+
+                    {/* EXEC SUMMARY: Dedicated Full Summary Page & Grounded Q&A buttons */}
+                    {formatId === 'exec_summary' && onNavigateTab && (
+                      <>
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => onNavigateTab('summary')}
+                          title="Open Full Exhaustive Summary Page"
+                        >
+                          <BookOpen size={13} /> Full Page
+                        </button>
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => onNavigateTab('chat')}
+                          title="Ask questions using Grounded Document AI"
+                        >
+                          <MessageSquare size={13} /> Ask AI
+                        </button>
+                      </>
                     )}
 
                     {/* INFOGRAPHIC / SUMMARY / ADVISORY: In-App PDF Preview */}

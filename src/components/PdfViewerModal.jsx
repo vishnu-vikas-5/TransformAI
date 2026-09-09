@@ -106,25 +106,23 @@ export default function PDFPreviewModal({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [activeOpen, totalPages, onClose]);
 
-  // Helper: Get PDF.js library instance
+  // Helper: Get PDF.js library instance from window
   const getPdfJsLib = async () => {
-    if (typeof window !== 'undefined' && window.pdfjsLib) {
-      if (!window.pdfjsLib.GlobalWorkerOptions.workerSrc) {
-        window.pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+    if (typeof window !== 'undefined') {
+      let attempts = 0;
+      while (!window.pdfjsLib && attempts < 15) {
+        await new Promise(r => setTimeout(r, 100));
+        attempts++;
       }
-      return window.pdfjsLib;
-    }
-    try {
-      const pdfjsDist = await import('pdfjs-dist');
-      const lib = pdfjsDist.default || pdfjsDist;
-      if (lib && !lib.GlobalWorkerOptions.workerSrc) {
-        lib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+      if (window.pdfjsLib) {
+        if (!window.pdfjsLib.GlobalWorkerOptions.workerSrc) {
+          window.pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+        }
+        return window.pdfjsLib;
       }
-      return lib;
-    } catch (err) {
-      console.error("Failed to load PDF.js library:", err);
-      return null;
     }
+    console.error("PDF.js library not available on window.pdfjsLib");
+    return null;
   };
 
   // Reset viewer parameters when modal opens or closes
