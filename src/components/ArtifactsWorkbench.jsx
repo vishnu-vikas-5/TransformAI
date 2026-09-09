@@ -3,6 +3,7 @@ import { CheckCircle2, Copy, Download, RefreshCw, Eye, ShieldCheck, Sparkles, Ch
 import { OUTPUT_FORMATS, PRE_GENERATED_RESULTS } from '../data/mockData';
 import { exportToPptx, exportToPdf, exportToMarkdown, exportToText } from '../utils/exportUtils';
 import VideoPlayerModal from './VideoPlayerModal';
+import OutputPreviewModal from './OutputPreviewModal';
 
 export default function ArtifactsWorkbench({
   selectedDoc,
@@ -19,6 +20,23 @@ export default function ArtifactsWorkbench({
   // Video Studio Modal state
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [activeVideoData, setActiveVideoData] = useState(null);
+
+  // Output Deliverable Preview Modal state (PDF / Slides / Social Mockups)
+  const [outputPreviewState, setOutputPreviewState] = useState({
+    isOpen: false,
+    formatInfo: null,
+    result: null
+  });
+
+  const handleOpenOutputPreview = (formatId) => {
+    const formatInfo = OUTPUT_FORMATS.find(f => f.id === formatId) || { title: formatId, agent: "Specialized Agent" };
+    const result = getResultForFormat(formatId);
+    setOutputPreviewState({
+      isOpen: true,
+      formatInfo,
+      result
+    });
+  };
 
   // Initialize or retrieve result for an output format (Prioritizing Backend Real-Time API output)
   const getResultForFormat = (formatId) => {
@@ -337,17 +355,25 @@ export default function ArtifactsWorkbench({
                       <FileText size={13} /> .txt
                     </button>
 
-                    {/* PRESENTATION: Real PPTX PowerPoint Download */}
+                    {/* PRESENTATION: Slide Deck Previewer & Real PPTX PowerPoint Download */}
                     {formatId === 'presentation' && (
-                      <button
-                        className="btn btn-primary btn-sm"
-                        onClick={() => handleExportPptx(formatId, formatInfo.title)}
-                      >
-                        <Download size={13} /> PPTX
-                      </button>
+                      <>
+                        <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() => handleOpenOutputPreview(formatId)}
+                        >
+                          <Eye size={13} /> Slide Deck Preview
+                        </button>
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => handleExportPptx(formatId, formatInfo.title)}
+                        >
+                          <Download size={13} /> PPTX
+                        </button>
+                      </>
                     )}
 
-                    {/* VIDEO PACKAGE: Video Studio Preview & PPTX Export */}
+                    {/* VIDEO PACKAGE: Video Studio Preview */}
                     {formatId === 'video_package' && (
                       <button
                         className="btn btn-primary btn-sm"
@@ -357,54 +383,70 @@ export default function ArtifactsWorkbench({
                       </button>
                     )}
 
-                    {/* INFOGRAPHIC / SUMMARY / ADVISORY: PDF Export */}
+                    {/* INFOGRAPHIC / EXECUTIVE SUMMARY / ADVISORY: PDF Preview & Download */}
                     {(formatId === 'infographic_pkg' || formatId === 'exec_summary' || formatId === 'advisory_doc') && (
-                      <button
-                        className="btn btn-primary btn-sm"
-                        onClick={() => handleExportPdf(formatId, formatInfo.title)}
-                      >
-                        <Download size={13} /> PDF
-                      </button>
-                    )}
-
-                    {/* EXEC SUMMARY: Dedicated Full Summary Page & Grounded Q&A buttons */}
-                    {formatId === 'exec_summary' && onNavigateTab && (
                       <>
                         <button
-                          className="btn btn-secondary btn-sm"
-                          onClick={() => onNavigateTab('summary')}
-                          title="Open Full Exhaustive Summary Page"
+                          className="btn btn-primary btn-sm"
+                          onClick={() => handleOpenOutputPreview(formatId)}
                         >
-                          <BookOpen size={13} /> Full Page
+                          <Eye size={13} /> PDF Preview
                         </button>
                         <button
                           className="btn btn-secondary btn-sm"
-                          onClick={() => onNavigateTab('chat')}
-                          title="Ask questions using Grounded Document AI"
+                          onClick={() => handleExportPdf(formatId, formatInfo.title)}
+                          title="Download PDF File"
                         >
-                          <MessageSquare size={13} /> Ask AI
+                          <Download size={13} /> PDF
                         </button>
                       </>
                     )}
 
-                    {/* LINKEDIN POST: Direct LinkedIn Post */}
-                    {formatId === 'linkedin_post' && (
+                    {/* EXEC SUMMARY: Dedicated Grounded Q&A button */}
+                    {formatId === 'exec_summary' && onNavigateTab && (
                       <button
-                        className="btn btn-primary btn-sm"
-                        onClick={() => handlePostToPlatform(formatId, 'linkedin')}
+                        className="btn btn-secondary btn-sm"
+                        onClick={() => onNavigateTab('chat')}
+                        title="Ask questions using Grounded Document AI"
                       >
-                        <ExternalLink size={13} /> LinkedIn
+                        <MessageSquare size={13} /> Ask AI
                       </button>
                     )}
 
-                    {/* TWITTER THREAD: Direct Twitter Post */}
+                    {/* LINKEDIN POST: Post Preview & Direct Share */}
+                    {formatId === 'linkedin_post' && (
+                      <>
+                        <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() => handleOpenOutputPreview(formatId)}
+                        >
+                          <Eye size={13} /> Post Preview
+                        </button>
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => handlePostToPlatform(formatId, 'linkedin')}
+                        >
+                          <ExternalLink size={13} /> LinkedIn
+                        </button>
+                      </>
+                    )}
+
+                    {/* TWITTER THREAD: Thread Preview & Direct Share */}
                     {formatId === 'twitter_thread' && (
-                      <button
-                        className="btn btn-primary btn-sm"
-                        onClick={() => handlePostToPlatform(formatId, 'twitter')}
-                      >
-                        <ExternalLink size={13} /> Post to X
-                      </button>
+                      <>
+                        <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() => handleOpenOutputPreview(formatId)}
+                        >
+                          <Eye size={13} /> Thread Preview
+                        </button>
+                        <button
+                          className="btn btn-secondary btn-sm"
+                          onClick={() => handlePostToPlatform(formatId, 'twitter')}
+                        >
+                          <ExternalLink size={13} /> Post to X
+                        </button>
+                      </>
                     )}
                   </div>
                 </div>
@@ -422,6 +464,14 @@ export default function ArtifactsWorkbench({
         videoData={activeVideoData}
         docId={selectedDoc?.id || 'document'}
         docTitle={selectedDoc?.title || 'Document Briefing'}
+      />
+
+      {/* Output Deliverable Preview Modal (PDF Viewer, Slide Reader, Social Mockup) */}
+      <OutputPreviewModal
+        isOpen={outputPreviewState.isOpen}
+        onClose={() => setOutputPreviewState({ isOpen: false, formatInfo: null, result: null })}
+        modalData={outputPreviewState}
+        selectedDoc={selectedDoc}
       />
 
     </div>

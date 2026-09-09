@@ -5,7 +5,6 @@ import InputSection from './components/InputSection';
 import OutputSelector from './components/OutputSelector';
 import OrchestratorVisualizer from './components/OrchestratorVisualizer';
 import ArtifactsWorkbench from './components/ArtifactsWorkbench';
-import FullSummaryPage from './components/FullSummaryPage';
 import GroundedQAChat from './components/GroundedQAChat';
 import ArchitectureSection from './components/ArchitectureSection';
 import ComparativeSection from './components/ComparativeSection';
@@ -16,16 +15,16 @@ import { SAMPLE_DOCUMENTS } from './data/mockData';
 import { API_BASE_URL } from './utils/apiConfig';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('workbench');
+  const [activeTab, setActiveTab] = useState('home');
   const [inputMode, setInputMode] = useState('sample');
   const [selectedDoc, setSelectedDoc] = useState(SAMPLE_DOCUMENTS[0]);
   const [customText, setCustomText] = useState('');
-  
+
   // Dashboard Configurable Parameters & Selection
   const [selectedOutputs, setSelectedOutputs] = useState([
-    'exec_summary', 
-    'video_package', 
-    'linkedin_post', 
+    'exec_summary',
+    'video_package',
+    'linkedin_post',
     'twitter_thread',
     'advisory_doc',
     'infographic_pkg',
@@ -121,13 +120,14 @@ export default function App() {
 
     } catch (err) {
       console.warn("Real-time stream error, performing simulation batch execution:", err);
-      // Fallback simulation sequence
+      // Fallback simulation sequence with smooth progress animation
       for (let i = 0; i < selectedOutputs.length; i++) {
-        await new Promise(r => setTimeout(r, 250));
+        await new Promise(r => setTimeout(r, 450));
         const agentId = selectedOutputs[i];
         setCompletedOutputs(prev => [...prev, agentId]);
         setExecutionProgress(Math.min(95, Math.round(((i + 1) / selectedOutputs.length) * 95)));
       }
+      await new Promise(r => setTimeout(r, 400));
       setExecutionProgress(100);
       setIsExecuting(false);
     }
@@ -151,9 +151,9 @@ export default function App() {
 
   return (
     <div className="app-container" style={{ minHeight: '100vh', background: 'transparent', color: '#FFFFFF' }}>
-      <Navbar 
-        activeTab={activeTab} 
-        setActiveTab={setActiveTab} 
+      <Navbar
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
         onLaunchDemo={() => {
           setActiveTab('workbench');
           handleRunOrchestration();
@@ -164,26 +164,25 @@ export default function App() {
       />
 
       <main>
-        <Hero 
-          onStartTransformation={() => {
-            setActiveTab('workbench');
-            setTimeout(() => {
-              const el = document.getElementById('workbench-section');
-              if (el) {
-                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
-            }, 50);
-          }} 
-          onExploreArchitecture={() => {
-            setActiveTab('architecture');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-        />
+        {activeTab === 'home' && (
+          <div className="animate-fade-in">
+            <Hero
+              onStartTransformation={() => {
+                setActiveTab('workbench');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              onExploreArchitecture={() => {
+                setActiveTab('architecture');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            />
+          </div>
+        )}
 
-        <div className="container">
+        <div className="container" style={{ paddingTop: activeTab === 'home' ? '0' : '1.5rem' }}>
           {activeTab === 'workbench' && (
             <div id="workbench-section" className="animate-fade-in">
-              <InputSection 
+              <InputSection
                 selectedDoc={selectedDoc}
                 setSelectedDoc={setSelectedDoc}
                 customText={customText}
@@ -192,7 +191,7 @@ export default function App() {
                 setInputMode={setInputMode}
               />
 
-              <OutputSelector 
+              <OutputSelector
                 selectedOutputs={selectedOutputs}
                 setSelectedOutputs={setSelectedOutputs}
                 selectedTone={selectedTone}
@@ -203,7 +202,7 @@ export default function App() {
                 setCommunicationStyle={setCommunicationStyle}
               />
 
-              <OrchestratorVisualizer 
+              <OrchestratorVisualizer
                 isExecuting={isExecuting}
                 executionProgress={executionProgress}
                 onRunOrchestration={handleRunOrchestration}
@@ -214,7 +213,7 @@ export default function App() {
                 onOpenAgentInspector={() => setIsAgentInspectorOpen(true)}
               />
 
-              <ArtifactsWorkbench 
+              <ArtifactsWorkbench
                 selectedDoc={selectedDoc}
                 selectedOutputs={selectedOutputs}
                 completedOutputs={completedOutputs}
@@ -225,19 +224,9 @@ export default function App() {
             </div>
           )}
 
-          {activeTab === 'summary' && (
-            <div className="animate-fade-in">
-              <FullSummaryPage 
-                selectedDoc={selectedDoc}
-                backendResults={backendResults}
-                onNavigateToChat={() => setActiveTab('chat')}
-              />
-            </div>
-          )}
-
           {activeTab === 'chat' && (
             <div className="animate-fade-in">
-              <GroundedQAChat 
+              <GroundedQAChat
                 selectedDoc={selectedDoc}
                 customText={customText}
               />
@@ -258,7 +247,7 @@ export default function App() {
         </div>
       </main>
 
-      <GroundingModal 
+      <GroundingModal
         isOpen={modalState.isOpen}
         onClose={handleCloseGroundingModal}
         modalData={modalState}

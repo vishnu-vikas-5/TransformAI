@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { FileText, Upload, Link as LinkIcon, Edit3, CheckCircle2, Eye, Sparkles, File, Loader2, Check } from 'lucide-react';
 import { SAMPLE_DOCUMENTS } from '../data/mockData';
 import { API_BASE_URL } from '../utils/apiConfig';
+import { formatFileSize, parsePdfClientSide } from '../utils/documentUtils';
 
 export default function InputSection({ selectedDoc, setSelectedDoc, customText, setCustomText, inputMode, setInputMode }) {
   const [showFullText, setShowFullText] = useState(false);
@@ -14,6 +15,7 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
   const handleFileProcess = async (file) => {
     if (!file) return;
     setIsReading(true);
+    const sizeFormatted = formatFileSize(file.size);
 
     try {
       // 1. Send file to FastAPI backend upload API (/api/upload)
@@ -28,21 +30,24 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
       if (response.ok) {
         const data = await response.json();
         const wordCount = data.word_count || 100;
-        const pages = Math.max(1, Math.ceil(wordCount / 400));
-        
+        const pages = data.pages || Math.max(1, Math.ceil(wordCount / 350));
+        const formattedSize = data.size_formatted || sizeFormatted;
+
         const newDoc = {
           id: `uploaded_${Date.now()}`,
           title: data.filename || file.name,
           category: 'Uploaded Document (Backend Ingested)',
-          summaryPreview: `Custom uploaded file (${(file.size / 1024).toFixed(1)} KB, ${wordCount.toLocaleString()} words). Parsed & extracted cleanly by FastAPI engine.`,
+          summaryPreview: `Custom uploaded file (${formattedSize}, ${pages} Pages, ${wordCount.toLocaleString()} words). Parsed & extracted cleanly by FastAPI engine.`,
           wordCount: wordCount,
           pages: pages,
+          fileSize: file.size,
+          fileSizeFormatted: formattedSize,
           rawText: data.extracted_text,
-          entities: ['Uploaded Document', file.name.split('.')[0], `${(file.size / 1024).toFixed(0)} KB`]
+          entities: ['Uploaded Document', file.name.split('.')[0], formattedSize]
         };
 
         setSelectedDoc(newDoc);
-        setUploadedFile({ name: file.name, size: file.size, wordCount });
+        setUploadedFile({ name: file.name, size: file.size, wordCount, pages });
         setIsReading(false);
         return;
       }
@@ -50,35 +55,57 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
       console.warn("Backend upload API unreachable, switching to local FileReader parsing:", err);
     }
 
-    // 2. Client-side Fallback Reader
+    // 2. Client-side Fallback Reader (Specialized for PDF and Plaintext)
+    if (file.name.toLowerCase().endsWith('.pdf')) {
+      const parsedPdf = await parsePdfClientSide(file);
+      const newDoc = {
+        id: `uploaded_${Date.now()}`,
+        title: file.name,
+        category: 'Uploaded PDF (Client Parsed)',
+        summaryPreview: `Custom uploaded PDF (${sizeFormatted}, ${parsedPdf.pages} Pages, ${parsedPdf.wordCount.toLocaleString()} words). Parsed cleanly on client.`,
+        wordCount: parsedPdf.wordCount,
+        pages: parsedPdf.pages,
+        fileSize: file.size,
+        fileSizeFormatted: sizeFormatted,
+        rawText: parsedPdf.rawText,
+        entities: ['Uploaded PDF', file.name.split('.')[0], sizeFormatted]
+      };
+
+      setSelectedDoc(newDoc);
+      setUploadedFile({ name: file.name, size: file.size, wordCount: parsedPdf.wordCount, pages: parsedPdf.pages });
+      setIsReading(false);
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = (e) => {
       let text = e.target.result || `[Content extracted from ${file.name}]`;
 
-      // Clean raw text if binary PDF/DOCX was read as text locally
-      if (file.name.endsWith('.pdf') || file.name.endsWith('.docx')) {
+      if (file.name.endsWith('.docx')) {
         text = text.replace(/[^\x20-\x7E\n\r\t]/g, ' ').replace(/\s+/g, ' ');
         if (text.trim().length < 20) {
-          text = `### Document Content: ${file.name}\n\n[Ingested content from ${file.name} (${(file.size / 1024).toFixed(1)} KB)]\n\nOperational advisory and strategic data extracted from uploaded document. Ready for multi-agent transformation.`;
+          text = `### Document Content: ${file.name}\n\n[Ingested content from ${file.name} (${sizeFormatted})]\n\nOperational advisory and strategic data extracted from uploaded document. Ready for multi-agent transformation.`;
         }
       }
 
       const wordCount = text.split(/\s+/).filter(Boolean).length || 100;
-      const pages = Math.max(1, Math.ceil(wordCount / 400));
+      const pages = Math.max(1, Math.ceil(wordCount / 350));
 
       const newDoc = {
         id: `uploaded_${Date.now()}`,
         title: file.name,
         category: 'Uploaded File',
-        summaryPreview: `Custom uploaded file (${(file.size / 1024).toFixed(1)} KB, ${wordCount.toLocaleString()} words). Ready for multi-agent transformation.`,
+        summaryPreview: `Custom uploaded file (${sizeFormatted}, ${pages} Pages, ${wordCount.toLocaleString()} words). Ready for multi-agent transformation.`,
         wordCount: wordCount,
         pages: pages,
+        fileSize: file.size,
+        fileSizeFormatted: sizeFormatted,
         rawText: text,
-        entities: ['Uploaded File', file.name.split('.')[0], `${(file.size / 1024).toFixed(0)} KB`]
+        entities: ['Uploaded File', file.name.split('.')[0], sizeFormatted]
       };
 
       setSelectedDoc(newDoc);
-      setUploadedFile({ name: file.name, size: file.size, wordCount });
+      setUploadedFile({ name: file.name, size: file.size, wordCount, pages });
       setIsReading(false);
     };
 
@@ -130,14 +157,14 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
 
   return (
     <div className="glass-panel" style={{ padding: '2rem', marginBottom: '2rem', background: '#121212', borderColor: '#DFD0B8' }}>
-      
+
       {/* Hidden File Input */}
-      <input 
-        type="file" 
-        ref={fileInputRef} 
-        style={{ display: 'none' }} 
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
         accept=".txt,.md,.pdf,.docx,.json,.csv"
-        onChange={handleFileSelect} 
+        onChange={handleFileSelect}
       />
 
       {/* Section Header */}
@@ -245,7 +272,8 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
                     {doc.summaryPreview}
                   </p>
 
-                  <div style={{ display: 'flex', gap: '1rem', fontSize: '0.75rem', color: '#FFFFFF', fontWeight: '600' }}>
+                  <div style={{ display: 'flex', gap: '1rem', fontSize: '0.75rem', color: '#FFFFFF', fontWeight: '600', flexWrap: 'wrap' }}>
+                    <span>💾 {doc.fileSizeFormatted || '1.2 MB'}</span>
                     <span>📄 {doc.pages} Pages</span>
                     <span>📝 {doc.wordCount.toLocaleString()} Words</span>
                   </div>
@@ -313,7 +341,7 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
       {/* Mode 2: Upload File (Drag & Drop & File Picker) */}
       {inputMode === 'upload' && (
         <div>
-          <div 
+          <div
             onClick={() => fileInputRef.current?.click()}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -367,7 +395,7 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
                     {selectedDoc.title}
                   </span>
                 </div>
-                <button 
+                <button
                   className="btn btn-secondary btn-sm"
                   onClick={() => setShowFullText(!showFullText)}
                 >
@@ -375,9 +403,18 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
                 </button>
               </div>
 
-              <div style={{ display: 'flex', gap: '1rem', fontSize: '0.8rem', color: '#FFFFFF', marginBottom: '0.5rem' }}>
-                <span>📝 {selectedDoc.wordCount.toLocaleString()} Words</span>
-                <span>📄 ~{selectedDoc.pages} Pages</span>
+              <div style={{ display: 'flex', gap: '1.25rem', fontSize: '0.8rem', color: '#FFFFFF', marginBottom: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                {selectedDoc.fileSizeFormatted && (
+                  <span style={{ background: '#121212', padding: '0.25rem 0.6rem', borderRadius: '6px', border: '1px solid #DFD0B8' }}>
+                    💾 File Size: <strong style={{ color: '#DFD0B8' }}>{selectedDoc.fileSizeFormatted}</strong>
+                  </span>
+                )}
+                <span style={{ background: '#121212', padding: '0.25rem 0.6rem', borderRadius: '6px', border: '1px solid #DFD0B8' }}>
+                  📝 Words: <strong style={{ color: '#DFD0B8' }}>{selectedDoc.wordCount?.toLocaleString() || 0}</strong>
+                </span>
+                <span style={{ background: '#121212', padding: '0.25rem 0.6rem', borderRadius: '6px', border: '1px solid #DFD0B8' }}>
+                  📄 Pages: <strong style={{ color: '#DFD0B8' }}>{selectedDoc.pages || 1}</strong>
+                </span>
               </div>
 
               {showFullText && (
@@ -445,11 +482,11 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
       {inputMode === 'url' && (
         <div>
           <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.25rem' }}>
-            <input 
-              type="url" 
+            <input
+              type="url"
               value={urlInput}
               onChange={(e) => setUrlInput(e.target.value)}
-              placeholder="https://example.com/advisories/incident-report-2026.pdf" 
+              placeholder="https://example.com/advisories/incident-report-2026.pdf"
               style={{
                 flex: 1,
                 padding: '0.75rem 1rem',

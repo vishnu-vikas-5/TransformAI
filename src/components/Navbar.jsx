@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Zap, ShieldCheck, Cpu, Sparkles, BookOpen, MessageSquare } from 'lucide-react';
+import { Zap, ShieldCheck, Cpu, Sparkles, MessageSquare } from 'lucide-react';
 import GooeyNav from './GooeyNav';
 
 const GithubIcon = ({ size = 18 }) => (
@@ -18,8 +18,8 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHe
     : 'Engine';
 
   const navItems = [
+    { label: 'Overview', icon: <Sparkles size={15} />, onClick: () => setActiveTab('home') },
     { label: 'Workbench', icon: <Cpu size={15} />, onClick: () => setActiveTab('workbench') },
-    { label: 'Summary', icon: <BookOpen size={15} />, onClick: () => setActiveTab('summary') },
     { label: 'Grounded AI Q&A', icon: <MessageSquare size={15} />, onClick: () => setActiveTab('chat') },
     { 
       label: 'System Insights', 
@@ -34,8 +34,8 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHe
 
   const getActiveIndex = () => {
     switch (activeTab) {
-      case 'workbench': return 0;
-      case 'summary': return 1;
+      case 'home': return 0;
+      case 'workbench': return 1;
       case 'chat': return 2;
       case 'architecture':
       case 'comparative': return 3;
@@ -63,7 +63,7 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHe
           <div 
             style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}
             onClick={() => {
-              setActiveTab('workbench');
+              setActiveTab('home');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           >

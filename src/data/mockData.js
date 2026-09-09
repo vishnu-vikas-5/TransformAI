@@ -5,6 +5,8 @@ export const SAMPLE_DOCUMENTS = [
     category: "Threat Intelligence & Incident Response",
     wordCount: 3840,
     pages: 10,
+    fileSize: 1298432,
+    fileSizeFormatted: "1.24 MB",
     entities: ["CVE-2024-38077", "RDP Licensing Service", "Remote Code Execution", "CVSS 9.8", "Windows Server 2022"],
     summaryPreview: "A critical zero-day memory corruption vulnerability in the Windows Remote Desktop Licensing service permits unauthenticated remote code execution with SYSTEM privileges.",
     rawText: `INCIDENT ADVISORY & TECHNICAL THREAT LOG
@@ -39,6 +41,8 @@ C. User & Credential Protections:
     category: "Government & Health Policy",
     wordCount: 2950,
     pages: 7,
+    fileSize: 870912,
+    fileSizeFormatted: "850.5 KB",
     entities: ["Respiratory Pathogen H5-V2", "Ministry of Health", "Quarantine Protocol", "Public Advisory", "Vaccine Distribution"],
     summaryPreview: "Emergency policy guidelines detailing containment protocols, travel restrictions, healthcare facility capacity management, and public safety procedures for H5-V2.",
     rawText: `PUBLIC HEALTH ADVISORY & OPERATIONAL DIRECTIVE
@@ -60,6 +64,8 @@ The National Public Health Authority has issued a Tier-2 Public Health Warning f
     category: "AI & Computer Science Research",
     wordCount: 5120,
     pages: 14,
+    fileSize: 2202009,
+    fileSizeFormatted: "2.10 MB",
     entities: ["Agentic Architecture", "Task Decomposition", "Parallel Inference", "Grounding Score", "Hallucination Reduction"],
     summaryPreview: "A technical evaluation demonstrating how decomposing complex multi-output prompts into specialized agent DAGs achieves 4.2x latency improvement and 99.1% factual grounding.",
     rawText: `RESEARCH PAPER: DECOUPLING GENERATION AND VALIDATION IN MULTI-AGENT LLM PIPELINES

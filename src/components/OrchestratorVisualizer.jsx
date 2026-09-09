@@ -116,17 +116,61 @@ export default function OrchestratorVisualizer({
         border: '1.5px solid #DFD0B8',
         marginBottom: '1.5rem'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <GitBranch size={18} color="#DFD0B8" />
             <span style={{ fontSize: '0.9rem', fontWeight: '700', color: '#FFFFFF' }}>
               Execution Graph (Directed Acyclic Graph)
             </span>
           </div>
-          <span className="badge" style={{ background: '#DFD0B8', color: '#000000', borderColor: '#E1DCC9' }}>
-            {isExecuting ? 'Parallel Processing Active' : completedOutputs.length > 0 ? 'Workflow Completed' : 'Ready'}
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <span className="badge" style={{ background: '#DFD0B8', color: '#000000', borderColor: '#E1DCC9' }}>
+              {isExecuting ? `Parallel Processing (${executionProgress}%)` : completedOutputs.length > 0 ? 'Workflow Completed' : 'Ready'}
+            </span>
+          </div>
         </div>
+
+        {/* Visual Animated Progress Bar */}
+        {(isExecuting || executionProgress > 0) && (
+          <div style={{
+            marginBottom: '1.5rem',
+            background: '#121212',
+            padding: '1rem 1.25rem',
+            borderRadius: 'var(--radius-md)',
+            border: '1.5px solid #DFD0B8'
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem', fontSize: '0.85rem' }}>
+              <span style={{ fontWeight: '700', color: '#FFFFFF', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <Loader2 size={16} className={isExecuting ? "spin" : ""} color="#DFD0B8" />
+                {isExecuting ? 'Agent DAG Pipeline Execution in Progress...' : 'Orchestration Pipeline Execution Completed!'}
+              </span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontWeight: '800', color: '#DFD0B8', fontSize: '1rem' }}>
+                {executionProgress}%
+              </span>
+            </div>
+            
+            {/* Progress Bar Outer Track */}
+            <div style={{
+              width: '100%',
+              height: '14px',
+              background: '#000000',
+              borderRadius: '999px',
+              border: '1.5px solid #DFD0B8',
+              overflow: 'hidden',
+              padding: '1px'
+            }}>
+              {/* Progress Bar Inner Bar */}
+              <div style={{
+                width: `${executionProgress}%`,
+                height: '100%',
+                background: 'linear-gradient(90deg, #DFD0B8 0%, #E1DCC9 100%)',
+                borderRadius: '999px',
+                transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                boxShadow: isExecuting ? '0 0 15px rgba(223, 208, 184, 0.8)' : 'none'
+              }} />
+            </div>
+          </div>
+        )}
 
         {/* Graph Nodes Flow */}
         <div style={{

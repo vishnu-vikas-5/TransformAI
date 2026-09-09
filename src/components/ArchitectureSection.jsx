@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cpu, GitBranch, Zap, FileText, Mail, Share2, HelpCircle } from 'lucide-react';
+import { Cpu, GitBranch, Zap, FileText, Video, Share2, ShieldAlert, Layers, PieChart } from 'lucide-react';
 import { AGENT_ROSTER } from '../data/mockData';
 
 export default function ArchitectureSection() {
@@ -37,7 +37,7 @@ export default function ArchitectureSection() {
             alignItems: 'center'
           }}>
             {/* Step 1: User & Input Ingestion */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%', maxWidth: '800px', background: '#121212', padding: '1rem 1.5rem', borderRadius: 'var(--radius-md)', border: '1.5px solid #DFD0B8' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%', maxWidth: '850px', background: '#121212', padding: '1rem 1.5rem', borderRadius: 'var(--radius-md)', border: '1.5px solid #DFD0B8' }}>
               <div style={{ background: '#DFD0B8', color: '#000000', width: '36px', height: '36px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '700' }}>1</div>
               <div style={{ flex: 1 }}>
                 <h4 style={{ fontSize: '0.95rem', fontWeight: '700', color: '#FFFFFF' }}>User Ingestion & Target Selection</h4>
@@ -48,7 +48,7 @@ export default function ArchitectureSection() {
             <div style={{ width: '2px', height: '24px', background: '#DFD0B8' }} />
 
             {/* Step 2: AI Orchestrator */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%', maxWidth: '800px', background: '#DFD0B8', padding: '1rem 1.5rem', borderRadius: 'var(--radius-md)', border: '2px solid #E1DCC9' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', width: '100%', maxWidth: '850px', background: '#DFD0B8', padding: '1rem 1.5rem', borderRadius: 'var(--radius-md)', border: '2px solid #E1DCC9' }}>
               <div style={{ background: '#000000', color: '#FFFFFF', width: '36px', height: '36px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '700' }}>2</div>
               <div style={{ flex: 1 }}>
                 <h4 style={{ fontSize: '0.95rem', fontWeight: '700', color: '#000000' }}>AI Orchestrator / Master Agent</h4>
@@ -58,23 +58,31 @@ export default function ArchitectureSection() {
 
             <div style={{ width: '2px', height: '24px', background: '#DFD0B8' }} />
 
-            {/* Step 3: Parallel Domain Agents */}
-            <div style={{ width: '100%', maxWidth: '800px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem' }}>
-              <div style={{ background: '#121212', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid #DFD0B8', textAlign: 'center' }}>
+            {/* Step 3: Parallel Specialized Domain Agents */}
+            <div style={{ width: '100%', maxWidth: '850px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.6rem' }}>
+              <div style={{ background: '#121212', padding: '0.65rem 0.4rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid #DFD0B8', textAlign: 'center' }}>
                 <FileText size={18} color="#DFD0B8" style={{ marginBottom: '0.2rem' }} />
-                <h5 style={{ fontSize: '0.8rem', color: '#FFFFFF' }}>Summary Agent</h5>
+                <h5 style={{ fontSize: '0.75rem', color: '#FFFFFF', fontWeight: '700' }}>Executive Briefing</h5>
               </div>
-              <div style={{ background: '#121212', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid #DFD0B8', textAlign: 'center' }}>
-                <Mail size={18} color="#DFD0B8" style={{ marginBottom: '0.2rem' }} />
-                <h5 style={{ fontSize: '0.8rem', color: '#FFFFFF' }}>Email Agent</h5>
+              <div style={{ background: '#121212', padding: '0.65rem 0.4rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid #DFD0B8', textAlign: 'center' }}>
+                <Video size={18} color="#DFD0B8" style={{ marginBottom: '0.2rem' }} />
+                <h5 style={{ fontSize: '0.75rem', color: '#FFFFFF', fontWeight: '700' }}>Video Script</h5>
               </div>
-              <div style={{ background: '#121212', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid #DFD0B8', textAlign: 'center' }}>
+              <div style={{ background: '#121212', padding: '0.65rem 0.4rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid #DFD0B8', textAlign: 'center' }}>
                 <Share2 size={18} color="#DFD0B8" style={{ marginBottom: '0.2rem' }} />
-                <h5 style={{ fontSize: '0.8rem', color: '#FFFFFF' }}>Social Agent</h5>
+                <h5 style={{ fontSize: '0.75rem', color: '#FFFFFF', fontWeight: '700' }}>Social & Thread</h5>
               </div>
-              <div style={{ background: '#121212', padding: '0.75rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid #DFD0B8', textAlign: 'center' }}>
-                <HelpCircle size={18} color="#DFD0B8" style={{ marginBottom: '0.2rem' }} />
-                <h5 style={{ fontSize: '0.8rem', color: '#FFFFFF' }}>FAQ Agent</h5>
+              <div style={{ background: '#121212', padding: '0.65rem 0.4rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid #DFD0B8', textAlign: 'center' }}>
+                <ShieldAlert size={18} color="#DFD0B8" style={{ marginBottom: '0.2rem' }} />
+                <h5 style={{ fontSize: '0.75rem', color: '#FFFFFF', fontWeight: '700' }}>Tech Advisory</h5>
+              </div>
+              <div style={{ background: '#121212', padding: '0.65rem 0.4rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid #DFD0B8', textAlign: 'center' }}>
+                <Layers size={18} color="#DFD0B8" style={{ marginBottom: '0.2rem' }} />
+                <h5 style={{ fontSize: '0.75rem', color: '#FFFFFF', fontWeight: '700' }}>Presentation Deck</h5>
+              </div>
+              <div style={{ background: '#121212', padding: '0.65rem 0.4rem', borderRadius: 'var(--radius-sm)', border: '1.5px solid #DFD0B8', textAlign: 'center' }}>
+                <PieChart size={18} color="#DFD0B8" style={{ marginBottom: '0.2rem' }} />
+                <h5 style={{ fontSize: '0.75rem', color: '#FFFFFF', fontWeight: '700' }}>Infographic Viz</h5>
               </div>
             </div>
 
