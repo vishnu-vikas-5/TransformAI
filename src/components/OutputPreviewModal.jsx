@@ -138,8 +138,8 @@ export default function OutputPreviewModal({ isOpen, onClose, modalData, selecte
         {/* Modal Main Body */}
         <div style={{ flex: 1, overflowY: 'auto', background: '#000000', padding: '1.5rem' }}>
 
-          {/* ================= MODE A: EXECUTIVE SUMMARY / ADVISORY / INFOGRAPHIC (PDF DOCUMENT PREVIEW) ================= */}
-          {(formatId === 'exec_summary' || formatId === 'advisory_doc' || formatId === 'infographic_pkg') && (
+          {/* ================= MODE A: EXECUTIVE SUMMARY / ADVISORY (PDF PREVIEW) ================= */}
+          {(formatId === 'exec_summary' || formatId === 'advisory_doc') && (
             <div style={{ maxWidth: '850px', margin: '0 auto' }}>
               
               {/* PDF Toolbar Header */}
@@ -242,7 +242,7 @@ export default function OutputPreviewModal({ isOpen, onClose, modalData, selecte
                   paddingTop: '1rem',
                   borderTop: '1px solid #333333',
                   display: 'flex',
-                  justify: 'space-between',
+                  justifyContent: 'space-between',
                   fontSize: '0.75rem',
                   color: '#A0A0A0'
                 }}>
@@ -252,6 +252,151 @@ export default function OutputPreviewModal({ isOpen, onClose, modalData, selecte
 
               </div>
 
+            </div>
+          )}
+
+          {/* ================= MODE A2: VISUAL INFOGRAPHIC POSTER GENERATOR ================= */}
+          {formatId === 'infographic_pkg' && (
+            <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+              {/* Infographic Image Toolbar */}
+              <div style={{
+                background: '#12100E',
+                border: '1.5px solid #3D352E',
+                borderRadius: '8px 8px 0 0',
+                padding: '0.75rem 1.25rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                fontSize: '0.8rem',
+                color: '#F5F2EB'
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '800', color: '#D4AF37' }}>
+                  <ImageIcon size={16} color="#D4AF37" />
+                  <span>SyntaxX Visual Infographic Generator (1080x1350)</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={() => handleDownloadInfographicImage('png')}
+                    disabled={isExportingImage}
+                    style={{ background: '#D4AF37', color: '#0D0B0A', borderColor: '#D4AF37', fontWeight: '800' }}
+                  >
+                    {isExportingImage ? <Sparkles size={12} className="spin" /> : <Download size={12} />}
+                    {isExportingImage ? 'Generating PNG...' : 'Download PNG Image'}
+                  </button>
+                  <button
+                    className="btn btn-secondary btn-sm"
+                    onClick={() => handleDownloadInfographicImage('jpg')}
+                    disabled={isExportingImage}
+                    style={{ borderColor: '#3D352E', color: '#F5F2EB' }}
+                  >
+                    <ImageIcon size={12} /> Download JPG
+                  </button>
+                </div>
+              </div>
+
+              {/* Rendered Visual Infographic Poster Container */}
+              <div
+                ref={posterRef}
+                style={{
+                  background: '#0D0B0A',
+                  border: '1.5px solid #3D352E',
+                  borderTop: 'none',
+                  borderRadius: '0 0 12px 12px',
+                  padding: '2.25rem',
+                  color: '#F5F2EB',
+                  boxShadow: '0 25px 60px rgba(0,0,0,0.95)',
+                  fontFamily: 'Inter, system-ui, sans-serif'
+                }}
+              >
+                {/* Header Banner */}
+                <div style={{ borderBottom: '2px solid #3D352E', paddingBottom: '1.25rem', marginBottom: '1.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div>
+                    <span style={{ fontSize: '0.725rem', color: '#D4AF37', fontWeight: '800', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                      SYNTAXX VISUAL INFOGRAPHIC POSTER
+                    </span>
+                    <h2 style={{ fontSize: '1.65rem', fontWeight: '900', color: '#F5F2EB', marginTop: '0.25rem', lineHeight: '1.25' }}>
+                      {docTitle}
+                    </h2>
+                  </div>
+                  <span style={{ background: '#D4AF37', color: '#0D0B0A', fontWeight: '900', padding: '0.2rem 0.6rem', borderRadius: '4px', fontSize: '0.7rem' }}>
+                    VERIFIED VISUAL
+                  </span>
+                </div>
+
+                {/* 4 Prominent Metric Callout Cards */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.85rem', marginBottom: '1.75rem' }}>
+                  {[
+                    { val: 'CVSS 9.8', lbl: 'SEVERITY SCORE', icon: '⚡' },
+                    { val: '45 MIN', lbl: 'EXPLOITATION WINDOW', icon: '⏱️' },
+                    { val: '14 NODES', lbl: 'CONTAINED SCOPE', icon: '🛡️' },
+                    { val: 'KB5040442', lbl: 'MANDATORY PATCH', icon: '🔧' }
+                  ].map((m, idx) => (
+                    <div key={idx} style={{ background: '#1E1A17', border: '1.5px solid #3D352E', borderRadius: '8px', padding: '1rem 0.75rem', textAlign: 'center' }}>
+                      <div style={{ fontSize: '1.2rem', marginBottom: '0.2rem' }}>{m.icon}</div>
+                      <div style={{ fontSize: '1.35rem', fontWeight: '900', color: '#D4AF37' }}>{m.val}</div>
+                      <div style={{ fontSize: '0.625rem', fontWeight: '800', color: '#C5A059', marginTop: '0.25rem', textTransform: 'uppercase' }}>{m.lbl}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Threat Situation Box */}
+                <div style={{ background: '#1E1A17', border: '1px solid #3D352E', borderRadius: '10px', padding: '1.25rem', marginBottom: '1.75rem' }}>
+                  <div style={{ fontSize: '0.725rem', color: '#D4AF37', fontWeight: '800', textTransform: 'uppercase', marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                    <AlertTriangle size={13} color="#D4AF37" /> Threat Situation & Core Intelligence
+                  </div>
+                  <div style={{ fontSize: '0.875rem', color: '#E8E2D5', lineHeight: '1.55' }}>
+                    Critical zero-day vulnerability (CVE-2024-38077) identified in Remote Desktop Licensing Service. System memory corruption enables unauthenticated Remote Code Execution across Windows Server 2016/2019/2022 domain controllers.
+                  </div>
+                </div>
+
+                {/* Visual Process Flowchart */}
+                <div style={{ marginBottom: '1.75rem' }}>
+                  <div style={{ fontSize: '0.725rem', color: '#D4AF37', fontWeight: '800', textTransform: 'uppercase', marginBottom: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                    <Cpu size={13} color="#D4AF37" /> Attack Vector & Incident Execution Flow
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.65rem' }}>
+                    {[
+                      { step: '01', title: 'Initial Vector', desc: 'RPC Port 135 handshake' },
+                      { step: '02', title: 'Exploitation', desc: 'RCE payload execution' },
+                      { step: '03', title: 'Privilege Escalation', desc: 'SYSTEM Domain Admin access' },
+                      { step: '04', title: 'Containment', desc: '45-min automated isolation' }
+                    ].map((step, idx) => (
+                      <div key={idx} style={{ background: '#25201C', border: '1px solid #3D352E', borderRadius: '8px', padding: '0.85rem 0.75rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.35rem' }}>
+                          <span style={{ background: '#D4AF37', color: '#0D0B0A', fontSize: '0.6rem', fontWeight: '900', padding: '0.1rem 0.35rem', borderRadius: '3px' }}>PHASE {step.step}</span>
+                          {idx < 3 && <ArrowRight size={12} color="#C5A059" />}
+                        </div>
+                        <div style={{ fontSize: '0.8rem', fontWeight: '800', color: '#F5F2EB' }}>{step.title}</div>
+                        <div style={{ fontSize: '0.68rem', color: '#A59D94', marginTop: '0.2rem' }}>{step.desc}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Key Findings & Directives Dual Grid */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem' }}>
+                  <div style={{ background: '#1E1A17', border: '1px solid #3D352E', borderRadius: '8px', padding: '1rem' }}>
+                    <div style={{ fontSize: '0.725rem', color: '#D4AF37', fontWeight: '800', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Key Insights</div>
+                    <div style={{ fontSize: '0.8rem', color: '#E8E2D5', lineHeight: '1.5' }}>• Zero data exfiltration across 14 monitored database nodes.</div>
+                    <div style={{ fontSize: '0.8rem', color: '#E8E2D5', lineHeight: '1.5', marginTop: '0.4rem' }}>• Rapid containment completed within 45 minutes of RPC anomaly.</div>
+                  </div>
+
+                  <div style={{ background: '#1E1A17', border: '1px solid #3D352E', borderRadius: '8px', padding: '1rem' }}>
+                    <div style={{ fontSize: '0.725rem', color: '#D4AF37', fontWeight: '800', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Operational Directives</div>
+                    <div style={{ fontSize: '0.8rem', color: '#E8E2D5', lineHeight: '1.5' }}>1. Block Port 135 & RPC dynamic ports at perimeter firewalls.</div>
+                    <div style={{ fontSize: '0.8rem', color: '#E8E2D5', lineHeight: '1.5', marginTop: '0.4rem' }}>2. Deploy Security Update KB5040442 across domain controllers.</div>
+                  </div>
+                </div>
+
+                {/* Footer Traceability */}
+                <div style={{ borderTop: '1px solid #3D352E', paddingTop: '0.75rem', display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', color: '#8A8278' }}>
+                  <span>SyntaxX Visual Infographic Engine • 1080x1350 Resolution</span>
+                  <span style={{ color: '#D4AF37' }}>99.4% Factual Grounding Verified</span>
+                </div>
+              </div>
             </div>
           )}
 

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { CheckCircle2, Copy, Download, RefreshCw, Eye, ShieldCheck, Sparkles, Check, ExternalLink, Play, FileText, BookOpen, MessageSquare } from 'lucide-react';
+import { CheckCircle2, Copy, Download, RefreshCw, Eye, ShieldCheck, Sparkles, Check, ExternalLink, Play, FileText, BookOpen, MessageSquare, Image as ImageIcon } from 'lucide-react';
 import { OUTPUT_FORMATS, PRE_GENERATED_RESULTS } from '../data/mockData';
 import { exportToPptx, exportToPdf, exportToMarkdown, exportToText } from '../utils/exportUtils';
 import { formatContentForDisplay } from '../utils/documentUtils';
 import VideoPlayerModal from './VideoPlayerModal';
 import OutputPreviewModal from './OutputPreviewModal';
+import InfographicVisualModal from './InfographicVisualModal';
 
 export default function ArtifactsWorkbench({
   selectedDoc,
@@ -22,12 +23,26 @@ export default function ArtifactsWorkbench({
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [activeVideoData, setActiveVideoData] = useState(null);
 
+  // Infographic Visual Studio Modal state
+  const [isInfographicModalOpen, setIsInfographicModalOpen] = useState(false);
+  const [activeInfographicData, setActiveInfographicData] = useState(null);
+
   // Output Deliverable Preview Modal state (PDF / Slides / Social Mockups)
   const [outputPreviewState, setOutputPreviewState] = useState({
     isOpen: false,
     formatInfo: null,
     result: null
   });
+
+  const handleOpenInfographicStudio = (formatId) => {
+    const formatInfo = OUTPUT_FORMATS.find(f => f.id === formatId) || { title: formatId, agent: "Specialized Agent" };
+    const result = getResultForFormat(formatId);
+    setActiveInfographicData({
+      formatInfo,
+      result
+    });
+    setIsInfographicModalOpen(true);
+  };
 
   const handleOpenOutputPreview = (formatId) => {
     const formatInfo = OUTPUT_FORMATS.find(f => f.id === formatId) || { title: formatId, agent: "Specialized Agent" };
@@ -475,14 +490,25 @@ export default function ArtifactsWorkbench({
                       </button>
                     )}
 
-                    {/* INFOGRAPHIC / EXECUTIVE SUMMARY / ADVISORY: PDF Preview & Download */}
+                    {/* INFOGRAPHIC SPECIFIC: Dedicated Visual Studio (PNG/JPG) Button */}
+                    {formatId === 'infographic_pkg' && (
+                      <button
+                        className="btn btn-primary btn-sm"
+                        onClick={() => handleOpenInfographicStudio(formatId)}
+                        style={{ background: '#D4AF37', color: '#0D0B0A', borderColor: '#D4AF37', fontWeight: '800' }}
+                      >
+                        <ImageIcon size={13} /> Visual Studio (PNG/JPG)
+                      </button>
+                    )}
+
+                    {/* INFOGRAPHIC / EXECUTIVE SUMMARY / ADVISORY: Preview & Download */}
                     {(formatId === 'infographic_pkg' || formatId === 'exec_summary' || formatId === 'advisory_doc') && (
                       <>
                         <button
-                          className="btn btn-primary btn-sm"
+                          className="btn btn-secondary btn-sm"
                           onClick={() => handleOpenOutputPreview(formatId)}
                         >
-                          <Eye size={13} /> PDF Preview
+                          <Eye size={13} /> Preview
                         </button>
                         <button
                           className="btn btn-secondary btn-sm"
@@ -556,6 +582,15 @@ export default function ArtifactsWorkbench({
         videoData={activeVideoData}
         docId={selectedDoc?.id || 'document'}
         docTitle={selectedDoc?.title || 'Document Briefing'}
+      />
+
+      {/* Infographic Visual Studio Modal */}
+      <InfographicVisualModal
+        isOpen={isInfographicModalOpen}
+        onClose={() => setIsInfographicModalOpen(false)}
+        result={activeInfographicData?.result}
+        docTitle={selectedDoc?.title || 'Source Document'}
+        formatTitle={activeInfographicData?.formatInfo?.title || 'Infographic'}
       />
 
       {/* Output Deliverable Preview Modal (PDF Viewer, Slide Reader, Social Mockup) */}
