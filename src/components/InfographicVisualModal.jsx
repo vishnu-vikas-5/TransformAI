@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { X, Download, Image as ImageIcon, FileText, ShieldCheck, Check, Sparkles, AlertTriangle, ArrowRight, Activity, Cpu } from 'lucide-react';
+import { X, Download, Image as ImageIcon, FileText, ShieldCheck, Check, Sparkles, AlertTriangle, ArrowRight, Activity, Cpu, CheckCircle2 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { exportToPdf } from '../utils/exportUtils';
 

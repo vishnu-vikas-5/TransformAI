@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { X, Download, Copy, Check, FileText, ShieldCheck, Printer, ChevronLeft, ChevronRight, Play, Eye, Share2, Sparkles, ExternalLink, Image as ImageIcon, AlertTriangle, Cpu, ArrowRight } from 'lucide-react';
+import { X, Download, Copy, Check, FileText, ShieldCheck, Printer, ChevronLeft, ChevronRight, Play, Eye, Share2, Sparkles, ExternalLink, Image as ImageIcon, AlertTriangle, Cpu, ArrowRight, Activity } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { exportToPdf, exportToPptx } from '../utils/exportUtils';
 import { formatContentForDisplay } from '../utils/documentUtils';
