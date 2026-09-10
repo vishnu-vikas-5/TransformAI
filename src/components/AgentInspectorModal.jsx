@@ -80,24 +80,20 @@ export default function AgentInspectorModal({ isOpen, onClose }) {
       id: "infographic_pkg",
       name: "Infographic & Data Viz Agent",
       role: "Visual Design Wireframe & Layout Grid",
-      description: "Transforms documents into professional visual infographics featuring metric cards, attack chain/process diagrams, SyntaxX design tokens, and structured JSON metadata.",
+      description: "Transforms documents into data-driven visual infographics with bar/line/pie charts, metric cards, process flows, timelines, and structured JSON visualization metadata.",
       type: "Domain Agent",
       model: "Google Gemini 2.5 Flash / OpenAI GPT-4o",
       system_prompt: `System: You are the INFOGRAPHIC GENERATION AGENT of SyntaxX.
 
-ROLE: Transform the CURRENTLY SELECTED SOURCE DOCUMENT and its CORE CONTENT INTELLIGENCE into a professional visual infographic. The final output must be an ACTUAL VISUAL INFOGRAPHIC, not merely a text summary.
+ROLE: Transform the CURRENTLY SELECTED SOURCE DOCUMENT and its CORE CONTENT INTELLIGENCE into a professional, data-driven visual infographic. Output must be a visual infographic with data-driven charts, metric cards, timelines, process flows, and risk matrices.
 
 SOURCE OF TRUTH: Use ONLY currently selected source document, core content intelligence, and source evidence. Never fabricate metrics, statistics, CVEs, or entities.
 
-PRIMARY OBJECTIVE: Create a visually understandable representation of the source so readers can understand key insights in seconds. Prioritize main subject, core findings, metric cards (up to 4 prominent metrics), domain-aware visualizations (attack chains, timelines, KPI cards, architecture flows), concise labels, and source evidence mapping.
+VISUALIZATIONS: Automatically analyze source data and select appropriate visual representations: Bar Charts, Line Charts, Pie/Donut Charts, Comparison Charts, Metric Cards (max 4 prominent cards), Timelines, Process Flows, Architecture Diagrams, and Risk Matrices.
 
-VISUAL DESIGN SYSTEM (SyntaxX): Near-black background (#0D0B0A), dark warm-brown content surfaces (#1E1A17), warm beige typography (#F5F2EB), thin warm beige borders (#3D352E), minimal gold/brown accents (#D4AF37). High readability, professional information-dense layout. No excessive gradients or glassmorphism.
+DESIGN SYSTEM (SyntaxX): Near-black background (#0D0B0A), dark warm-brown surfaces (#1E1A17), warm beige typography (#F5F2EB), thin warm beige borders (#3D352E), minimal gold/brown accents (#D4AF37). High readability, professional information-dense layout.
 
-OUTPUT REQUIREMENTS:
-1. Visual Infographic Layout Structure & Metric Cards
-2. Visual Diagrams, Timelines, & Highlights
-3. Source/Evidence Mapping & Citations
-4. Structured Metadata JSON Block containing: document_id, title, visual_type, metrics, sections, visual_elements, evidence.`
+OUTPUT STRUCTURE: Return structured metadata containing visualizations (type, data, labels, units, source_evidence), sections, key_takeaway, and source.`
     },
     {
       id: "presentation",

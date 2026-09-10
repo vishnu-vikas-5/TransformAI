@@ -424,6 +424,53 @@ export default function OutputPreviewModal({ isOpen, onClose, modalData, selecte
                   </div>
                 </div>
 
+                {/* Data-Driven Bar Chart & Comparison Visual */}
+                <div style={{ background: '#1E1A17', border: '1.5px solid #3D352E', borderRadius: '10px', padding: '1.1rem', marginBottom: '1.5rem' }}>
+                  <div style={{ fontSize: '0.725rem', color: '#D4AF37', fontWeight: '800', textTransform: 'uppercase', marginBottom: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                    <Activity size={13} color="#D4AF37" /> Data-Driven Comparative Analysis & Vector Distribution
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
+                    <div>
+                      <div style={{ fontSize: '0.7rem', color: '#A59D94', fontWeight: '700', marginBottom: '0.6rem' }}>Affected System Vulnerability Distribution</div>
+                      {[
+                        { label: 'Domain Controllers', val: 95, color: '#D4AF37' },
+                        { label: 'RPC Licensing Nodes', val: 82, color: '#C5A059' },
+                        { label: 'Database Cluster Nodes', val: 40, color: '#8A8278' },
+                        { label: 'Secondary Gateways', val: 18, color: '#4A4037' }
+                      ].map((bar, idx) => (
+                        <div key={idx} style={{ marginBottom: '0.5rem' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.68rem', color: '#E8E2D5', marginBottom: '0.15rem' }}>
+                            <span>{bar.label}</span>
+                            <span style={{ fontWeight: '800', color: bar.color }}>{bar.val}%</span>
+                          </div>
+                          <div style={{ background: '#0D0B0A', borderRadius: '4px', height: '6px', overflow: 'hidden', border: '1px solid #3D352E' }}>
+                            <div style={{ width: `${bar.val}%`, background: bar.color, height: '100%', borderRadius: '4px' }} />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div>
+                      <div style={{ fontSize: '0.7rem', color: '#A59D94', fontWeight: '700', marginBottom: '0.6rem' }}>Response Metric Comparison (Before vs After)</div>
+                      {[
+                        { metric: 'Detection Accuracy', before: '68%', after: '99.4%', diff: '+31.4%' },
+                        { metric: 'Containment Latency', before: '180m', after: '45m', diff: '-75.0%' },
+                        { metric: 'Exfiltration Risk', before: 'High', after: 'Zero', diff: 'Secured' }
+                      ].map((cmp, idx) => (
+                        <div key={idx} style={{ background: '#25201C', border: '1px solid #3D352E', borderRadius: '5px', padding: '0.55rem 0.65rem', marginBottom: '0.45rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                          <span style={{ fontSize: '0.7rem', color: '#F5F2EB', fontWeight: '700' }}>{cmp.metric}</span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.68rem' }}>
+                            <span style={{ color: '#8A8278', textDecoration: 'line-through' }}>{cmp.before}</span>
+                            <span style={{ color: '#D4AF37', fontWeight: '900' }}>{cmp.after}</span>
+                            <span style={{ background: '#D4AF37', color: '#0D0B0A', fontSize: '0.6rem', fontWeight: '900', padding: '0.1rem 0.3rem', borderRadius: '3px' }}>{cmp.diff}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
                 {/* Footer Traceability */}
                 <div style={{ borderTop: '1px solid #3D352E', paddingTop: '0.75rem', display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', color: '#8A8278' }}>
                   <span>SyntaxX Visual Infographic Engine • 1080x1350 Resolution</span>
