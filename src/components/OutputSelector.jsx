@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckSquare, Square, FileText, Video, Share2, MessageSquare, ShieldAlert, PieChart, Layers, Settings2 } from 'lucide-react';
+import { CheckSquare, Square, FileText, Video, Share2, MessageSquare, ShieldAlert, PieChart, Layers } from 'lucide-react';
 import { OUTPUT_FORMATS } from '../data/mockData';
 
 const ICON_MAP = {
@@ -121,105 +121,6 @@ export default function OutputSelector({
           );
         })}
       </div>
-
-      {/* Configurable Parameters Section */}
-      <div style={{
-        background: '#000000',
-        borderRadius: 'var(--radius-md)',
-        padding: '1.25rem',
-        border: '1.5px solid #DFD0B8'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: '#FFFFFF' }}>
-          <Settings2 size={16} color="#DFD0B8" />
-          <h4 style={{ fontSize: '0.9rem', fontWeight: '700' }}>Dashboard Configurable Parameters</h4>
-        </div>
-
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '1.25rem'
-        }}>
-          {/* Parameter 1: Communication Tone */}
-          <div>
-            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.4rem', color: '#E1DCC9' }}>
-              Target Tone
-            </label>
-            <select
-              value={selectedTone}
-              onChange={(e) => setSelectedTone(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '0.6rem 0.75rem',
-                background: '#121212',
-                border: '1.5px solid #DFD0B8',
-                borderRadius: 'var(--radius-sm)',
-                color: '#FFFFFF',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.825rem',
-                outline: 'none'
-              }}
-            >
-              <option value="formal">Strategic & Executive (Formal)</option>
-              <option value="actionable">Actionable & Urgent (Operational)</option>
-              <option value="public">Public Engagement (Social / Media)</option>
-              <option value="technical">Technical & Precise (Engineering)</option>
-            </select>
-          </div>
-
-          {/* Parameter 2: Level of Detail */}
-          <div>
-            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.4rem', color: '#E1DCC9' }}>
-              Level of Detail
-            </label>
-            <select
-              value={detailLevel}
-              onChange={(e) => setDetailLevel(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '0.6rem 0.75rem',
-                background: '#121212',
-                border: '1.5px solid #DFD0B8',
-                borderRadius: 'var(--radius-sm)',
-                color: '#FFFFFF',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.825rem',
-                outline: 'none'
-              }}
-            >
-              <option value="high">Comprehensive & Detailed</option>
-              <option value="medium">Balanced Standard</option>
-              <option value="concise">Concise & High-Level Briefing</option>
-            </select>
-          </div>
-
-          {/* Parameter 3: Content Style */}
-          <div>
-            <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: '600', marginBottom: '0.4rem', color: '#E1DCC9' }}>
-              Communication Style
-            </label>
-            <select
-              value={communicationStyle}
-              onChange={(e) => setCommunicationStyle(e.target.value)}
-              style={{
-                width: '100%',
-                padding: '0.6rem 0.75rem',
-                background: '#121212',
-                border: '1.5px solid #DFD0B8',
-                borderRadius: 'var(--radius-sm)',
-                color: '#FFFFFF',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.825rem',
-                outline: 'none'
-              }}
-            >
-              <option value="bullet">Structured Bulleted & Modular</option>
-              <option value="narrative">Conversational & Story-Driven</option>
-              <option value="directive">Direct Policy & Actionable</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
     </div>
   );
 }
