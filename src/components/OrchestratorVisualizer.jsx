@@ -103,7 +103,7 @@ export default function OrchestratorVisualizer({
             onClick={onOpenAgentInspector}
             style={{ padding: '0.35rem 0.75rem', fontSize: '0.75rem' }}
           >
-            Inspect AI System 🔍
+            Inspect AI System
           </button>
         </div>
       </div>

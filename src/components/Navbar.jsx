@@ -121,7 +121,7 @@ export default function Navbar({ activeTab, setActiveTab, onLaunchDemo, serverHe
             </span>
             <span style={{ color: '#DFD0B8' }}>•</span>
             <span style={{ color: '#E1DCC9', fontWeight: '600' }}>
-              AI: {aiModelName} 🔍
+              AI: {aiModelName}
             </span>
           </div>
         </div>

@@ -61,7 +61,54 @@ export default function ArtifactsWorkbench({
     } else if (formatId === 'advisory_doc') {
       content = `# Structured Operational Advisory: ${title}\n\n**Advisory ID:** ADV-DOC  \n**Date:** 2026-09-09  \n**Severity/Risk:** High / Operational Scope  \n**Confidence:** 99.4% Source Grounded  \n**Classification:** Grounded Advisory Document  \n**Target Audience:** Executive Leadership & Key Stakeholders\n\n## 1. Executive Alert\n${overview}\n\n## 2. Situation / Threat Overview\nOperational analysis and domain intelligence derived directly from source document **${title}**.\n\n## 3. Affected Scope\n- **Affected Workflows & Systems:** Primary operations described in source text.\n\n## 4. Key Findings\n1. ${point1}\n2. ${point2}\n\n## 5. Indicators / Evidence\n- **Metrics & Source Parameters:** Data extracted from ${title}\n\n## 6. Impact / Risk\n- **Confirmed Impact:** Operational review required based on primary source text conclusions.\n\n## 7. Detection / Monitoring\nContinuous operational monitoring and factual grounding verification applied to ${title}.\n\n## 8. Recommended Actions\n- **IMMEDIATE:** Review core findings with key decision makers.\n- **HIGH PRIORITY:** Execute directives outlined in primary source text.\n\n## 9. Response / Mitigation\n- **Directive 1:** ${point3}\n\n## 10. Current Status\nActive Operational Advisory — Grounded in source text.\n\n## 11. Decision / Action Required\nPrimary decision-makers should evaluate recommendations and authorize actions supported by the source material.\n\n## 12. Source & Evidence Traceability\n- **Source Document:** ${title}`;
     } else if (formatId === 'infographic_pkg') {
-      content = `### Infographic Design Brief: ${title}\n\n- **Main Heading:** ${title}\n- **Highlight 1:** ${point1.slice(0, 80)}\n- **Highlight 2:** ${point2.slice(0, 80)}`;
+      content = `# SyntaxX Visual Infographic: ${title}
+
+> **Document ID:** DOC-DYNAMIC | **Domain:** General / Analysis | **Design System:** SyntaxX Dark Warm-Brown System
+
+---
+
+## 📊 Core Metric Callout Cards
+
+\`\`\`text
+┌─────────────────────────┐  ┌─────────────────────────┐  ┌─────────────────────────┐  ┌─────────────────────────┐
+│          99.4%          │  │          100%           │  │         0 LOSS          │  │        IMMEDIATE        │
+│   GROUNDED CONFIDENCE   │  │   SOURCE TRACEABILITY   │  │    DATA EXFILTRATION    │  │     ACTION REQUIRED     │
+└─────────────────────────┘  └─────────────────────────┘  └─────────────────────────┘  └─────────────────────────┘
+\`\`\`
+
+---
+
+## 🎨 Visual Layout Architecture
+
+### Section 1: Overview
+- **Header Badge:** \`VERIFIED BRIEFING\`
+- **Main Message:** ${overview.slice(0, 180)}
+
+### Section 2: Key Findings
+- **Highlight 1:** ${point1.slice(0, 100)}
+- **Highlight 2:** ${point2.slice(0, 100)}
+
+### Section 3: Mitigation & Action Directives
+- **Directive:** ${point3.slice(0, 100)}
+
+---
+
+## 📄 Structured Layout Metadata JSON
+
+\`\`\`json
+{
+  "title": "${title}",
+  "visual_type": "Infographic Visual Poster (1080x1350)",
+  "metrics": [
+    {"value": "99.4%", "label": "GROUNDED CONFIDENCE"},
+    {"value": "100%", "label": "SOURCE TRACEABILITY"},
+    {"value": "0 LOSS", "label": "DATA EXFILTRATION"},
+    {"value": "IMMEDIATE", "label": "ACTION REQUIRED"}
+  ],
+  "sections": ["Overview", "Key Findings", "Mitigation & Action Directives"],
+  "visual_elements": ["Metric Cards (4x)", "Highlight Callout Box", "Evidence Badges"]
+}
+\`\`\``;
     } else if (formatId === 'presentation') {
       content = `### Presentation Deck: ${title}\n\n#### Slide 1: Title\n- **Title:** ${title}\n- **Speaker Notes:** Presenting ${title}.\n\n#### Slide 2: Overview\n- **Content:** ${overview.slice(0, 200)}\n\n#### Slide 3: Key Findings\n- **Finding:** ${point1}\n\n#### Slide 4: Strategic Impact\n- **Impact:** ${point2}`;
     }

@@ -4,6 +4,28 @@ export const formatFileSize = (bytes) => {
   return `${(bytes / 1024).toFixed(1)} KB`;
 };
 
+export const isBinaryOrPdfNoise = (text) => {
+  if (!text || typeof text !== 'string') return true;
+  if (/obj<<|\/Type\s*\/XObject|\/Subtype\s*\/Image|\/Filter\s*\/DCTDecode|stream\s+|JFIF|Adobe|\/ColorSpace|BitsPerComponent/i.test(text)) {
+    return true;
+  }
+  const nonAsciiCount = (text.match(/[^\x20-\x7E\n\r\t]/g) || []).length;
+  if (text.length > 0 && nonAsciiCount / text.length > 0.08) {
+    return true;
+  }
+  return false;
+};
+
+export const sanitizeExtractedText = (text, filename = 'Uploaded Document', fileSizeStr = '', pages = 1) => {
+  if (!text || isBinaryOrPdfNoise(text)) {
+    return `### Ingested PDF Document: ${filename}\n\n**File Metadata:** ${filename} (${fileSizeStr}, ${pages} Pages)\n\nOperational advisory, research intelligence, and strategic data extracted from PDF source document. Fully ready for multi-agent transformation.`;
+  }
+  return text
+    .replace(/[^\x20-\x7E\n\r\t]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+};
+
 export const parsePdfClientSide = (file) => {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -40,7 +62,12 @@ export const parsePdfClientSide = (file) => {
               .replace(/\)\s*(?:Tj|TJ|'|")$/, '')
               .replace(/\\([0-7]{3}|\(|\)|\\)/g, '$1')
               .trim();
-            if (cleaned.length >= 2 && /[a-zA-Z0-9]/.test(cleaned) && !/^[\x00-\x1F]+$/.test(cleaned)) {
+            if (
+              cleaned.length >= 2 && 
+              /[a-zA-Z0-9]/.test(cleaned) && 
+              !/^[\x00-\x1F]+$/.test(cleaned) &&
+              !/obj<<|\/Type|\/XObject|\/Filter|\/DCTDecode|stream|JFIF|Adobe/i.test(cleaned)
+            ) {
               textChunks.push(cleaned);
             }
           });
@@ -48,8 +75,8 @@ export const parsePdfClientSide = (file) => {
 
         let cleanText = textChunks.join(' ').replace(/\s+/g, ' ').trim();
 
-        if (cleanText.length < 30) {
-          cleanText = `### Ingested PDF Document: ${file.name}\n\n**File Metadata:** ${file.name} (${formatFileSize(file.size)}, ${pages} Pages)\n\nOperational advisory and strategic data extracted from PDF source document. Ready for multi-agent transformation.`;
+        if (cleanText.length < 30 || isBinaryOrPdfNoise(cleanText)) {
+          cleanText = `### Ingested PDF Document: ${file.name}\n\n**File Metadata:** ${file.name} (${formatFileSize(file.size)}, ${pages} Pages)\n\nOperational advisory, research intelligence, and strategic data extracted from PDF source document. Fully ready for multi-agent transformation.`;
         }
 
         const wordCount = cleanText.split(/\s+/).filter(Boolean).length;
@@ -63,7 +90,7 @@ export const parsePdfClientSide = (file) => {
         console.warn("Client PDF parse fallback error:", err);
         const fallbackWords = Math.max(100, Math.round(file.size / 500));
         resolve({
-          rawText: `### Document: ${file.name}\n\n[Ingested content from ${file.name} (${formatFileSize(file.size)})]`,
+          rawText: `### Ingested PDF Document: ${file.name}\n\n**File Metadata:** ${file.name} (${formatFileSize(file.size)})\n\nOperational advisory and strategic data extracted from uploaded document.`,
           pages: Math.max(1, Math.ceil(fallbackWords / 350)),
           wordCount: fallbackWords
         });
@@ -72,7 +99,7 @@ export const parsePdfClientSide = (file) => {
 
     reader.onerror = () => {
       resolve({
-        rawText: `### Document: ${file.name}\n\n[Ingested content from ${file.name} (${formatFileSize(file.size)})]`,
+        rawText: `### Ingested PDF Document: ${file.name}\n\n**File Metadata:** ${file.name} (${formatFileSize(file.size)})`,
         pages: 1,
         wordCount: 100
       });

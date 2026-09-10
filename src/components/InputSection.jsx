@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { FileText, Upload, Link as LinkIcon, Edit3, CheckCircle2, Eye, Sparkles, File, Loader2, Check } from 'lucide-react';
 import { SAMPLE_DOCUMENTS } from '../data/mockData';
 import { API_BASE_URL } from '../utils/apiConfig';
-import { formatFileSize, parsePdfClientSide } from '../utils/documentUtils';
+import { formatFileSize, parsePdfClientSide, sanitizeExtractedText } from '../utils/documentUtils';
 
 export default function InputSection({ selectedDoc, setSelectedDoc, customText, setCustomText, inputMode, setInputMode }) {
   const [showFullText, setShowFullText] = useState(false);
@@ -32,6 +32,7 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
         const wordCount = data.word_count || 100;
         const pages = data.pages || Math.max(1, Math.ceil(wordCount / 350));
         const formattedSize = data.size_formatted || sizeFormatted;
+        const cleanExtractedText = sanitizeExtractedText(data.extracted_text, file.name, formattedSize, pages);
 
         const newDoc = {
           id: `uploaded_${Date.now()}`,
@@ -42,7 +43,7 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
           pages: pages,
           fileSize: file.size,
           fileSizeFormatted: formattedSize,
-          rawText: data.extracted_text,
+          rawText: cleanExtractedText,
           entities: ['Uploaded Document', file.name.split('.')[0], formattedSize]
         };
 
@@ -58,6 +59,7 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
     // 2. Client-side Fallback Reader (Specialized for PDF and Plaintext)
     if (file.name.toLowerCase().endsWith('.pdf')) {
       const parsedPdf = await parsePdfClientSide(file);
+      const cleanPdfText = sanitizeExtractedText(parsedPdf.rawText, file.name, sizeFormatted, parsedPdf.pages);
       const newDoc = {
         id: `uploaded_${Date.now()}`,
         title: file.name,
@@ -67,7 +69,7 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
         pages: parsedPdf.pages,
         fileSize: file.size,
         fileSizeFormatted: sizeFormatted,
-        rawText: parsedPdf.rawText,
+        rawText: cleanPdfText,
         entities: ['Uploaded PDF', file.name.split('.')[0], sizeFormatted]
       };
 
@@ -80,16 +82,9 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
     const reader = new FileReader();
     reader.onload = (e) => {
       let text = e.target.result || `[Content extracted from ${file.name}]`;
-
-      if (file.name.endsWith('.docx')) {
-        text = text.replace(/[^\x20-\x7E\n\r\t]/g, ' ').replace(/\s+/g, ' ');
-        if (text.trim().length < 20) {
-          text = `### Document Content: ${file.name}\n\n[Ingested content from ${file.name} (${sizeFormatted})]\n\nOperational advisory and strategic data extracted from uploaded document. Ready for multi-agent transformation.`;
-        }
-      }
-
       const wordCount = text.split(/\s+/).filter(Boolean).length || 100;
       const pages = Math.max(1, Math.ceil(wordCount / 350));
+      const cleanText = sanitizeExtractedText(text, file.name, sizeFormatted, pages);
 
       const newDoc = {
         id: `uploaded_${Date.now()}`,
@@ -100,7 +95,7 @@ export default function InputSection({ selectedDoc, setSelectedDoc, customText, 
         pages: pages,
         fileSize: file.size,
         fileSizeFormatted: sizeFormatted,
-        rawText: text,
+        rawText: cleanText,
         entities: ['Uploaded File', file.name.split('.')[0], sizeFormatted]
       };
 

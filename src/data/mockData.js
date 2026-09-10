@@ -309,25 +309,101 @@ Active exploitation of a heap-based buffer overflow in \`termsrv.dll\` / \`lsvcs
     },
 
     infographic_pkg: {
-      content: `### Infographic Design & Content Package
+      content: `# SyntaxX Visual Infographic: Threat Intelligence Briefing (CVE-2024-38077)
 
-#### 1. Core Visual Concept & Layout Structure
-- **Layout Grid:** 3-Tier Vertical Flow (Header Threat Stats -> Visual Attack Vector -> Remediation Checklist)
-- **Primary Color Palette:** Deep Charcoal (#0B0F19), Critical Red (#F43F5E), Emerald Green (#10B981)
+> **Document ID:** DOC-CYBER-2026-001 | **Domain:** Cybersecurity / Intelligence | **Design System:** SyntaxX Dark Warm-Brown System
 
-#### 2. Key Data Cards & Visual Metrics
-- **Card 1 (Hero Metric):** "CVSS 9.8 / CRITICAL" — Large bold callout with a warning icon.
-- **Card 2 (Exploitation Window):** "45 Minutes" — Animated clock icon representing time from initial RPC handshake to LockBit 4.0 ransomware staging.
-- **Card 3 (Containment Stat):** "0 Data Exfiltrated" — Shield icon showing 14 database nodes isolated with zero data loss.
+---
 
-#### 3. Step-by-Step Visual Action Flow
-1. **Block Port 135:** Firewall icon shutting down TCP 135 & RPC dynamic ports.
-2. **Apply KB5040442:** Download/Install update icon for Windows Server 2016/2019/2022.
-3. **Reset Admin Passwords & Enforce MFA:** Security key icon representing Hardware MFA login.`,
+## 📊 Core Metric Callout Cards
+
+\`\`\`text
+┌─────────────────────────┐  ┌─────────────────────────┐  ┌─────────────────────────┐  ┌─────────────────────────┐
+│        CVSS 9.8         │  │         45 MIN          │  │        14 NODES         │  │        KB5040442        │
+│     SEVERITY SCORE      │  │   EXPLOITATION WINDOW   │  │     CONTAINED SCOPE     │  │     MANDATORY PATCH     │
+└─────────────────────────┘  └─────────────────────────┘  └─────────────────────────┘  └─────────────────────────┘
+\`\`\`
+
+---
+
+## 🎨 Visual Layout Architecture
+
+### Section 1: Threat / Situation Overview
+- **Header Badge:** \`CRITICAL ADVISORY\`
+- **Main Message:** Critical zero-day Remote Code Execution vulnerability in Windows Remote Desktop Licensing Service allows unauthenticated attacker domain compromise.
+- **Key Entity Callout:** CVE-2024-38077 | CVSS 9.8 | Target: Windows Server 2016/2019/2022.
+
+### Section 2: Attack Chain & Process Flow
+\`\`\`
+[RPC Handshake] ──► [Buffer Overflow Execution] ──► [SYSTEM Privilege Escalation] ──► [Automated Network Isolation]
+\`\`\`
+- **Phase 1 (Initial Vector):** Crafted RPC packet transmitted to TCP Port 135 Endpoint Mapper.
+- **Phase 2 (Propagation):** Memory corruption allows arbitrary payload execution.
+- **Phase 3 (Resolution):** Incident contained within 45-minute window; zero data exfiltrated across 14 database nodes.
+
+### Section 3: Highlighted Key Findings
+- **Highlight 1:** Zero data exfiltration confirmed across all 14 monitored database nodes.
+- **Highlight 2:** Rapid containment executed within 45 minutes of initial RPC handshake anomaly.
+
+### Section 4: Operational Mitigation Directives
+- **Directive 1:** Block TCP Port 135 & RPC Dynamic Port Range at perimeter firewalls immediately.
+- **Directive 2:** Deploy Security Update KB5040442 across all active Windows Server domain controllers.
+
+---
+
+## 🎨 SyntaxX Design System Tokens
+
+- **Background Surface:** Near-Black Onyx (\`#0D0B0A\`)
+- **Content Surfaces:** Dark Warm-Brown (\`#1E1A17\` / \`#25201C\`)
+- **Primary Typography:** Warm Beige / Cream (\`#F5F2EB\`)
+- **Card Borders:** Thin Warm Beige (\`#3D352E\`)
+- **Accent Tokens:** Muted Gold (\`#D4AF37\`) & Warning Amber (\`#C5A059\`)
+- **Visual Style:** High readability, dense layout, zero glassmorphism / excessive gradients.
+
+---
+
+## 🔗 Source & Evidence Traceability
+
+- **Source Document ID:** \`DOC-CYBER-2026-001\`
+- **Source Document Title:** \`Threat Intelligence Briefing (CVE-2024-38077)\`
+- **Evidence Reference:** Mapped directly to Source Section 1 & 2 (45-minute window and 14 database nodes).
+
+---
+
+## 📄 Structured Layout Metadata JSON
+
+\`\`\`json
+{
+  "document_id": "DOC-CYBER-2026-001",
+  "title": "Threat Intelligence Briefing (CVE-2024-38077)",
+  "visual_type": "Infographic Visual Poster (1080x1350)",
+  "metrics": [
+    {"value": "CVSS 9.8", "label": "SEVERITY SCORE", "evidence": "Source Section 1"},
+    {"value": "45 MIN", "label": "EXPLOITATION WINDOW", "evidence": "Source Section 2"},
+    {"value": "14 NODES", "label": "CONTAINED SCOPE", "evidence": "Source Section 2"},
+    {"value": "KB5040442", "label": "MANDATORY PATCH", "evidence": "Source Section 3"}
+  ],
+  "sections": [
+    "Threat / Situation Overview",
+    "Attack Chain & Process Flow",
+    "Highlighted Key Findings",
+    "Operational Mitigation Directives"
+  ],
+  "visual_elements": [
+    "Metric Cards (4x)",
+    "Process Flowchart Diagram",
+    "Highlight Callout Box",
+    "Evidence Grounding Badges"
+  ],
+  "evidence": [
+    {"claim": "Zero data exfiltration across 14 database nodes", "source_id": "DOC-CYBER-2026-001", "section": "Section 2"}
+  ]
+}
+\`\`\``,
       groundingScore: 98.7,
       hallucinations: 0,
       toneMatch: 98,
-      validationNotes: "Provides complete visual infographic wireframe, asset recommendations, and data callouts.",
+      validationNotes: "SyntaxX Infographic visual structure with metric cards, process diagram, and structured metadata JSON.",
       citations: [
         "Source Section 1 & 2: 45-minute window and 14 database nodes"
       ]
