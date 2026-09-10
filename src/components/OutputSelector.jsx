@@ -80,6 +80,7 @@ export default function OutputSelector({
           return (
             <div
               key={format.id}
+              id={`output-selector-${format.id}`}
               onClick={() => toggleOutput(format.id)}
               style={{
                 padding: '1.25rem',

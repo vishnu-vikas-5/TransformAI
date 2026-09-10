@@ -302,3 +302,11 @@ code {
   background: var(--c-choc-brown);
   color: var(--c-cream-ivory);
 }
+
+/* Workbench Card Glow on Redirection */
+.highlight-agent-card {
+  box-shadow: 0 0 25px rgba(223, 208, 184, 0.8) !important;
+  border-color: #FFFFFF !important;
+  transform: scale(1.015);
+  transition: all 0.35s ease-in-out;
+}

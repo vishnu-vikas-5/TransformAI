@@ -332,6 +332,7 @@ export default function ArtifactsWorkbench({
             return (
               <div
                 key={formatId}
+                id={`workbench-agent-${formatId}`}
                 className="glass-panel"
                 style={{
                   padding: '1.5rem',
@@ -339,7 +340,8 @@ export default function ArtifactsWorkbench({
                   flexDirection: 'column',
                   gap: '1rem',
                   background: '#000000',
-                  borderColor: '#DFD0B8'
+                  borderColor: '#DFD0B8',
+                  transition: 'all 0.3s ease'
                 }}
               >
                 {/* Card Top Row */}

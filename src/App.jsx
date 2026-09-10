@@ -254,6 +254,16 @@ export default function App() {
               <GroundedQAChat
                 selectedDoc={selectedDoc}
                 customText={customText}
+                selectedOutputs={selectedOutputs}
+                setSelectedOutputs={setSelectedOutputs}
+                completedOutputs={completedOutputs}
+                setCompletedOutputs={setCompletedOutputs}
+                backendResults={backendResults}
+                setBackendResults={setBackendResults}
+                selectedTone={selectedTone}
+                detailLevel={detailLevel}
+                communicationStyle={communicationStyle}
+                onNavigateTab={(tab) => setActiveTab(tab)}
               />
             </div>
           )}

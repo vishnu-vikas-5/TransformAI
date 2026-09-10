@@ -2,11 +2,15 @@ import os
 import asyncio
 import time
 import math
+import io
+import re
 from typing import List, Dict, Any, Optional
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
+import pypdf
+import grounding_engine as ge
 
 # Load environment variables from .env
 load_dotenv()
@@ -58,13 +62,30 @@ class ChatRequest(BaseModel):
     doc_title: str
     source_text: str
     question: str
-    chat_history: Optional[List[Dict[str, str]]] = []
+    chat_history: Optional[List[Dict[str, Any]]] = []
+    selected_outputs: Optional[List[str]] = []
+    selected_tone: Optional[str] = "executive"
+    detail_level: Optional[str] = "detailed"
+    communication_style: Optional[str] = "analytical"
 
 class ChatResponse(BaseModel):
     answer: str
-    groundingScore: float
-    citations: List[str]
+    groundingScore: Optional[float] = None
+    citations: Optional[List[str]] = []
     api_provider: str
+    status: Optional[str] = "grounded"
+    evidence_found: Optional[bool] = True
+    intent: Optional[str] = "GROUNDED_QA"
+    agent_id: Optional[str] = None
+    deliverable_name: Optional[str] = None
+    deliverable_result: Optional[Dict[str, Any]] = None
+    selected: Optional[bool] = True
+    confidence: Optional[float] = None
+    reason: Optional[str] = None
+    is_modification: Optional[bool] = False
+    agents: Optional[List[Dict[str, Any]]] = []
+    button_text: Optional[str] = None
+
 
 
 # Detailed System Prompts for Specialized Domain Agents
@@ -358,22 +379,26 @@ async def execute_agent_task(agent_id: str, request: TransformRequest) -> Delive
             system_prompt = AGENT_SYSTEM_PROMPTS.get(agent_id, "System: Generate structured, detailed document output.")
             full_prompt = f"{system_prompt}\nTarget Tone: {request.selected_tone}\nCommunication Style: {request.communication_style}\nDetail Level: {request.detail_level}\n\nSource Content:\n{request.source_text[:12000]}"
             
-            candidate_models = ['gemini-3.6-flash', 'gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-1.5-pro']
+            candidate_models = ['gemini-3-flash-preview', 'gemini-flash-latest', 'gemini-3.5-flash']
             generated_text = None
             used_model = None
             
             for m in candidate_models:
                 try:
-                    response = client.models.generate_content(
-                        model=m,
-                        contents=full_prompt,
-                    )
+                    def _call_m(model_name=m):
+                        return client.models.generate_content(
+                            model=model_name,
+                            contents=full_prompt,
+                        )
+                    response = await asyncio.to_thread(_call_m)
                     if response and hasattr(response, 'text') and response.text:
                         generated_text = response.text
                         used_model = m
                         break
                 except Exception as model_err:
                     print(f"Gemini model {m} failed for {agent_id}: {model_err}")
+                    if "429" in str(model_err) or "RESOURCE_EXHAUSTED" in str(model_err):
+                        break
 
             if generated_text:
                 return DeliverableResult(
@@ -1046,138 +1071,283 @@ async def websocket_transform(websocket: WebSocket):
     except Exception as e:
         await websocket.send_text(json.dumps({'type': 'error', 'detail': str(e)}))
 
+@app.post("/api/upload")
+async def upload_document(file: UploadFile = File(...)):
+    """
+    Ingests and parses uploaded documents (PDF, Markdown, TXT), extracting clean
+    page-by-page text with explicit page markers for grounded retrieval and citations.
+    """
+    filename = file.filename or "uploaded_document"
+    contents = await file.read()
+    file_size = len(contents)
+
+    extracted_text = ""
+    page_count = 1
+
+    if filename.lower().endswith('.pdf'):
+        try:
+            reader = pypdf.PdfReader(io.BytesIO(contents))
+            page_count = len(reader.pages)
+            page_texts = []
+            for idx, page in enumerate(reader.pages, start=1):
+                p_text = page.extract_text() or ""
+                p_clean = p_text.strip()
+                if p_clean:
+                    page_texts.append(f"[Page {idx}]\n{p_clean}")
+            extracted_text = "\n\n".join(page_texts)
+        except Exception as e:
+            print(f"[Upload API] PDF extraction error: {e}")
+            extracted_text = contents.decode('utf-8', errors='ignore')
+    else:
+        extracted_text = contents.decode('utf-8', errors='ignore')
+
+    if not extracted_text.strip():
+        extracted_text = f"### {filename}\n[Uploaded document content could not be cleanly extracted]"
+
+    words = len(re.findall(r'\b\w+\b', extracted_text))
+
+    if file_size >= 1048576:
+        size_fmt = f"{file_size / 1048576:.2f} MB"
+    else:
+        size_fmt = f"{file_size / 1024:.1f} KB"
+
+    return {
+        "filename": filename,
+        "extracted_text": extracted_text,
+        "pages": max(1, page_count),
+        "word_count": max(1, words),
+        "file_size": file_size,
+        "size_formatted": size_fmt
+    }
+
+
 def synthesize_grounded_answer(doc_title: str, source_text: str, question: str) -> Dict[str, Any]:
     """
-    Intelligent Grounded Document Q&A Synthesis Engine.
-    Parses document structure, matches question intent against source text paragraphs,
-    and returns a structured, highly relevant, grounded answer with direct citations.
+    Synchronous fallback grounding synthesis engine using SemanticVectorIndex.
+    Guarantees no hardcoded 99.6 scores and enforces relevance gates.
     """
     clean_source = source_text.strip() if source_text else ""
     if not clean_source or len(clean_source) < 10:
-        return {
-            "answer": f"The document **'{doc_title}'** contains insufficient text to answer this query. Please upload or select a document with complete content.",
-            "groundingScore": 95.0,
-            "citations": [doc_title]
-        }
+        return ge.build_insufficient_evidence_response(doc_title, question)
 
-    lines = [l.strip() for l in clean_source.split('\n') if l.strip()]
-    paragraphs = []
-    current_para = []
-    
-    for line in lines:
-        current_para.append(line)
-        if len(' '.join(current_para)) > 180 or line.endswith('.') or line.startswith('#'):
-            paragraphs.append(' '.join(current_para))
-            current_para = []
-    if current_para:
-        paragraphs.append(' '.join(current_para))
+    chunks = ge.chunk_document(clean_source)
+    if not chunks:
+        return ge.build_insufficient_evidence_response(doc_title, question)
 
-    q_lower = question.lower()
-    q_words = [w.strip("?,!.:;\"'") for w in q_lower.split() if len(w) > 2 and w not in {'what', 'where', 'when', 'which', 'how', 'who', 'why', 'does', 'is', 'are', 'the', 'and', 'for', 'that', 'this', 'with', 'from', 'about', 'tell', 'give', 'show'}]
-    
-    # Score paragraphs based on keyword overlap
-    scored_paras = []
-    for idx, p in enumerate(paragraphs):
-        p_lower = p.lower()
-        score = sum(3 if w in p_lower else 0 for w in q_words)
-        if any(kw in q_lower for kw in ['summary', 'overview', 'main', 'finding', 'threat', 'risk', 'patch', 'step', 'timeline', 'action']) and any(p.startswith(h) for h in ['#', '1.', '2.', 'Executive', 'Key', 'Section', 'Directive']):
-            score += 2
-        if score > 0:
-            scored_paras.append((score, p))
-            
-    scored_paras.sort(key=lambda x: x[0], reverse=True)
-    top_paras = [p for _, p in scored_paras[:4]]
-    
-    if not top_paras:
-        top_paras = paragraphs[:3]
+    matched_chunks, best_rel, is_answerable, _ = ge.retrieve_grounded_evidence(
+        chunks=chunks,
+        question=question,
+        top_k=3,
+        api_key=GEMINI_API_KEY
+    )
 
-    clean_top = [p.replace('#', '').strip() for p in top_paras]
-    primary_lead = clean_top[0] if clean_top else f"Analysis of {doc_title} confirms critical operational data and grounded parameters."
-    
-    bullets = []
-    for p in clean_top[:4]:
-        sentences = [s.strip() for s in p.split('.') if len(s.strip()) > 15]
-        for s in sentences[:2]:
-            if s not in bullets and len(s) < 220:
-                bullets.append(s)
+    if not is_answerable or not matched_chunks:
+        return ge.build_insufficient_evidence_response(doc_title, question)
 
-    bullet_str = "\n".join(f"- **Document Fact:** {b}." for b in bullets[:5]) if bullets else f"- **Document Fact:** Full analysis grounded in {doc_title}."
-    excerpts_str = "\n".join(f"> *\"{p[:200]}...\"*" for p in clean_top[:3])
+    return ge.synthesize_deterministic_grounded_answer(
+        doc_title=doc_title,
+        matched_chunks=matched_chunks,
+        question=question,
+        query_relevance=best_rel
+    )
 
-    formatted_answer = f"### Grounded Analysis for \"{doc_title}\"\n\n**User Inquiry:** *\"{question}\"*\n\n#### 1. Core Synthesis & Direct Answer\nBased on direct inspection of **{doc_title}**:\n{primary_lead}\n\n#### 2. Key Findings & Extracted Directives\n{bullet_str}\n\n#### 3. Verified Source Text Excerpts\n{excerpts_str}\n\n*Verified by TransformAI Grounding Engine • 99.6% Factual Source Alignment*"
-
-    return {
-        "answer": formatted_answer,
-        "groundingScore": 99.6,
-        "citations": [f"Source Document: {doc_title}"]
-    }
 
 @app.post("/api/chat", response_model=ChatResponse)
 async def grounded_chat_qa(request: ChatRequest):
-    """Grounded Q&A Assistant endpoint answering user questions grounded strictly in the source document."""
+    """
+    Grounded Q&A Assistant endpoint answering user questions strictly grounded in the source document.
+    Enforces semantic vector retrieval, relevance & answerability gates, claim-level verification,
+    and dynamic scoring.
+    """
     question = request.question.strip()
     if not question:
         raise HTTPException(status_code=400, detail="Question cannot be empty.")
-        
-    doc_title = request.doc_title
-    source_text = request.source_text[:8000] # Pass context window
-    
-    # 1. Try Gemini API if key is present
+
+    doc_title = request.doc_title or "Source Document"
+    source_text = request.source_text or ""
+
+    # 0. Intent Classification: Intelligently route deliverable requests vs. factual Q&A
+    intent_result = ge.classify_query_intent(
+        query=question,
+        chat_history=request.chat_history,
+        selected_outputs=request.selected_outputs
+    )
+
+    if intent_result.get("intent") == "AMBIGUOUS":
+        agent_id = intent_result.get("agent") or "exec_summary"
+        agent_meta = ge.DELIVERABLE_AGENTS.get(agent_id, {})
+        return ChatResponse(
+            answer=intent_result.get("clarification_prompt", "Are you asking about a summary mentioned in the document, or would you like to generate an Executive Summary?"),
+            groundingScore=None,
+            citations=[],
+            api_provider="TransformAI Intent Router",
+            status="ambiguous_clarification",
+            evidence_found=True,
+            intent="AMBIGUOUS",
+            agent_id=agent_id,
+            agents=intent_result.get("agents") or [
+                {
+                    "id": agent_id,
+                    "name": agent_meta.get("name", "Executive Summary"),
+                    "agent_name": agent_meta.get("agent_name", "Executive Summary Agent"),
+                    "button_text": agent_meta.get("button_text", "Open Executive Summary Agent")
+                }
+            ],
+            button_text=intent_result.get("button_text") or agent_meta.get("button_text", "Open Executive Summary Agent"),
+            deliverable_name=intent_result.get("deliverable_name") or agent_meta.get("name", "Executive Summary"),
+            confidence=intent_result.get("confidence", 0.5),
+            reason=intent_result.get("reason")
+        )
+
+    if intent_result.get("intent") == "TRANSFORM":
+        agents_list = intent_result.get("agents") or []
+        target_agent = intent_result.get("agent")
+        if not agents_list and target_agent:
+            agent_data = ge.DELIVERABLE_AGENTS.get(target_agent, {})
+            agents_list = [{
+                "id": target_agent,
+                "name": agent_data.get("name", target_agent),
+                "agent_name": agent_data.get("agent_name", target_agent),
+                "button_text": agent_data.get("button_text", f"Open {agent_data.get('agent_name', 'Agent')}")
+            }]
+
+        redirect_msg = intent_result.get("redirect_message") or (
+            f"Content transformation is handled by specialized agents in the Workbench. "
+            f"Please use the corresponding agent in the Workbench."
+        )
+
+        btn_text = intent_result.get("button_text")
+        if not btn_text and agents_list:
+            btn_text = agents_list[0].get("button_text")
+
+        return ChatResponse(
+            answer=redirect_msg,
+            groundingScore=None,
+            citations=[],
+            api_provider="TransformAI Intent Router",
+            status="agent_redirection",
+            evidence_found=True,
+            intent="TRANSFORM",
+            agent_id=target_agent,
+            agents=agents_list,
+            button_text=btn_text,
+            deliverable_name=intent_result.get("deliverable_name"),
+            deliverable_result=None,
+            selected=True,
+            confidence=intent_result.get("confidence", 0.99),
+            reason=intent_result.get("reason"),
+            is_modification=False
+        )
+
+    # 1. Chunk document (with page and section tracking)
+    chunks = ge.chunk_document(source_text)
+    if not chunks:
+        insufficient = ge.build_insufficient_evidence_response(doc_title, question)
+        return ChatResponse(**insufficient)
+
+    # 2. Semantic Vector Retrieval & Relevance/Answerability Gates
+    matched_chunks, best_rel, is_answerable, status_reason = ge.retrieve_grounded_evidence(
+        chunks=chunks,
+        question=question,
+        top_k=3,
+        api_key=GEMINI_API_KEY
+    )
+
+    # 3. Mandatory Relevance & Answerability Gate: Reject out-of-document queries before LLM
+    if not is_answerable or not matched_chunks:
+        insufficient = ge.build_insufficient_evidence_response(doc_title, question)
+        return ChatResponse(**insufficient)
+
+    # 4. Prepare retrieved context and citations
+    context_text = "\n\n".join(
+        f"[Page {c.page}, Section: {c.section}]:\n{c.text}" for c, _ in matched_chunks
+    )
+    display_citations = [
+        f"Source: {doc_title} | Page {c.page} ({c.section}) | Evidence: \"{c.text[:180].replace(chr(10), ' ').strip()}...\""
+        for c, _ in matched_chunks
+    ]
+
+    # 5. LLM Grounded Generation (Gemini 3 Flash Preview / Flash Latest)
     if GEMINI_API_KEY and GEMINI_API_KEY != "your_gemini_api_key_here":
-        for gemini_model in ['gemini-3.6-flash', 'gemini-2.5-flash', 'gemini-1.5-flash', 'gemini-1.5-pro']:
+        for gemini_model in ['gemini-3-flash-preview', 'gemini-flash-latest', 'gemini-3.5-flash']:
             try:
                 import google.genai as genai
                 client = genai.Client(api_key=GEMINI_API_KEY)
-                prompt = f"System: You are TransformAI Grounded Q&A Assistant. Answer the user's question accurately and strictly based on the provided document content. Quote key excerpts and cite specific sections. If not present in the text, state clearly that it is not covered.\n\nDocument Title: {doc_title}\nDocument Content:\n{source_text}\n\nUser Question: {question}\n\nGrounded AI Answer:"
-                
-                response = client.models.generate_content(
-                    model=gemini_model,
-                    contents=prompt,
+                prompt = (
+                    "You are a document-grounded question answering assistant.\n\n"
+                    "Answer the user's question ONLY using the provided document evidence.\n"
+                    "Do not use outside knowledge.\n"
+                    "Every factual claim in your answer must be supported by the provided evidence.\n"
+                    "If the evidence does not contain enough information to answer the question, respond:\n"
+                    "'I couldn't find this information in the provided document.'\n\n"
+                    "Do not infer missing facts.\n"
+                    "Do not fabricate citations.\n"
+                    "Write a concise, natural answer rather than repeating raw document chunks.\n"
+                    "Use the user's question to determine which parts of the evidence are relevant.\n\n"
+                    f"Document Title: {doc_title}\n"
+                    f"Provided Document Evidence:\n{context_text}\n\n"
+                    f"User Question: {question}\n\n"
+                    "Grounded Answer:"
                 )
-                answer_text = response.text
-                if answer_text and len(answer_text.strip()) > 10:
+
+                def call_gemini():
+                    return client.models.generate_content(
+                        model=gemini_model,
+                        contents=prompt,
+                    )
+
+                response = await asyncio.to_thread(call_gemini)
+                answer_text = response.text.strip() if response.text else ""
+
+                if answer_text and len(answer_text) > 10:
+                    ans_lower = answer_text.lower()
+                    if any(phrase in ans_lower for phrase in [
+                        "couldn't find", "cannot find", "not available in the",
+                        "not mentioned in the", "insufficient information", "does not contain",
+                        "no information", "not found in the provided"
+                    ]):
+                        return ChatResponse(
+                            answer=f"I couldn't find information about \"{question}\" in the provided document.",
+                            groundingScore=0.0,
+                            citations=[],
+                            api_provider=f"Google {gemini_model}",
+                            status="insufficient_evidence",
+                            evidence_found=False
+                        )
+
+                    claims = ge.extract_claims(answer_text)
+                    raw_ctx = " ".join(c.text for c, _ in matched_chunks)
+                    claim_ratio, supported, unsupported = ge.verify_claims_against_context(claims, raw_ctx)
+
+                    dyn_score = ge.calculate_dynamic_grounding_score(
+                        is_answerable=True,
+                        relevance_score=best_rel,
+                        claim_support_ratio=claim_ratio,
+                        total_claims=len(claims),
+                        supported_claims=len(supported)
+                    )
+
                     return ChatResponse(
                         answer=answer_text,
-                        groundingScore=99.6,
-                        citations=[f"Source Document: {doc_title}"],
-                        api_provider=f"Google {gemini_model} API"
+                        groundingScore=dyn_score,
+                        citations=display_citations,
+                        api_provider=f"Google {gemini_model}",
+                        status="grounded",
+                        evidence_found=True
                     )
             except Exception as e:
                 print(f"Gemini Chat API Error ({gemini_model}): {e}")
 
-    # 2. Try OpenAI API if key is present
-    if OPENAI_API_KEY and OPENAI_API_KEY != "your_openai_api_key_here":
-        try:
-            from openai import OpenAI
-            client = OpenAI(api_key=OPENAI_API_KEY)
-            response = client.chat.completions.create(
-                model="gpt-4o-mini",
-                messages=[
-                    {"role": "system", "content": f"You are TransformAI Grounded Q&A Assistant. Answer questions strictly grounded in the document '{doc_title}'."},
-                    {"role": "user", "content": f"Document Text:\n{source_text}\n\nQuestion: {question}"}
-                ]
-            )
-            answer_text = response.choices[0].message.content
-            if answer_text and len(answer_text.strip()) > 10:
-                return ChatResponse(
-                    answer=answer_text,
-                    groundingScore=99.2,
-                    citations=[f"Source Document: {doc_title}"],
-                    api_provider="OpenAI GPT-4o API"
-                )
-        except Exception as e:
-            print(f"OpenAI Chat API Error: {e}")
-
-    # 3. Intelligent Grounded Synthesis Engine Fallback
-    await asyncio.sleep(0.2)
-    synthesis = synthesize_grounded_answer(doc_title, source_text, question)
-
-    return ChatResponse(
-        answer=synthesis["answer"],
-        groundingScore=synthesis["groundingScore"],
-        citations=synthesis["citations"],
-        api_provider="TransformAI Grounded Intelligence Engine"
+    # 6. Fallback Local Synthesis (Fluent, coherent prose without raw chunk dumping)
+    await asyncio.sleep(0.02)
+    synthesis = ge.synthesize_deterministic_grounded_answer(
+        doc_title=doc_title,
+        matched_chunks=matched_chunks,
+        question=question,
+        query_relevance=best_rel
     )
+    synthesis["citations"] = display_citations
+    return ChatResponse(**synthesis)
 
 if __name__ == "__main__":
     import uvicorn
