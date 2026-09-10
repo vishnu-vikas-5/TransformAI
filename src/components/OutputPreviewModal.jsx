@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { X, Download, Copy, Check, FileText, ShieldCheck, Printer, ChevronLeft, ChevronRight, Play, Eye, Share2, Sparkles, ExternalLink } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { X, Download, Copy, Check, FileText, ShieldCheck, Printer, ChevronLeft, ChevronRight, Play, Eye, Share2, Sparkles, ExternalLink, Image as ImageIcon, AlertTriangle, Cpu, ArrowRight } from 'lucide-react';
+import html2canvas from 'html2canvas';
 import { exportToPdf, exportToPptx } from '../utils/exportUtils';
 import { formatContentForDisplay } from '../utils/documentUtils';
 
@@ -16,6 +17,9 @@ export default function OutputPreviewModal({ isOpen, onClose, modalData, selecte
   const [copied, setCopied] = useState(false);
   const [currentSlideIdx, setCurrentSlideIdx] = useState(0);
 
+  const posterRef = useRef(null);
+  const [isExportingImage, setIsExportingImage] = useState(false);
+
   const handleCopy = () => {
     navigator.clipboard.writeText(content);
     setCopied(true);
@@ -28,6 +32,35 @@ export default function OutputPreviewModal({ isOpen, onClose, modalData, selecte
 
   const handleDownloadPptx = () => {
     exportToPptx(title, content, selectedDoc?.id || 'doc');
+  };
+
+  const handleDownloadInfographicImage = async (format = 'png') => {
+    if (!posterRef.current) return;
+    setIsExportingImage(true);
+    try {
+      const element = posterRef.current;
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#0D0B0A',
+        logging: false,
+        allowTaint: true
+      });
+      const mimeType = format === 'jpg' ? 'image/jpeg' : 'image/png';
+      const imageUri = canvas.toDataURL(mimeType, 0.95);
+      const link = document.createElement('a');
+      const sanitizedName = (docTitle || 'Document').replace(/[^a-z0-9]/gi, '_').toLowerCase();
+      link.download = `SyntaxX_Infographic_${sanitizedName}.${format}`;
+      link.href = imageUri;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setIsExportingImage(false);
+    } catch (err) {
+      console.error("Failed to export infographic image:", err);
+      setIsExportingImage(false);
+      alert("Failed to export image. Please try again.");
+    }
   };
 
   // Parse slides if presentation deck

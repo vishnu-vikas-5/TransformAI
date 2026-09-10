@@ -2,7 +2,10 @@ import re
 import math
 import os
 from typing import List, Dict, Any, Optional, Tuple
-import numpy as np
+try:
+    import numpy as np
+except ImportError:
+    np = None
 
 STOP_WORDS = {
     'a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an', 'and', 'any', 'are', 'aren\'t',
@@ -285,13 +288,23 @@ def get_gemini_embeddings(texts: List[str], api_key: Optional[str] = None) -> Op
 
 def compute_cosine_similarity(vec_a: List[float], vec_b: List[float]) -> float:
     """Computes cosine similarity between two dense vectors."""
-    a = np.array(vec_a, dtype=np.float32)
-    b = np.array(vec_b, dtype=np.float32)
-    norm_a = np.linalg.norm(a)
-    norm_b = np.linalg.norm(b)
+    if not vec_a or not vec_b or len(vec_a) != len(vec_b):
+        return 0.0
+    if np is not None:
+        a = np.array(vec_a, dtype=np.float32)
+        b = np.array(vec_b, dtype=np.float32)
+        norm_a = np.linalg.norm(a)
+        norm_b = np.linalg.norm(b)
+        if norm_a == 0 or norm_b == 0:
+            return 0.0
+        return float(np.dot(a, b) / (norm_a * norm_b))
+    
+    dot_product = sum(x * y for x, y in zip(vec_a, vec_b))
+    norm_a = math.sqrt(sum(x * x for x in vec_a))
+    norm_b = math.sqrt(sum(y * y for y in vec_b))
     if norm_a == 0 or norm_b == 0:
         return 0.0
-    return float(np.dot(a, b) / (norm_a * norm_b))
+    return float(dot_product / (norm_a * norm_b))
 
 
 def compute_local_tfidf_similarity(
