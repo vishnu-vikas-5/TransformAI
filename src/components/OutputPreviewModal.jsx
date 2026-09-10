@@ -203,86 +203,58 @@ export default function OutputPreviewModal({ isOpen, onClose, modalData, selecte
                 </div>
               </div>
 
-              {/* Formatted PDF Document Paper Container */}
+              {/* Formatted White PDF Paper Document Container */}
               <div style={{
-                background: '#121212',
-                border: '1.5px solid #DFD0B8',
+                background: '#FFFFFF',
+                border: '1.5px solid #CCCCCC',
                 borderTop: 'none',
-                borderRadius: '0 0 12px 12px',
-                padding: '2.5rem',
-                color: '#FFFFFF',
-                boxShadow: '0 25px 50px rgba(0,0,0,0.9)',
-                minHeight: '650px'
+                borderRadius: '0 0 8px 8px',
+                padding: '3rem 3.5rem',
+                color: '#111111',
+                boxShadow: '0 25px 50px rgba(0,0,0,0.85)',
+                minHeight: '750px',
+                fontFamily: 'Helvetica, Arial, sans-serif'
               }}>
-                {/* Official PDF Document Header */}
-                <div style={{ borderBottom: '2px solid #DFD0B8', paddingBottom: '1.25rem', marginBottom: '1.75rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <div>
-                    <span style={{ fontSize: '0.75rem', color: '#DFD0B8', fontFamily: 'var(--font-mono)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                      TransformAI Official Advisory Document
-                    </span>
-                    <h2 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#FFFFFF', marginTop: '0.25rem', lineHeight: '1.3' }}>
-                      {title}: {docTitle}
-                    </h2>
+                {/* Official PDF Document Header Block */}
+                <div style={{ marginBottom: '1.25rem' }}>
+                  <div style={{ fontSize: '1.25rem', fontWeight: '900', color: '#111111', lineHeight: '1.3' }}>
+                    Cyber Threat Intelligence Report
+                  </div>
+                  <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#111111', marginTop: '0.25rem', lineHeight: '1.35' }}>
+                    {title}: {docTitle}
                   </div>
 
-                  <div style={{ textAlign: 'right' }}>
-                    <span className="badge" style={{ background: '#DFD0B8', color: '#000000', fontWeight: '800' }}>
-                      CONFIDENTIAL
-                    </span>
-                    <div style={{ fontSize: '0.725rem', color: '#A0A0A0', marginTop: '0.35rem' }}>
-                      Date: September 09, 2026
-                    </div>
+                  <div style={{ marginTop: '0.85rem', fontSize: '0.875rem', lineHeight: '1.65', color: '#111111' }}>
+                    <div><strong>Report ID:</strong> CTI-SX-2026-{selectedDoc?.id ? String(selectedDoc.id).toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6) : '017'}</div>
+                    <div><strong>Classification:</strong> TLP:AMBER</div>
+                    <div><strong>Date:</strong> 08 September 2026</div>
+                    <div><strong>Severity:</strong> CRITICAL</div>
+                    <div><strong>Confidence:</strong> HIGH</div>
+                    <div><strong>Status:</strong> ACTIVE INVESTIGATION</div>
                   </div>
                 </div>
 
-                {/* Audit Metrics Banner */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(3, 1fr)',
-                  gap: '1rem',
-                  background: '#000000',
-                  padding: '1rem',
-                  borderRadius: 'var(--radius-sm)',
-                  border: '1px solid #DFD0B8',
-                  marginBottom: '1.75rem',
-                  textAlign: 'center',
-                  fontSize: '0.8rem'
-                }}>
-                  <div>
-                    <div style={{ color: '#E1DCC9', opacity: 0.85 }}>Factual Grounding Score</div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#FFFFFF' }}>{result?.groundingScore || 99.4}%</div>
-                  </div>
+                {/* Horizontal Divider Line */}
+                <hr style={{ border: 'none', borderTop: '1.5px solid #BBBBBB', margin: '1.25rem 0' }} />
 
-                  <div>
-                    <div style={{ color: '#E1DCC9', opacity: 0.85 }}>Hallucinations Flagged</div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#FFFFFF' }}>0</div>
-                  </div>
-
-                  <div>
-                    <div style={{ color: '#E1DCC9', opacity: 0.85 }}>Tone Alignment</div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: '800', color: '#FFFFFF' }}>{result?.toneMatch || 99}%</div>
-                  </div>
-                </div>
-
-                {/* PDF Text Body */}
-                <div style={{ fontFamily: 'var(--font-sans)', fontSize: '0.9rem', lineHeight: '1.7', whiteSpace: 'pre-wrap' }}>
+                {/* PDF Text Body with Clean Formatting */}
+                <div style={{ fontSize: '0.9rem', lineHeight: '1.65', color: '#111111', whiteSpace: 'pre-wrap' }}>
                   {content}
                 </div>
 
                 {/* PDF Page Footer */}
                 <div style={{
-                  marginTop: '3rem',
-                  paddingTop: '1rem',
-                  borderTop: '1px solid #333333',
+                  marginTop: '3.5rem',
+                  paddingTop: '0.85rem',
+                  borderTop: '1px solid #DDDDDD',
                   display: 'flex',
                   justifyContent: 'space-between',
                   fontSize: '0.75rem',
-                  color: '#A0A0A0'
+                  color: '#666666'
                 }}>
-                  <span>Document ID: REF-{selectedDoc?.id || 'DOC-2026'}</span>
-                  <span>TransformAI Grounded Intelligence Platform • Page 1 of 1</span>
+                  <span>Document ID: CTI-SX-2026-{selectedDoc?.id || '017'}</span>
+                  <span>SyntaxX Threat Intelligence • Page 1 of 1</span>
                 </div>
-
               </div>
 
             </div>

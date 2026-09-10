@@ -148,43 +148,124 @@ export const exportToPptx = async (title, rawContent, docId = "document") => {
 };
 
 /**
- * Generates and triggers download of a formatted PDF document using Black & Warm Sand Gold palette
+ * Generates and triggers download of a formatted PDF document matching Cyber Threat Intelligence Report / Executive Advisory layout
  */
 export const exportToPdf = (title, rawContent, docId = "document") => {
   try {
     const doc = new jsPDF();
-    const cleanDocTitle = sanitizeText(title || "Generated Report");
+    const cleanDocTitle = sanitizeText(title || "Cyber Threat Intelligence Report");
 
-    doc.setFillColor(0, 0, 0); // #000000
+    // 1. Page Background: Clean White Paper
+    doc.setFillColor(255, 255, 255);
     doc.rect(0, 0, 210, 297, "F");
 
-    doc.setTextColor(255, 255, 255); // #FFFFFF
-    doc.setFontSize(16);
-    doc.text(cleanDocTitle, 14, 20);
+    let y = 20;
 
-    doc.setTextColor(223, 208, 184); // #DFD0B8
-    doc.setFontSize(9);
-    doc.text("TransformAI Generated Report", 14, 27);
+    // 2. Header Title Block
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.setTextColor(17, 17, 17);
+    doc.text("Cyber Threat Intelligence Report", 15, y);
+    y += 6;
 
-    doc.setDrawColor(225, 220, 201); // #E1DCC9
-    doc.line(14, 31, 196, 31);
+    doc.setFontSize(12);
+    doc.text(cleanDocTitle, 15, y);
+    y += 7;
 
-    doc.setTextColor(255, 255, 255); // #FFFFFF
-    doc.setFontSize(9.5);
+    // 3. Header Metadata Block (Key-Value Pairs)
+    const metadata = [
+      { label: "Report ID", val: `CTI-SX-2026-${(docId || "017").toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6) || "017"}` },
+      { label: "Classification", val: "TLP:AMBER" },
+      { label: "Date", val: "08 September 2026" },
+      { label: "Severity", val: "CRITICAL" },
+      { label: "Confidence", val: "HIGH" },
+      { label: "Status", val: "ACTIVE INVESTIGATION" }
+    ];
 
-    const sanitizedBody = sanitizeText(rawContent);
-    const splitText = doc.splitTextToSize(sanitizedBody, 180);
-    let y = 38;
+    doc.setFontSize(10);
+    metadata.forEach(item => {
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(17, 17, 17);
+      const labelText = `${item.label}: `;
+      doc.text(labelText, 15, y);
+      
+      const labelWidth = doc.getTextWidth(labelText);
+      doc.setFont("helvetica", "bold"); // Bold value as in report screenshot
+      doc.text(item.val, 15 + labelWidth, y);
+      y += 5;
+    });
 
-    splitText.forEach(line => {
-      if (y > 280) {
+    y += 2;
+
+    // 4. Horizontal Separator Line
+    doc.setDrawColor(180, 180, 180);
+    doc.setLineWidth(0.6);
+    doc.line(15, y, 195, y);
+    y += 8;
+
+    // 5. Parse and Render Body Content
+    const sanitizedBody = sanitizeText(rawContent || "");
+    const lines = sanitizedBody.split("\n");
+
+    const checkNewPage = (neededSpace = 8) => {
+      if (y + neededSpace > 280) {
         doc.addPage();
-        doc.setFillColor(0, 0, 0); // #000000
+        doc.setFillColor(255, 255, 255);
         doc.rect(0, 0, 210, 297, "F");
         y = 20;
       }
-      doc.text(line, 14, y);
-      y += 5.5;
+    };
+
+    lines.forEach(line => {
+      const trimmed = line.trim();
+      if (!trimmed) {
+        y += 3;
+        return;
+      }
+
+      // Check if numbered section header (e.g. "1. Executive Summary", "2. Threat Overview", "## 1. Executive Alert")
+      const isNumberedHeader = /^(#+\s*)?\d+\.\s+/.test(trimmed) || /^##?\s+/.test(trimmed);
+      
+      // Check if sub-header field (e.g. "Threat Type", "Attack Vector", "Severity", "Confidence", "Exploitation Status", "Affected Technology", "Malware")
+      const isSubHeader = /^(Threat Type|Attack Vector|Severity|Confidence|Exploitation Status|Affected Technology|Malware|Advisory ID|Classification|Target Audience):?/i.test(trimmed);
+
+      if (isNumberedHeader) {
+        checkNewPage(14);
+        
+        // Add horizontal divider line before section 2+
+        if (y > 45) {
+          doc.setDrawColor(210, 210, 210);
+          doc.setLineWidth(0.4);
+          doc.line(15, y, 195, y);
+          y += 6;
+        }
+
+        const headerText = trimmed.replace(/^#+\s*/, '');
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(11.5);
+        doc.setTextColor(11, 11, 11);
+        doc.text(headerText, 15, y);
+        y += 6.5;
+      } else if (isSubHeader) {
+        checkNewPage(8);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(10);
+        doc.setTextColor(17, 17, 17);
+        doc.text(trimmed.replace(/\*\*/g, ''), 15, y);
+        y += 5;
+      } else {
+        // Regular paragraph or body line
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9.5);
+        doc.setTextColor(34, 34, 34);
+
+        const wrapped = doc.splitTextToSize(trimmed.replace(/\*\*/g, ''), 180);
+        wrapped.forEach(wLine => {
+          checkNewPage(5);
+          doc.text(wLine, 15, y);
+          y += 5;
+        });
+      }
     });
 
     const cleanFilenameTitle = (title || "report").toLowerCase().replace(/[^a-z0-9]+/g, '_');
